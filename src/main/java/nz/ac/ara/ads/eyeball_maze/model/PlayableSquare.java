@@ -1,6 +1,6 @@
 package nz.ac.ara.ads.eyeball_maze.model;
 
-import nz.ac.ara.ads.eyeball_maze.views.enums.Shape;
+import nz.ac.ara.ads.eyeball_maze.enums.Shape;
 import java.awt.*;
 
 

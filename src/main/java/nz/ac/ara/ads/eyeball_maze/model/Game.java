@@ -1,7 +1,7 @@
 package nz.ac.ara.ads.eyeball_maze.model;
 
-import nz.ac.ara.ads.eyeball_maze.views.enums.Color;
-import nz.ac.ara.ads.eyeball_maze.views.enums.Direction;
+import nz.ac.ara.ads.eyeball_maze.enums.Color;
+import nz.ac.ara.ads.eyeball_maze.enums.Direction;
 
 public class Game {
 
