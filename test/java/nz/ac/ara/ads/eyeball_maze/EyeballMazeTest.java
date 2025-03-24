@@ -5,7 +5,13 @@ import org.testng.annotations.Test;
 */
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import nz.ac.ara.ads.eyeball_maze.model.BlankSquare;
+import nz.ac.ara.ads.eyeball_maze.model.Game;
+import nz.ac.ara.ads.eyeball_maze.model.PlayableSquare;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import java.util.Random;
 
 class TestGameHoldsLevels {
     Game game = new Game();
@@ -38,8 +44,8 @@ class TestGameHoldsLevels {
     void testGetLevelCountWithOneLevel() {
         this.addTestLevel1();
         int expectedLevelCount = 1;
-        int actuallevelCount = game.getLevelCount();
-        assertEquals(expectedLevelCount, actuallevelCount);
+        int actualLevelCount = game.getLevelCount();
+        assertEquals(expectedLevelCount, actualLevelCount);
     }
 
     @Test
@@ -47,12 +53,12 @@ class TestGameHoldsLevels {
         this.addTestLevel1();
         this.addTestLevel2();
         int expectedLevelCount = 2;
-        int actuallevelCount = game.getLevelCount();
-        assertEquals(expectedLevelCount, actuallevelCount);
+        int actualLevelCount = game.getLevelCount();
+        assertEquals(expectedLevelCount, actualLevelCount);
     }
 
     @Test
-    void testMostRecentlyAddedLevelIsCurrentLevelbyCheckingSize() {
+    void testMostRecentlyAddedLevelIsCurrentLevelByCheckingSize() {
         this.addTestLevel1();
         this.addTestLevel2();
         int[] expectedLevelSize = { 7, 3 };
@@ -60,7 +66,7 @@ class TestGameHoldsLevels {
         assertArrayEquals(expectedLevelSize, actualLevelSize);
     }
     @Test
-    void testSettingLevelChangesCurrentLevelbyCheckingSize() {
+    void testSettingLevelChangesCurrentLevelByCheckingSize() {
         this.addTestLevel1();
         this.addTestLevel2();
         int[] expectedLevelSize = { 1, 5 };
@@ -70,12 +76,10 @@ class TestGameHoldsLevels {
     }
 
     @Test
-    void testSettingLeveltoToolargeNumberThrowsException() {
+    void testSettingLevelToTooLargeNumberThrowsException() {
         this.addTestLevel1();
         this.addTestLevel2();
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.setLevel(42);
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.setLevel(42));
     }
 }
 
@@ -102,7 +106,7 @@ class TestLevelHoldsGoals {
     }
 
     @Test
-    void testAddingOneGoalputsGoalAtExpectedPosition() {
+    void testAddingOneGoalPutsGoalAtExpectedPosition() {
         // this.add7High3WideLevel();
         game.addGoal(4, 2);
         boolean hasGoal = game.hasGoalAt(4, 2);
@@ -110,7 +114,7 @@ class TestLevelHoldsGoals {
     }
 
     @Test
-    void testAddingTwoGoalIncreasesGoalCountto2() {
+    void testAddingTwoGoalIncreasesGoalCountTo2() {
         // this.add7High3WideLevel();
         game.addGoal(4, 2);
         game.addGoal(6, 1);
@@ -131,7 +135,7 @@ class TestLevelHoldsGoals {
     }
 
     @Test
-    void testNewGamehas0CompletedGoals() {
+    void testNewGameHas0CompletedGoals() {
         // this.add7High3WideLevel();
         game.addGoal(4, 2);
         game.addGoal(6, 1);
@@ -143,17 +147,13 @@ class TestLevelHoldsGoals {
     @Test
     void testAddingGoalsOutsideLevelHeightThrowsRangeException() {
         // this.add7High3WideLevel();
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.addGoal(8, 2);
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.addGoal(8, 2));
     }
 
     @Test
     void testAddingGoalsOutsideLevelWidthThrowsRangeException() {
         // this.add7High3WideLevel();
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.addGoal(2, 9);
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.addGoal(2, 9));
     }
 }
 
@@ -181,18 +181,14 @@ class TestGameHoldsSquares {
     void testAddingSquareOutsideLevelWidthThrowsException() {
         game = new Game();
         game.addLevel(9, 1);
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.addSquare(new BlankSquare(), 0, 4);
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.addSquare(new BlankSquare(), 0, 4));
     }
 
     @Test
     void testAddingSquareOutsideLevelHeightThrowsException() {
         game = new Game();
         game.addLevel(9, 1);
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.addSquare(new BlankSquare(), 22, 0);
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.addSquare(new BlankSquare(), 22, 0));
     }
 
     @Test
@@ -233,17 +229,13 @@ class TestGameHoldsEyeball {
     @Test
     void testAddingEyeballOutsideHeightThrowsException() {
         // this.add7High3WideLevel();
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.addEyeball(9, 2, Direction.UP);
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.addEyeball(9, 2, Direction.UP));
     }
 
     @Test
     void testAddingEyeballOutsideWidthThrowsException() {
         // this.add7High3WideLevel();
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.addEyeball(6, 5, Direction.UP);
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.addEyeball(6, 5, Direction.UP));
     }
 
     @Test
@@ -889,7 +881,7 @@ class TestCompletingGoals {
     Game game;
     LevelDataHandler levelDataHandler;
 
-    record SquareData(Color color, Shape shape, Position position) {};
+    record SquareData(Color color, Shape shape, Position position) {}
 
     SquareData[] levelOneInitData = {
             new SquareData(Color.BLANK, Shape.BLANK, new Position(0, 0)),
