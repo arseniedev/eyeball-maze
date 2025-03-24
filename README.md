@@ -1,1 +1,1 @@
-# EyeballMaze
+# java_assessments
