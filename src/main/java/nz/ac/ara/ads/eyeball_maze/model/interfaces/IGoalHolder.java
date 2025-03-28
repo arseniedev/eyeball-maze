@@ -1,4 +1,4 @@
-package nz.ac.ara.ads.eyeball_maze.views.interfaces;
+package nz.ac.ara.ads.eyeball_maze.model.interfaces;
 
 public interface IGoalHolder {
     public void addGoal(int row, int column);

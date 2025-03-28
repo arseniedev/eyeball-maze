@@ -1,7 +1,9 @@
-package nz.ac.ara.ads.eyeball_maze.model;
+package nz.ac.ara.ads.eyeball_maze.model.classes;
 
 import nz.ac.ara.ads.eyeball_maze.enums.Color;
 import nz.ac.ara.ads.eyeball_maze.enums.Direction;
+import nz.ac.ara.ads.eyeball_maze.enums.Message;
+import nz.ac.ara.ads.eyeball_maze.enums.Shape;
 
 public class Game {
 
@@ -41,16 +43,18 @@ public class Game {
         return 0;
     }
 
-    public int addSquare(BlankSquare sq1, int row, int column) {
+    public int addSquare(Square sq1, int row, int column) {
         return 0;
     }
-
+//public int addSquare(BlankSquare sq1, int row, int column) {
+//    return 0;
+//}
     public Color getColorAt(int row, int column) {
         return Color.PURPLE;
     }
 
     public Shape getShapeAt(int row, int column) {
-        return null;
+        return Shape.STAR;
     }
 
     public int getEyeballRow() {
@@ -79,7 +83,7 @@ public class Game {
         return null;
     }
 
-    public Message checkDirectionMessage() {
+    public Message checkDirectionMessage(int row, int column) {
         return null;
     }
 
@@ -87,15 +91,14 @@ public class Game {
         return null;
     }
 
-    public Message messageIfMovingTo(int row, int column) {
-        return null;
-    }
+//    public Message messageIfMovingTo(int row, int column) {
+//        return null;
+//    }
 
     public Message messageIfMovingTo(int row, int column) {
-        return null;
+        return Message.OK;
     }
 
-    public void moveTo(Position position) {
-
+    public void moveTo(int row, int column) {
     }
 }

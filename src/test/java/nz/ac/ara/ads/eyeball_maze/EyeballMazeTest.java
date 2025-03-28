@@ -1,14 +1,16 @@
 package nz.ac.ara.ads.eyeball_maze;
 /*
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.testng.annotations.Test;
 */
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
-import nz.ac.ara.ads.eyeball_maze.model.BlankSquare;
-import nz.ac.ara.ads.eyeball_maze.model.Game;
-import nz.ac.ara.ads.eyeball_maze.model.PlayableSquare;
+import nz.ac.ara.ads.eyeball_maze.enums.Color;
+import nz.ac.ara.ads.eyeball_maze.enums.Direction;
+import nz.ac.ara.ads.eyeball_maze.enums.Message;
+import nz.ac.ara.ads.eyeball_maze.enums.Shape;
+import nz.ac.ara.ads.eyeball_maze.model.classes.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import java.util.Random;
@@ -334,7 +336,10 @@ class TestUpMoves {
         Message[] expected = { Message.DIFFERENT_SHAPE_OR_COLOR,
                 Message.DIFFERENT_SHAPE_OR_COLOR };
         game.addEyeball(6, 0, Direction.UP);
-        Message[] actual = { game.messageIfMovingTo(2, 0), game.messageIfMovingTo(3, 0) };
+        Message[] actual = {
+                game.messageIfMovingTo(2, 0),
+                game.messageIfMovingTo(3, 0)
+        };
         assertArrayEquals(expected, actual);
     }
 

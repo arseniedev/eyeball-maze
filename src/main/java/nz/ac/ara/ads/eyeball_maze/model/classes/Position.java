@@ -1,7 +1,7 @@
-package nz.ac.ara.ads.eyeball_maze.model;
+package nz.ac.ara.ads.eyeball_maze.model.classes;
 
 public class Position {
-    public Position() {
+    public Position(int row, int column) {
 
     }
 

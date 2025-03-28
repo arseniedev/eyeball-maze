@@ -1,4 +1,4 @@
-package nz.ac.ara.ads.eyeball_maze.views.interfaces;
+package nz.ac.ara.ads.eyeball_maze.model.interfaces;
 
 public interface ISquareHolder {
     public void addSquare(Square square, int row, int column);

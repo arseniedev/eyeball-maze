@@ -1,4 +1,4 @@
-package nz.ac.ara.ads.eyeball_maze.views.interfaces;
+package nz.ac.ara.ads.eyeball_maze.model.interfaces;
 
 public interface IMoving {
     public boolean canMoveTo( int destinationRow, int destinationColumn);
