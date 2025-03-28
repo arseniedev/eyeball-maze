@@ -7,7 +7,6 @@ public abstract class Square {
     protected  Color color;
     protected Shape shape;
     public Square() {
-
     }
 
     public Square(Color color, Shape shape) {

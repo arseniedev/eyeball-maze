@@ -1,8 +1,10 @@
 package nz.ac.ara.ads.eyeball_maze.model.interfaces;
 
+import nz.ac.ara.ads.eyeball_maze.enums.Message;
+
 public interface IMoving {
     public boolean canMoveTo( int destinationRow, int destinationColumn);
-    public  Message messageIfMovingTo(int destinationRow, int destinationColumn);
+    public Message messageIfMovingTo(int destinationRow, int destinationColumn);
     public boolean isDirectionOK(int destinationRow, int destinationColumn);
     public Message checkDirectionMessage(int destinationRow, int destinationColumn);
     public boolean hasBlankFreePathTo(int destinationRow, int destinationColumn);

@@ -1,7 +1,4 @@
 package nz.ac.ara.ads.eyeball_maze;
-/*
-import org.testng.annotations.Test;
-*/
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
