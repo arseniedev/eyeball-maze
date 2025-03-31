@@ -10,7 +10,6 @@ public class Game {
     public Game() {
     }
     public void addLevel(int row, int column) {
-
     }
     public int getLevelWidth() {
         return 0;
