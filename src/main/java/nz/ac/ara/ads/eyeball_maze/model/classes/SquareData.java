@@ -6,6 +6,9 @@ import java.util.Objects;
 public record SquareData (Color color, Shape shape, Position position) {
 
     public SquareData {
+//        Shape sqShape;
+//        Color sqColor;
+
         Objects.requireNonNull(position, "Position cannot be null");
 
         if (color == null) {

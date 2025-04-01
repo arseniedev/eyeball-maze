@@ -1,20 +1,21 @@
 package nz.ac.ara.ads.eyeball_maze.model.classes;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.*;
 
 import nz.ac.ara.ads.eyeball_maze.enums.*;
 import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
 
-public class Game {
+public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
     protected int levelCount;
     private final List<Position> levelCollection =  new ArrayList<>();
     private final List<Position> goalCollection =  new ArrayList<>();
-    private final List<SquareData> squareCollection =  new ArrayList<>();
+    private final List<Square> squareCollection =  new ArrayList<>();
+    private final List<EyeBall> eyeBallCollection = new ArrayList<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -22,22 +23,29 @@ public class Game {
         this.levelCount = 0;
     }
 
+    @Override
     public void addLevel(int row, int column) {
 //        this.levelCollection.add(Color.RED, Shape.DIAMOND, new Position(row,column));
         this.levelCollection.add(new Position(row,column));
         this.levelCount ++;
-//        this.levelCount = this.levelCollection.size();
 
     }
+    @Override
     public int getLevelWidth() {
         return this.levelCollection.get(this.levelCount -1).getColumn(); //.position()
     }
+
+    @Override
     public int getLevelHeight() {
         return this.levelCollection.get(this.levelCount -1).getRow(); //.position()
     }
+
+    @Override
     public int getLevelCount() {
         return this.levelCount;
     }
+
+    @Override
     public void setLevel(int level) {
         if (level > this.levelCollection.size()) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
@@ -47,9 +55,9 @@ public class Game {
             LOGGER.log(Level.INFO, Message.OK.name());
         }
     }
+    @Override
     public void addGoal(int row, int column) {
-        int validCoordinateCount = this.validCoordinateCount(row,column);
-        if (validCoordinateCount > 0) {
+        if (this.validCoordinate(row,column)) {
             LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
             this.goalCollection.add(new Position(row,column));
             LOGGER.log(Level.INFO, Message.OK.name());
@@ -57,122 +65,158 @@ public class Game {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }
     }
-    private int validCoordinateCount(int row, int column) {
-        int validCoordinateCount = 0;
-        for (Position position : this.levelCollection) {
-            LOGGER.log(Level.INFO, "row: " + position.getRow() + " column: " + position.getColumn());
-            if (position.getRow() >= row && position.getColumn() >= column) {
-                validCoordinateCount++;
-            }
-        }
-        return validCoordinateCount;
+    private boolean validCoordinate(int row, int column) {
+//            long validCoordinateCount = this.levelCollection.stream().filter(position -> position.getRow() >= row && position.getColumn() >= column).count();
+//        int validCoordinateCount = 0;
+//        for (Position position : this.levelCollection) {
+//            LOGGER.log(Level.INFO, "row: " + position.getRow() + " column: " + position.getColumn());
+//            if (position.getRow() >= row && position.getColumn() >= column) {
+//                validCoordinateCount++;
+//            }
+//        }
+
+//        return validCoordinateCount > 0;
+        return this.levelCollection.stream()
+                .filter(
+                        position -> position.getRow() >= row && position.getColumn() >= column)
+                .count() > 0;
     }
+
+    @Override
     public int getGoalCount() {
         return this.goalCollection.size();
     }
+
+    @Override
     public boolean hasGoalAt(int row, int column) {
         LOGGER.log(Level.INFO, "Checking if goal at row: " + row + ", column: " + column);
-//        Position targetPosition = (Position) position;
-//        return row == targetPosition.getRow() && column == targetPosition.getColumn();
 
         Position targetPosition = new Position(row,column);
         return this.goalCollection.contains(targetPosition);
-
-//        LOGGER.log(Level.INFO, `${this.goalCollection}`);
     }
+
+    @Override
     public int getCompletedGoalCount() {
         return 0;
     }
+
+    @Override
     public void addSquare(Square square, int row, int column) {
-        int validCoordinateCount = this.validCoordinateCount(row,column);
-        if (validCoordinateCount > 0) {
+        if (this.validCoordinate(row,column)) {
             Color sqColor = square.color;
             Shape sqShape = square.shape;
             Position sqPosition = new Position(row,column);
 
-            LOGGER.log(Level.INFO, "Adding a square at: " + row + ", " + column);
-            this.squareCollection.add(new SquareData(sqColor,sqShape,sqPosition));
-            LOGGER.log(Level.INFO, Message.OK.name());
+            if (sqColor == null && sqShape == null) {
+                this.squareCollection.add(new BlankSquare());
+            } else {
+                this.squareCollection.add(new PlayableSquare(sqColor,sqShape));
+            }
+//            Square sqData = new Square(sqColor,sqShape,sqPosition);
+//            this.squareCollection.add(sqData);
+//            LOGGER.log(Level.INFO, "Adding a square at: " + row + ", " + column); //+ "With color/shape" + sqData.color() + sqShape.shape()
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }
     }
+
+    @Override
     public Color getColorAt(int row, int column) {
         Color output = Color.BLANK;
         LOGGER.log(Level.INFO, "Checking colour at row: " + row + ", column: " + column);
         int targetRow;
         int targetColumn;
-        for (SquareData grid : this.squareCollection) {
-            targetRow = grid.position().getRow();
-            targetColumn = grid.position().getColumn();
+        for (Square grid : this.squareCollection) {
+            targetRow = grid.position.row;
+            targetColumn = grid.position.column;
 
             if (targetRow == row && targetColumn == column) {
-                LOGGER.log(Level.INFO, String.valueOf(grid.color()));
-                output = grid.color();
+                LOGGER.log(Level.INFO, String.valueOf(grid.color));
+                output = grid.color;
             }
-//            else {
-//                output = Color.BLANK;
-//            }
         }
-//        throw new IllegalArgumentException(String.valueOf(ErrorCode.COLOUR_NOT_FOUND));
-//            else {
-//            }
-
-//        Position targetPosition = new Position(row,column);
-//        return this.goalCollection.contains(targetPosition);
-//        this.squareCollection
         return output;
     }
+
+    @Override
     public Shape getShapeAt(int row, int column) {
-        Shape output = Shape.BLANK;
         LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column);
-        int targetRow;
-        int targetColumn;
-        for (SquareData grid : this.squareCollection) {
-            targetRow = grid.position().getRow();
-            targetColumn = grid.position().getColumn();
+//        int targetRow;
+//        int targetColumn;
+        for (Square grid : this.squareCollection) {
+//            targetRow = grid.position().getRow();
+//            targetColumn = grid.position().getColumn();
 
-            if (targetRow == row && targetColumn == column) {
-                LOGGER.log(Level.INFO, String.valueOf(grid.shape()));
-                output = grid.shape();
+            if (grid.position.row == row && grid.position.column == column) {
+                LOGGER.log(Level.INFO, String.valueOf(grid.shape));
+                return grid.shape;
             }
-//            else {
-//                output = Shape.BLANK;
-//            }
         }
-//        throw new IllegalArgumentException(String.valueOf(ErrorCode.SHAPE_NOT_FOUND));
-        return output;
+        return Shape.BLANK;
     }
-    public int getEyeballRow() {
-        return 0;
-    }
-    public int getEyeballColumn() {
-        return 0;
-    }
+    @Override
     public void addEyeball(int row, int column, Direction direction) {
+        if (this.validCoordinate(row,column)) {
+            Position position = new Position(row,column);
 
+            LOGGER.log(Level.INFO, "Adding an eyeball at: " + row + ", " + column);
+            this.eyeBallCollection.add(new EyeBall(position, direction));
+            LOGGER.log(Level.INFO, Message.OK.name());
+        } else {
+            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
+        }
     }
+    @Override
+    public int getEyeballRow() {
+        return this.eyeBallCollection.get(this.levelCount -1).position.getRow(); //.position()
+    }
+
+    @Override
+    public int getEyeballColumn() {
+        return this.eyeBallCollection.get(this.levelCount -1).position.getColumn();
+    }
+
+    @Override
     public boolean canMoveTo(int row, int column) {
         return false;
     }
+
+    @Override
     public boolean hasBlankFreePathTo(int row, int column) {
         return false;
     }
+
+    @Override
     public boolean isDirectionOK(int row, int column) {
         return false;
     }
+
+    @Override
     public Direction getEyeballDirection() {
-        return null;
+        return this.eyeBallCollection.get(this.levelCount -1).direction; //.position()
     }
+
+    @Override
     public Message checkDirectionMessage(int row, int column) {
         return null;
     }
+
+    @Override
     public Message checkMessageForBlankOnPathTo(int row, int column) {
+        Color color = this.getColorAt(row,column);
+        Shape shape = this.getShapeAt(row,column);
+        if (shape == Shape.BLANK && color == Color.BLANK) {
+            return Message.MOVING_OVER_BLANK;
+        }
         return null;
     }
+
+    @Override
     public Message messageIfMovingTo(int row, int column) {
         return Message.OK;
     }
+
+    @Override
     public void moveTo(int row, int column) {
     }
 }

@@ -6,10 +6,13 @@ import nz.ac.ara.ads.eyeball_maze.enums.Shape;
 public abstract class Square {
     protected  Color color;
     protected Shape shape;
+    public Position position;
+
     public Square() {
+
     }
 
-    public Square(Color color, Shape shape) {
+    public Square(Color color, Shape shape, Position position) {
 
     }
 }

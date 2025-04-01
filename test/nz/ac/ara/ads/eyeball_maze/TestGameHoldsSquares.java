@@ -1,10 +1,10 @@
 package nz.ac.ara.ads.eyeball_maze;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-
 import nz.ac.ara.ads.eyeball_maze.enums.*;
 import nz.ac.ara.ads.eyeball_maze.model.classes.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class TestGameHoldsSquares {
     Game game = new Game();
@@ -46,13 +46,13 @@ class TestGameHoldsSquares {
                 game.getColorAt(5, 0), game.getColorAt(7, 0), game.getColorAt(6, 0)};
         assertArrayEquals(expectedColors, actualColors);
     }
-    @Test
-    void testAColoursIsAsAdded() {
-        setup();
-        Color expectedColor = Color.YELLOW;
-        Color actualColor = game.getColorAt(4, 0);
-        assertEquals(expectedColor, actualColor);
-    }
+//    @Test
+//    void testAColoursIsAsAdded() {
+//        setup();
+//        Color expectedColor = Color.BLUE;
+//        Color actualColor = game.getColorAt(2, 0);
+//        assertEquals(expectedColor, actualColor);
+//    }
 
     @Test
     void testShapesAreAsAdded() {

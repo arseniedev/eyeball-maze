@@ -1,6 +1,10 @@
 //package nz.ac.ara.ads.eyeball_maze;
 //
+//import nz.ac.ara.ads.eyeball_maze.model.classes.*;
+//import nz.ac.ara.ads.eyeball_maze.enums.*;
+//
 //import static org.junit.jupiter.api.Assertions.*;
+//
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //
