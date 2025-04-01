@@ -48,7 +48,10 @@ class TestLevelHoldsGoals {
         game.addGoal(4, 2);
         game.addGoal(6, 1);
         boolean[] expectedHasGoals = {true, true};
-        boolean[] actualHasGoals = {game.hasGoalAt(4, 2), game.hasGoalAt(6, 1)};
+        boolean[] actualHasGoals = {
+            game.hasGoalAt(4, 2),
+            game.hasGoalAt(6, 1)
+        };
         assertArrayEquals(expectedHasGoals, actualHasGoals);
     }
 

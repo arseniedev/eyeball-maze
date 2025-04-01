@@ -13,6 +13,7 @@ import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
 public class Game {
     protected int levelCount;
     private final List<Position> gridCollection =  new ArrayList<Position>();
+    private final List<Position> goalCollection =  new ArrayList<>();
 //    private final List<SquareData> gridCollection =  new ArrayList<SquareData>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -24,15 +25,15 @@ public class Game {
     public void addLevel(int row, int column) {
 //        this.gridCollection.add(Color.RED, Shape.DIAMOND, new Position(row,column));
         this.gridCollection.add(new Position(row,column));
-//        this.levelCount ++;
+        this.levelCount ++;
 //        this.levelCount = this.gridCollection.size();
 
     }
     public int getLevelWidth() {
-        return this.gridCollection.get(this.levelCount).getColumn(); //.position()
+        return this.gridCollection.get(this.levelCount -1).getColumn(); //.position()
     }
     public int getLevelHeight() {
-        return this.gridCollection.get(this.levelCount).getRow(); //.position()
+        return this.gridCollection.get(this.levelCount -1).getRow(); //.position()
     }
     public int getLevelCount() {
         return this.levelCount;
@@ -42,17 +43,42 @@ public class Game {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         } else {
             LOGGER.log(Level.INFO, "Setting level: " + level);
-            this.levelCount = level;
+            this.levelCount = level + 1;
             LOGGER.log(Level.INFO, Message.OK.name());
         }
     }
     public void addGoal(int row, int column) {
+        int validGoalCount = this.getValidGoalCount(row,column);
+        if (validGoalCount > 0) {
+            LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
+            this.goalCollection.add(new Position(row,column));
+            LOGGER.log(Level.INFO, Message.OK.name());
+        } else {
+            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
+        }
+    }
+    private int getValidGoalCount(int row, int column) {
+        int validGoalCount = 0;
+        for (Position position : this.gridCollection) {
+            LOGGER.log(Level.INFO, "row: " + position.getRow() + " column: " + position.getColumn());
+            if (position.getRow() >= row && position.getColumn() >= column) {
+                validGoalCount++;
+            }
+        }
+        return validGoalCount;
     }
     public int getGoalCount() {
-        return 0;
+        return this.goalCollection.size();
     }
     public boolean hasGoalAt(int row, int column) {
-        return false;
+        LOGGER.log(Level.INFO, "Checking if goal at row: " + row + ", column: " + column);
+//        Position targetPosition = (Position) position;
+//        return row == targetPosition.getRow() && column == targetPosition.getColumn();
+
+        Position targetPosition = new Position(row,column);
+        return this.goalCollection.contains(targetPosition);
+
+//        LOGGER.log(Level.INFO, `${this.goalCollection}`);
     }
     public int getCompletedGoalCount() {
         return 0;
