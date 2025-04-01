@@ -1,5 +1,4 @@
 package nz.ac.ara.ads.eyeball_maze.model.interfaces;
-
 import nz.ac.ara.ads.eyeball_maze.enums.Message;
 
 public interface IMoving {

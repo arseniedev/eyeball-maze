@@ -1,0 +1,11 @@
+package nz.ac.ara.ads.eyeball_maze.enums;
+
+public enum ErrorCode {
+    INDEX_OUT_OF_BOUNDS("Index out of bounds");
+
+    private final String errorMessage;
+    ErrorCode(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+    public String errorMessage() { return errorMessage; }
+}
