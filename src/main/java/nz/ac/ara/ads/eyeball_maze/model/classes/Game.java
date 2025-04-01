@@ -10,10 +10,10 @@ import java.util.logging.*;
 import nz.ac.ara.ads.eyeball_maze.enums.*;
 import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
 
-
 public class Game {
     protected int levelCount;
-    private final List<Position> levelPath =  new ArrayList<Position>();
+    private final List<Position> gridCollection =  new ArrayList<Position>();
+//    private final List<SquareData> gridCollection =  new ArrayList<SquareData>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -22,44 +22,26 @@ public class Game {
     }
 
     public void addLevel(int row, int column) {
-        this.levelPath.add(new Position(row,column));
-        this.levelCount ++;
-//        if (this.levelCount > 0) {
-//            LOGGER.log(Level.INFO, "Not Empty " + this.levelPath.size());
-//            this.levelCount = this.levelPath.size();
-//        } else {
-//            LOGGER.log(Level.INFO, "Empty " + this.levelPath.size());
-//            this.levelCount ++;
-//        }
+//        this.gridCollection.add(Color.RED, Shape.DIAMOND, new Position(row,column));
+        this.gridCollection.add(new Position(row,column));
+//        this.levelCount ++;
+//        this.levelCount = this.gridCollection.size();
+
     }
     public int getLevelWidth() {
-//        try {
-            return this.levelPath.get(this.levelCount - 1).getColumn();
-//        }
-//        catch (IndexOutOfBoundsException exception) {
-//            throw new IndexOutOfBoundsException(exception.getMessage());
-//        }
-////        LOGGER.log(Level.INFO, "Width " + this.levelPath.get(this.levelCount).getColumn());
+        return this.gridCollection.get(this.levelCount).getColumn(); //.position()
     }
     public int getLevelHeight() {
-//        try {
-            return this.levelPath.get(this.levelCount - 1).getRow();
-//        }
-//        catch (IndexOutOfBoundsException exception) {
-//            throw new IndexOutOfBoundsException(exception.getMessage());
-//        }
-//        LOGGER.log(Level.INFO, "Height " + this.levelPath.get(this.levelCount).getRow());
-//        return this.levelPath.get(this.levelCount).getRow();
+        return this.gridCollection.get(this.levelCount).getRow(); //.position()
     }
     public int getLevelCount() {
-
         return this.levelCount;
     }
     public void setLevel(int level) {
-        if (level > this.levelPath.size()) {
+        if (level > this.gridCollection.size()) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         } else {
-            LOGGER.log(Level.INFO, "Setting level: " + this.levelPath.size());
+            LOGGER.log(Level.INFO, "Setting level: " + level);
             this.levelCount = level;
             LOGGER.log(Level.INFO, Message.OK.name());
         }
