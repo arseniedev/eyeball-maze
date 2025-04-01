@@ -3,6 +3,12 @@
 //import static org.junit.jupiter.api.Assertions.*;
 //import org.junit.jupiter.api.Test;
 //
+//import nz.ac.ara.ads.eyeball_maze.enums.*;
+//import nz.ac.ara.ads.eyeball_maze.model.classes.*;
+////import nz.ac.ara.ads.eyeball_maze.model.classes.Game;
+////import nz.ac.ara.ads.eyeball_maze.model.classes.BlankSquare;
+////import nz.ac.ara.ads.eyeball_maze.model.classes.PlayableSquare;
+//
 //class TestGameHoldsSquares {
 //    Game game = new Game();
 //

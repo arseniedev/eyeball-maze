@@ -12,45 +12,46 @@ import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
 
 
 public class Game {
-
-    protected int levelWidth;
-    protected int levelHeight;
     protected int levelCount;
-//    protected int lastIndex;
-
     private final List<Position> levelPath =  new ArrayList<Position>();
-
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public Game() {
-//        this.levelPath.clear();
         this.levelCount = 0;
     }
 
     public void addLevel(int row, int column) {
         this.levelPath.add(new Position(row,column));
         this.levelCount ++;
+//        if (this.levelCount > 0) {
+//            LOGGER.log(Level.INFO, "Not Empty " + this.levelPath.size());
+//            this.levelCount = this.levelPath.size();
+//        } else {
+//            LOGGER.log(Level.INFO, "Empty " + this.levelPath.size());
+//            this.levelCount ++;
+//        }
     }
     public int getLevelWidth() {
-//        return this.levelWidth;
-//        LOGGER.log(Level.INFO, "Current count: " + this.levelCount);
-        return this.levelWidth = this.levelPath.get(this.levelCount).getColumn();
+//        try {
+            return this.levelPath.get(this.levelCount - 1).getColumn();
+//        }
+//        catch (IndexOutOfBoundsException exception) {
+//            throw new IndexOutOfBoundsException(exception.getMessage());
+//        }
+////        LOGGER.log(Level.INFO, "Width " + this.levelPath.get(this.levelCount).getColumn());
     }
     public int getLevelHeight() {
-//        return this.levelHeight;
-//        LOGGER.log(Level.INFO, "Current count: " + this.levelCount);
-        return this.levelHeight = this.levelPath.get(this.levelCount).getRow();
+//        try {
+            return this.levelPath.get(this.levelCount - 1).getRow();
+//        }
+//        catch (IndexOutOfBoundsException exception) {
+//            throw new IndexOutOfBoundsException(exception.getMessage());
+//        }
+//        LOGGER.log(Level.INFO, "Height " + this.levelPath.get(this.levelCount).getRow());
+//        return this.levelPath.get(this.levelCount).getRow();
     }
     public int getLevelCount() {
-//        int lastIndex = this.levelPath.size() - 1;
-//        if (lastIndex >= 0) {
-//            LOGGER.log(Level.INFO, "Setting level " + num);
-//            this.levelCount = num;
-////            System.out.println("Last element: " + list.get(lastIndex));
-//        } else {
-////            System.out.println("The list is empty.");
-//        }
 
         return this.levelCount;
     }
