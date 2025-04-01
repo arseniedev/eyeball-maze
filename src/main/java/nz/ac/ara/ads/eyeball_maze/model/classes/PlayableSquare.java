@@ -11,4 +11,13 @@ public class PlayableSquare extends Square {
         this.color = color;
         this.shape = shape;
     }
+    @Override
+    public Color getColor() {
+        return this.color;
+    }
+
+    @Override
+    public Shape getShape() {
+        return this.shape;
+    }
 }

@@ -14,8 +14,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     protected int levelCount;
     private final List<Position> levelCollection =  new ArrayList<>();
     private final List<Position> goalCollection =  new ArrayList<>();
-    private final List<Square> squareCollection =  new ArrayList<>();
+//    private final List<Square> squareCollection =  new ArrayList<>();
     private final List<EyeBall> eyeBallCollection = new ArrayList<>();
+    Map <Position, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -101,59 +102,108 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     @Override
+    public Color getColorAt(int row, int column) {
+        Color output = Color.BLANK;
+        LOGGER.log(Level.INFO, "Checking color at row: " + row + ", column: " + column);
+        for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
+            if (entry.getKey().row == row && entry.getKey().column == column) {
+                output = entry.getValue().getColor();
+                LOGGER.log(Level.INFO, "output: " + output);
+            }
+        }
+        return output;
+    }
+    @Override
     public void addSquare(Square square, int row, int column) {
+//        Map <Position, Square> squareCollection = new HashMap<>();
+
         if (this.validCoordinate(row,column)) {
-            Color sqColor = square.color;
-            Shape sqShape = square.shape;
+//            Color sqColor = square.getColor();
+//            Shape sqShape = square.getShape();
             Position sqPosition = new Position(row,column);
 
-            if (sqColor == null && sqShape == null) {
-                this.squareCollection.add(new BlankSquare());
-            } else {
-                this.squareCollection.add(new PlayableSquare(sqColor,sqShape));
-            }
-//            Square sqData = new Square(sqColor,sqShape,sqPosition);
+            LOGGER.log(Level.INFO, "Adding a square shape" + square.getShape() + ", color:" + square.getColor());
+            this.squareCollection.put(sqPosition,square);
+
+//            if (sqColor == null && sqShape == null) {
+//                this.squareCollection.put(sqPosition,new BlankSquare());
+////                this.squareCollection.add(new BlankSquare(), );
+//            } else {
+//                this.squareCollection.put(sqPosition,new PlayableSquare(sqColor,sqShape));
+////                this.squareCollection.add(new PlayableSquare(sqColor,sqShape));
+//            }
 //            this.squareCollection.add(sqData);
-//            LOGGER.log(Level.INFO, "Adding a square at: " + row + ", " + column); //+ "With color/shape" + sqData.color() + sqShape.shape()
+//            SquareData sqData = new SquareData(sqColor,sqShape,sqPosition);
+            LOGGER.log(Level.INFO, "Adding a square at: " + row + ", " + column); //+ "With color/shape" + sqData.color() + sqShape.shape()
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }
     }
 
     @Override
-    public Color getColorAt(int row, int column) {
-        Color output = Color.BLANK;
-        LOGGER.log(Level.INFO, "Checking colour at row: " + row + ", column: " + column);
-        int targetRow;
-        int targetColumn;
-        for (Square grid : this.squareCollection) {
-            targetRow = grid.position.row;
-            targetColumn = grid.position.column;
-
-            if (targetRow == row && targetColumn == column) {
-                LOGGER.log(Level.INFO, String.valueOf(grid.color));
-                output = grid.color;
+    public Shape getShapeAt(int row, int column) {
+        Shape output = Shape.BLANK;
+        LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column);
+        for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
+//            if (entry.getValue().getClass().getName() instanceof BlankSquare) {
+            if (entry.getKey().row == row && entry.getKey().column == column) {
+                output = entry.getValue().getShape();
+                LOGGER.log(Level.INFO, "output: " + output);
             }
         }
+//            System.out.println(entry);
+            // %n - A new line character appropriate to the platform running the application
+//            System.out.printf("Key: %s and Value: %s %n", entry.getKey().getRow(), entry.getValue().getClass().getName());
+//            System.out.printf("Value: %s", entry.getValue().getShape());
         return output;
-    }
 
-    @Override
-    public Shape getShapeAt(int row, int column) {
-        LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column);
+        }
 //        int targetRow;
 //        int targetColumn;
-        for (Square grid : this.squareCollection) {
-//            targetRow = grid.position().getRow();
-//            targetColumn = grid.position().getColumn();
+        /*
+        Position targetPosition = new Position(row,column);
+        LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column);
+        Square sq = this.squareCollection.get(targetPosition);
 
-            if (grid.position.row == row && grid.position.column == column) {
-                LOGGER.log(Level.INFO, String.valueOf(grid.shape));
-                return grid.shape;
-            }
-        }
-        return Shape.BLANK;
-    }
+        return sq.shape;
+        for (Position position: this.squareCollection.keySet()) {
+            LOGGER.log(Level.INFO, "Getting" + this.squareCollection.get(position).shape);
+//            if (square.position.getRow() == row && square.position.getColumn() == column) {
+//                Square square = this.squareCollection.get(position);
+//                if (square != null) {
+//                    LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column + ", shape: " + this.squareCollection.get(position).shape);
+//                    return square.shape;
+//                } else {
+//                    LOGGER.log(Level.WARNING, "Square not found at row:" + row + "column:" + column);
+//                }
+//            }
+//        }
+        * */
+/*
+* */
+/*
+//        for (Square grid : this.squareCollection) {
+//            targetRow = grid.position.getRow();
+//            targetColumn = grid.position.getColumn();
+//            Position p = new Position(row,column);
+////
+////            if (targetRow == row && targetColumn == column) {
+////                LOGGER.log(Level.INFO, String.valueOf(grid.shape));
+////                return grid.shape;
+////            }
+//        }
+*/
+//    }
+
+//    private static <L> int findIndexInAList(ArrayList<L> list, int position) {
+//        for (int index = 0; index < list.size(); index++) {
+////            int row = list.get(index).position.row;
+////            int col = list.get(index).position.column;
+////            if(list.get(index).position) {
+////            if (list.get(index).position.equals(list.get(index + 1))) {
+////            }
+//        }
+//    }
     @Override
     public void addEyeball(int row, int column, Direction direction) {
         if (this.validCoordinate(row,column)) {
