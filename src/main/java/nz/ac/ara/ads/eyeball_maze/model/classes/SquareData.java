@@ -6,16 +6,14 @@ import java.util.Objects;
 public record SquareData (Color color, Shape shape, Position position) {
 
     public SquareData {
-        Objects.requireNonNull(color);
-        Objects.requireNonNull(shape);
-        Objects.requireNonNull(position);
-    }
+        Objects.requireNonNull(position, "Position cannot be null");
 
-//    public SquareData (Color color, Shape shape, Position position) {
-//        this(color, Color.RED);
-//    }
-//
-//    public SquareData(Color color, Shape shape) {
-//    }
+        if (color == null) {
+            color = Color.BLANK;
+        }
+        if (shape == null) {
+            shape = Shape.BLANK;
+        }
+    }
 }
 
