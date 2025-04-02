@@ -11,10 +11,11 @@ import nz.ac.ara.ads.eyeball_maze.enums.*;
 import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
 
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
-    protected int levelCount;
+    protected GameLevel gameLevel;
+    protected int levelCount = 0;
     protected int completedGoalCount;
 
-    private final List<Position> levelCollection =  new ArrayList<>();
+    private final List<GameLevel> levelCollection =  new ArrayList<>();
 //    private final List<Position> goalCollection =  new ArrayList<>();
 //    private final List<EyeBall> eyeBallCollection = new ArrayList<>();
 //    Map <Position, Square> squareCollection = new HashMap<>();
@@ -27,20 +28,19 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     @Override
-    public void addLevel(int row, int column) {
-//        this.levelCollection.add(Color.RED, Shape.DIAMOND, new Position(row,column));
-        this.levelCollection.add(new Position(row,column));
+    public void addLevel(int height, int width) {
+        this.gameLevel = new GameLevel(this.levelCount, height, width);
+        this.levelCollection.add(this.gameLevel);
         this.levelCount ++;
-
     }
     @Override
     public int getLevelWidth() {
-        return this.levelCollection.get(this.levelCount -1).getColumn(); //.position()
+        return this.levelCollection.get(this.levelCount - 1).getLevelWidth(); //.position()
     }
 
     @Override
     public int getLevelHeight() {
-        return this.levelCollection.get(this.levelCount -1).getRow(); //.position()
+        return this.levelCollection.get(this.levelCount - 1).getLevelHeight(); //.position()
     }
 
     @Override
@@ -49,27 +49,28 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     @Override
-    public void setLevel(int level) {
-        if (level > this.levelCollection.size()) {
+    public void setLevel(int newLevel) {
+        if (newLevel > this.levelCollection.size()) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         } else {
-            LOGGER.log(Level.INFO, "Setting level: " + level);
-            this.levelCount = level + 1;
+            LOGGER.log(Level.INFO, "Setting level: " + newLevel);
+            this.levelCount = newLevel + 1;
             LOGGER.log(Level.INFO, Message.OK.name());
         }
     }
     @Override
     public void addGoal(int row, int column) {
-        if (this.validCoordinate(row,column)) {
-            LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
-            this.goalCollection.add(new Position(row,column));
-            LOGGER.log(Level.INFO, Message.OK.name());
-        } else {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
-        }
+//        if (this.validCoordinate(row,column)) {
+//            LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
+//            this.goalCollection.add(new Position(row,column));
+//            LOGGER.log(Level.INFO, Message.OK.name());
+//        } else {
+//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
+//        }
     }
     private boolean validCoordinate(int row, int column) {
-        return this.levelCollection.stream().anyMatch(position -> position.getRow() >= row && position.getColumn() >= column);
+        return false;
+//        return this.levelCollection.stream().anyMatch(position -> position.getRow() >= row && position.getColumn() >= column);
     }
 
 //    private Square getS(int row, int column) {
@@ -190,7 +191,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public Direction getEyeballDirection() {
-        return this.eyeBallCollection.get(this.levelCount -1).direction; //.position()
+        return Direction.UP;
+//        return this.eyeBallCollection.get(this.levelCount -1).direction; //.position()
     }
 
     @Override
@@ -200,11 +202,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public Message checkMessageForBlankOnPathTo(int row, int column) {
-        Color color = this.getColorAt(row,column);
-        Shape shape = this.getShapeAt(row,column);
-        if (shape == Shape.BLANK && color == Color.BLANK) {
-            return Message.MOVING_OVER_BLANK;
-        }
+//        Color color = this.getColorAt(row,column);
+//        Shape shape = this.getShapeAt(row,column);
+//        if (shape == Shape.BLANK && color == Color.BLANK) {
+//            return Message.MOVING_OVER_BLANK;
+//        }
         return null;
     }
 
@@ -215,16 +217,17 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public void moveTo(int row, int column) {
-        if (this.hasGoalAt(row,column)) {
-            this.completedGoalCount++;
-        }
+//        if (this.hasGoalAt(row,column)) {
+//            this.completedGoalCount++;
+//        }
 //        return this.getCompletedGoalCount();
 
     }
 
     @Override
     public int getCompletedGoalCount() {
-        return completedGoalCount;
+        return 0;
+//        return completedGoalCount;
     }
 
 }
