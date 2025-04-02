@@ -142,9 +142,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(Level.INFO, "Creating an eyeball at: " + row + ", " + column);
             Position position = new Position(row,column);
             this.theEyeball = new EyeBall(position, direction);
-
-//            this.eyeBallCollection.add(new EyeBall(position, direction));
-//            LOGGER.log(Level.INFO, Message.OK.name());
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }
@@ -157,37 +154,41 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     @Override
     public int getEyeballColumn() {
         return this.theEyeball.getYPosition();
-//        return this.eyeBallCollection.get(this.levelCount -1).position.getColumn();
     }
 
     @Override
     public Direction getEyeballDirection() {
         return this.theEyeball.getDirection();
-//        return Direction.UP;
-//        return this.eyeBallCollection.get(this.levelCount -1).direction; //.position()
     }
 
     @Override
     public boolean canMoveTo(int row, int column) {
-//        LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + row + ", column: " + column);
-////        LOGGER.log(Level.INFO, "Eyeball: " + this.eyeBallCollection.size());
-//        // Eyeballs props
-//        Position targetPosition = new Position(row,column);
-//        /*
-//        * Is it in bound
-//        * Same color and shape
-//        * It is not the same cell
-//        * */
-//        Shape shape = this.getShapeAt(row,column);
-//        Color squareColor = this.getColorAt(row,column);
-////        PlayableSquare square =  this.squareCollection.get(targetPosition);
-////        this.squareCollection.containsKey()
-//        // match first
-//        // then check type is playable
-//
-//
-////        LOGGER.log(Level.INFO, "Eyeball:" + this.eyeBallCollection.size());
-        return false;
+        boolean result = false;
+        LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + row + ", column: " + column);
+        /*
+         Check if this is a goal playable square
+        * Is it in bound
+        * Same color and shape
+        * It is not the same cell
+        * */
+
+        if (this.hasGoalAt(row,column)) {
+            LOGGER.log(Level.INFO, "coordinate is a goal");
+            // check if it has shape or color
+            Color color = this.getSquareAt(row, column).getColor();
+            Shape shape = this.getSquareAt(row, column).getShape();
+
+            int eyeballRow = this.getEyeballRow();
+            int eyeballColumn = this.getEyeballColumn();
+
+        result = this.getColorAt(eyeballRow,eyeballColumn) == color && this.getShapeAt(eyeballRow,eyeballColumn) == shape;
+//            if (this.getColorAt(eyeballRow,eyeballColumn) == color && this.getShapeAt(eyeballRow,eyeballColumn) == shape) {
+//            }
+        } else {
+            LOGGER.log(Level.WARNING, "Can not move to " + row + ", " + column);
+        }
+
+        return result;
     }
 
     @Override
@@ -222,17 +223,17 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public void moveTo(int row, int column) {
-//        if (this.hasGoalAt(row,column)) {
-//            this.completedGoalCount++;
-//        }
+        if (this.hasGoalAt(row,column)) {
+            this.gameLevel.completedGoalCount++;
+            this.gameLevel.totalGoalCount--;
+        }
 //        return this.getCompletedGoalCount();
 
     }
 
     @Override
     public int getCompletedGoalCount() {
-        return 0;
-//        return completedGoalCount;
+        return this.gameLevel.totalGoalCount;
     }
 
 }
