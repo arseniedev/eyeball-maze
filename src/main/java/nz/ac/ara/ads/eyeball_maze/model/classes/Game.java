@@ -9,7 +9,8 @@ import java.util.logging.Logger;
 
 import nz.ac.ara.ads.eyeball_maze.enums.*;
 import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations
+        .NotNull;
 
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
     protected GameLevel gameLevel;
