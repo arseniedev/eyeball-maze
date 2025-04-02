@@ -15,9 +15,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     protected int completedGoalCount;
 
     private final List<Position> levelCollection =  new ArrayList<>();
-    private final List<Position> goalCollection =  new ArrayList<>();
-    private final List<EyeBall> eyeBallCollection = new ArrayList<>();
-    Map <Position, Square> squareCollection = new HashMap<>();
+//    private final List<Position> goalCollection =  new ArrayList<>();
+//    private final List<EyeBall> eyeBallCollection = new ArrayList<>();
+//    Map <Position, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -79,99 +79,102 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public int getGoalCount() {
-        return this.goalCollection.size();
+        return 0;
+//        return this.goalCollection.size();
     }
 
     @Override
     public boolean hasGoalAt(int row, int column) {
-        LOGGER.log(Level.INFO, "Checking if goal at row: " + row + ", column: " + column);
-
-        Position targetPosition = new Position(row,column);
-        return this.goalCollection.contains(targetPosition);
+        return false;
+//        LOGGER.log(Level.INFO, "Checking if goal at row: " + row + ", column: " + column);
+//
+//        Position targetPosition = new Position(row,column);
+//        return this.goalCollection.contains(targetPosition);
     }
 
     @Override
     public Color getColorAt(int row, int column) {
         Color output = Color.BLANK;
-        LOGGER.log(Level.INFO, "Checking color at row: " + row + ", column: " + column);
-        for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
-            if (entry.getKey().row == row && entry.getKey().column == column) {
-                output = entry.getValue().getColor();
-                LOGGER.log(Level.INFO, "output: " + output);
-            }
-        }
+//        LOGGER.log(Level.INFO, "Checking color at row: " + row + ", column: " + column);
+//        for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
+//            if (entry.getKey().row == row && entry.getKey().column == column) {
+//                output = entry.getValue().getColor();
+//                LOGGER.log(Level.INFO, "output: " + output);
+//            }
+//        }
         return output;
     }
     @Override
     public void addSquare(Square square, int row, int column) {
-        if (this.validCoordinate(row,column)) {
-            Position sqPosition = new Position(row,column);
-
-            LOGGER.log(Level.INFO, "Adding a square shape" + square.getShape() + ", color:" + square.getColor());
-            this.squareCollection.put(sqPosition,square);
-
-        } else {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
-        }
+//        if (this.validCoordinate(row,column)) {
+//            Position sqPosition = new Position(row,column);
+//
+//            LOGGER.log(Level.INFO, "Adding a square shape" + square.getShape() + ", color:" + square.getColor());
+//            this.squareCollection.put(sqPosition,square);
+//
+//        } else {
+//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
+//        }
     }
 
     @Override
     public Shape getShapeAt(int row, int column) {
         Shape output = Shape.BLANK;
-        LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column);
-        for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
-            if (entry.getKey().row == row && entry.getKey().column == column) {
-                output = entry.getValue().getShape();
-                LOGGER.log(Level.INFO, "output: " + output);
-            }
-        }
+//        LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column);
+//        for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
+//            if (entry.getKey().row == row && entry.getKey().column == column) {
+//                output = entry.getValue().getShape();
+//                LOGGER.log(Level.INFO, "output: " + output);
+//            }
+//        }
         return output;
 
     }
 
     @Override
     public void addEyeball(int row, int column, Direction direction) {
-        if (this.validCoordinate(row,column)) {
-            Position position = new Position(row,column);
-
-            LOGGER.log(Level.INFO, "Adding an eyeball at: " + row + ", " + column);
-            this.eyeBallCollection.add(new EyeBall(position, direction));
-            LOGGER.log(Level.INFO, Message.OK.name());
-        } else {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
-        }
+//        if (this.validCoordinate(row,column)) {
+//            Position position = new Position(row,column);
+//
+//            LOGGER.log(Level.INFO, "Adding an eyeball at: " + row + ", " + column);
+//            this.eyeBallCollection.add(new EyeBall(position, direction));
+//            LOGGER.log(Level.INFO, Message.OK.name());
+//        } else {
+//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
+//        }
     }
     @Override
     public int getEyeballRow() {
-        return this.eyeBallCollection.get(this.levelCount -1).position.getRow(); //.position()
+        return 0;
+//        return this.eyeBallCollection.get(this.levelCount -1).position.getRow(); //.position()
     }
-
+//
     @Override
     public int getEyeballColumn() {
-        return this.eyeBallCollection.get(this.levelCount -1).position.getColumn();
+        return 0;
+//        return this.eyeBallCollection.get(this.levelCount -1).position.getColumn();
     }
 
     @Override
     public boolean canMoveTo(int row, int column) {
-        LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + row + ", column: " + column);
-//        LOGGER.log(Level.INFO, "Eyeball: " + this.eyeBallCollection.size());
-        // Eyeballs props
-        Position targetPosition = new Position(row,column);
-        /*
-        * Is it in bound
-        * Same color and shape
-        * It is not the same cell
-        * */
-        Shape shape = this.getShapeAt(row,column);
-        Color squareColor = this.getColorAt(row,column);
-        /// <<< TO BE CONTINUED  >>>////
-        PlayableSquare square =  this.squareCollection.get(targetPosition);
-        this.squareCollection.containsKey()
-        // match first
-        // then check type is playable
-
-
-//        LOGGER.log(Level.INFO, "Eyeball:" + this.eyeBallCollection.size());
+//        LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + row + ", column: " + column);
+////        LOGGER.log(Level.INFO, "Eyeball: " + this.eyeBallCollection.size());
+//        // Eyeballs props
+//        Position targetPosition = new Position(row,column);
+//        /*
+//        * Is it in bound
+//        * Same color and shape
+//        * It is not the same cell
+//        * */
+//        Shape shape = this.getShapeAt(row,column);
+//        Color squareColor = this.getColorAt(row,column);
+////        PlayableSquare square =  this.squareCollection.get(targetPosition);
+////        this.squareCollection.containsKey()
+//        // match first
+//        // then check type is playable
+//
+//
+////        LOGGER.log(Level.INFO, "Eyeball:" + this.eyeBallCollection.size());
         return false;
     }
 
