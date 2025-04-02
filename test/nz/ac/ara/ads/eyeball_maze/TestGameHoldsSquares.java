@@ -46,13 +46,6 @@ class TestGameHoldsSquares {
                 game.getColorAt(5, 0), game.getColorAt(7, 0), game.getColorAt(6, 0)};
         assertArrayEquals(expectedColors, actualColors);
     }
-//    @Test
-//    void testAColoursIsAsAdded() {
-//        setup();
-//        Color expectedColor = Color.BLUE;
-//        Color actualColor = game.getColorAt(2, 0);
-//        assertEquals(expectedColor, actualColor);
-//    }
 
     @Test
     void testShapesAreAsAdded() {

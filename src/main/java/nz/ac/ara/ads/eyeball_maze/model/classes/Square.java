@@ -9,8 +9,8 @@ public abstract class Square {
     public Position position;
 
     public Square() {
-//        this.color = Color.BLANK;
-//        this.shape = Shape.BLANK;
+        this.color = Color.BLANK;
+        this.shape = Shape.BLANK;
 //        this.position = new Position(0,0);
     }
 

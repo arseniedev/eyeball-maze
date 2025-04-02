@@ -16,9 +16,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     protected int completedGoalCount;
 
     private final List<GameLevel> levelCollection =  new ArrayList<>();
+    Map <String, Square> squareCollection = new HashMap<>();
 //    private final List<Position> goalCollection =  new ArrayList<>();
 //    private final List<EyeBall> eyeBallCollection = new ArrayList<>();
-//    Map <Position, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -33,6 +33,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         this.levelCollection.add(this.gameLevel);
         this.levelCount ++;
     }
+
     @Override
     public int getLevelWidth() {
         return this.levelCollection.get(this.levelCount - 1).getLevelWidth(); //.position()
@@ -60,7 +61,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public void addGoal(int row, int column) {
-//        if (this.validCoordinate(row,column)) {
+//        if (this.isValidCoordinate(row,column)) {
 //            LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
 //            this.goalCollection.add(new Position(row,column));
 //            LOGGER.log(Level.INFO, Message.OK.name());
@@ -68,8 +69,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 //            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
 //        }
     }
-    private boolean validCoordinate(int row, int column) {
-        return false;
+    private boolean isValidCoordinate(int row, int column) {
+        int widthBoundary = this.gameLevel.getLevelWidth();
+        int heightBoundary = this.gameLevel.getLevelHeight();
+        return row <= heightBoundary && row >= 0 && column <= widthBoundary && column >= 0;
+//        return false;
 //        return this.levelCollection.stream().anyMatch(position -> position.getRow() >= row && position.getColumn() >= column);
     }
 
@@ -96,40 +100,48 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     @Override
     public Color getColorAt(int row, int column) {
         Color output = Color.BLANK;
-//        LOGGER.log(Level.INFO, "Checking color at row: " + row + ", column: " + column);
-//        for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
-//            if (entry.getKey().row == row && entry.getKey().column == column) {
-//                output = entry.getValue().getColor();
-//                LOGGER.log(Level.INFO, "output: " + output);
-//            }
-//        }
+        LOGGER.log(Level.INFO, "Checking color at row: " + row + ", column: " + column);
+
+        Square square = this.squareCollection.get(row + "," + column);
+        if (square != null) {
+            output = square.getColor();
+        } else {
+            throw new IllegalArgumentException(String.valueOf(ErrorCode.SHAPE_NOT_FOUND));
+        }
         return output;
     }
     @Override
     public void addSquare(Square square, int row, int column) {
-//        if (this.validCoordinate(row,column)) {
-//            Position sqPosition = new Position(row,column);
-//
-//            LOGGER.log(Level.INFO, "Adding a square shape" + square.getShape() + ", color:" + square.getColor());
-//            this.squareCollection.put(sqPosition,square);
-//
-//        } else {
-//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
-//        }
+        if (this.isValidCoordinate(row,column)) {
+            String squareType = square.getClass().getSimpleName();
+
+            LOGGER.log(Level.INFO, "Adding a "+ squareType + "shape" + square.getShape() + ", color:" + square.getColor() + "at row:" + row + ", column:" + column);
+
+            /*
+            * https://www.tutorialspoint.com/java/lang/class_getsimplename.htm
+            */
+            LOGGER.log(Level.INFO, "Square type:" + squareType);
+
+            String coordinateKey = row + "," + column;
+            this.squareCollection.put(coordinateKey,square);
+
+        } else {
+            throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
+        }
     }
 
     @Override
     public Shape getShapeAt(int row, int column) {
         Shape output = Shape.BLANK;
-//        LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column);
-//        for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
-//            if (entry.getKey().row == row && entry.getKey().column == column) {
-//                output = entry.getValue().getShape();
-//                LOGGER.log(Level.INFO, "output: " + output);
-//            }
-//        }
-        return output;
+        LOGGER.log(Level.INFO, "Checking shape at row: " + row + ", column: " + column);
 
+        Square square = this.squareCollection.get(row + "," + column);
+        if (square != null) {
+            output = square.getShape();
+        } else {
+            throw new IllegalArgumentException(String.valueOf(ErrorCode.SHAPE_NOT_FOUND));
+        }
+        return output;
     }
 
     @Override
