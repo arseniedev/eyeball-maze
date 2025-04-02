@@ -9,13 +9,13 @@ public class Position {
         this.column = column;
     }
 
-//    public int getRow() {
-//        return this.row;
-//    }
-//
-//    public int getColumn() {
-//        return this.column;
-//    }
+    public int getRow() {
+        return this.row;
+    }
+
+    public int getColumn() {
+        return this.column;
+    }
 
 //    @Override
 //    public boolean equals(Object obj) {
