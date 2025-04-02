@@ -6,11 +6,17 @@ import nz.ac.ara.ads.eyeball_maze.enums.Color;
 public class PlayableSquare extends Square {
     protected Color color;
     protected Shape shape;
+    public boolean isGoal = false;
+
+    public PlayableSquare() {
+
+    }
 
     public PlayableSquare(Color color, Shape shape) {
         this.color = color;
         this.shape = shape;
     }
+
     @Override
     public Color getColor() {
         return this.color;
@@ -20,4 +26,18 @@ public class PlayableSquare extends Square {
     public Shape getShape() {
         return this.shape;
     }
+
+    public void setAsGoal() {
+        this.isGoal = true;
+    }
+
+//    @Override
+//    public boolean hasGoalAt(int row, int column) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void addGoal(int row, int column) {
+//        this.isGoal = true;
+//    }
 }

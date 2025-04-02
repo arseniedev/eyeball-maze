@@ -33,7 +33,7 @@ class TestLevelHoldsGoals {
 
     @Test
     void testAddingTwoGoalIncreasesGoalCountTo2() {
-        // this.add7High3WideLevel();
+//         this.add7High3WideLevel();
         game.addGoal(4, 2);
         game.addGoal(6, 1);
         int expectedGoalCount = 2;
