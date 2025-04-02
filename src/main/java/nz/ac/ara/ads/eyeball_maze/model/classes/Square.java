@@ -4,9 +4,10 @@ import nz.ac.ara.ads.eyeball_maze.enums.Color;
 import nz.ac.ara.ads.eyeball_maze.enums.Shape;
 
 public abstract class Square {
+    public boolean isGoal;
     protected  Color color;
     protected Shape shape;
-    public Position position;
+//    public Position position;
 
     public Square() {
         this.color = Color.BLANK;
@@ -29,4 +30,5 @@ public abstract class Square {
     public Shape getShape() {
         return this.shape;
     }
+
 }

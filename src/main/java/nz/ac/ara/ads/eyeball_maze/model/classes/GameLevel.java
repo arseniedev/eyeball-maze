@@ -5,6 +5,9 @@ public class GameLevel {
     protected int levelWidth;
     protected int levelHeight;
 
+    protected int totalGoalCount = 0;
+    protected int completedGoalCount = 0;
+
     public GameLevel(int levelNumber, int levelHeight, int levelWidth) {
         this.levelWidth = levelWidth;
         this.levelHeight = levelHeight;
@@ -22,5 +25,10 @@ public class GameLevel {
         return levelHeight;
     }
 
-
+    public int getCompletedGoalCount() {
+        return completedGoalCount;
+    }
+    public int getTotalGoalCount() {
+        return totalGoalCount;
+    }
 }
