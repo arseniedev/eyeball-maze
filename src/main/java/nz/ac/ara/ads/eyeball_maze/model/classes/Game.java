@@ -141,8 +141,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public void addEyeball(int currentY, int currentX, Direction direction) {
         if (this.isValidCoordinate(currentY,currentX)) {
             LOGGER.log(Level.INFO, "Creating an eyeball at: " + currentY + ", " + currentX);
-            Position position = new Position(currentY,currentX);
-            this.theEyeball = new EyeBall(position, direction);
+//            Position position = new Position(currentY,currentX);
+            this.theEyeball = new EyeBall(currentY,currentX, direction);
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }
@@ -156,22 +156,15 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public int getEyeballColumn() {
         return this.theEyeball.getXPosition();
     }
-
-    private Direction getNewDirection(int targetY, int targetX) {
+    private Direction getNewEyeballDirection() {
+////         Returns the direction it is taking
         Direction direction;
 
-        int currentY= this.theEyeball.oldPosition.row;
-        int currentX = this.theEyeball.oldPosition.column;
+        int currentY= this.theEyeball.currentYPosition;
+        int currentX = this.theEyeball.currentXPosition;
 
         int newYDestination = this.getEyeballRow();
         int newXDestination = this.getEyeballColumn();
-/*
-        int currentY= this.getEyeballRow();
-        int currentX = this.getEyeballColumn();
-
-        int newXDestination = this.theEyeball.getXPosition();
-        int newYDestination = this.theEyeball.getYPosition();
-* */
 
         boolean isMovingVertical= newXDestination == currentX;
         boolean isMovingHorizontal = newYDestination == currentY;
@@ -189,54 +182,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public Direction getEyeballDirection() {
-        Direction direction;
+////         Returns what is the direction it is facing
+        return this.theEyeball.getDirection();
 
-        int currentY= this.theEyeball.oldPosition.row;
-        int currentX = this.theEyeball.oldPosition.column;
-
-        int newYDestination = this.getEyeballRow();
-        int newXDestination = this.getEyeballColumn();
-/*
-        int currentY= this.getEyeballRow();
-        int currentX = this.getEyeballColumn();
-
-        int newXDestination = this.theEyeball.getXPosition();
-        int newYDestination = this.theEyeball.getYPosition();
-* */
-
-        boolean isMovingVertical= newXDestination == currentX;
-        boolean isMovingHorizontal = newYDestination == currentY;
-
-        if (isMovingHorizontal) {
-            direction = newXDestination > currentX ? Direction.RIGHT : Direction.LEFT;
-
-        } else if (isMovingVertical) {
-            direction = newYDestination > currentY ? Direction.UP : Direction.DOWN;
-        } else {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
-        }
-        return direction;
-        /*
-        Direction direction;
-//        Direction direction = this.theEyeball.getDirection();
-        int currentY= this.getEyeballRow();
-        int currentX = this.getEyeballColumn();
-
-        int newXDestination = this.theEyeball.getXPosition();
-        int newYDestination = this.theEyeball.getYPosition();
-
-        boolean isMovingVertical= newXDestination == currentX;
-        boolean isMovingHorizontal = newYDestination == currentY;
-
-        boolean isNotMovingBackward =  newXDestination >= currentX;
-        boolean isNotMovingDownward = newYDestination >= currentY;
-
-        boolean isMovingRight = isMovingHorizontal && isNotMovingBackward;
-        boolean isMovingLeft = isMovingHorizontal && !isNotMovingBackward;
-        boolean isMovingUp = isMovingVertical && isNotMovingDownward;
-        boolean isMovingDown = isMovingVertical && !isNotMovingDownward;
-
-        * */
     }
 
     @Override
@@ -289,9 +237,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public boolean isDirectionOK(int newYDestination, int newXDestination) {
         boolean result;
         Direction eyeBallFacingDirection = this.theEyeball.getDirection();
+//        Direction newDirection = this.setNewEyeballDirection(newYDestination, newXDestination);
+        this.theEyeball.updateEyeball(newYDestination, newXDestination);
+        Direction newDirection = this.getNewEyeballDirection();
 
-        this.theEyeball.setNextPosition(newYDestination, newXDestination);
-        Direction newDirection = this.getEyeballDirection();
+//        Direction newDirection = this.getNewEyeballDirection();
 //
 //        int currentY= this.getEyeballRow();
 //        int currentX = this.getEyeballColumn();
@@ -368,7 +318,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 //            PlayableSquare playableSquare = (PlayableSquare) destinationSquare;
 
             LOGGER.log(Level.INFO, "Moving " + squareType + " to " + row + ", " + column);
-            this.theEyeball.setNextPosition(row,column);
+            this.theEyeball.updateEyeball(row,column);
+//            this.setNewEyeballDirection(row,column);
 
             if (this.hasGoalAt(row,column)) {
                 this.gameLevel.completedGoalCount++;
