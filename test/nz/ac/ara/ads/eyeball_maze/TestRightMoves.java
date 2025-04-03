@@ -76,7 +76,7 @@ class TestRightMoves {
     @Test
     void testNotOKWhenMovingBackwards() {
         boolean expected = false;
-        game.addEyeball(0, 1, Direction.LEFT);
+        game.addEyeball(0, 0, Direction.LEFT);
         boolean actual = game.isDirectionOK(0, 2);
         assertEquals(expected, actual);
     }
