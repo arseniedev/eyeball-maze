@@ -138,10 +138,10 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     @Override
-    public void addEyeball(int row, int column, Direction direction) {
-        if (this.isValidCoordinate(row,column)) {
-            LOGGER.log(Level.INFO, "Creating an eyeball at: " + row + ", " + column);
-            Position position = new Position(row,column);
+    public void addEyeball(int currentY, int currentX, Direction direction) {
+        if (this.isValidCoordinate(currentY,currentX)) {
+            LOGGER.log(Level.INFO, "Creating an eyeball at: " + currentY + ", " + currentX);
+            Position position = new Position(currentY,currentX);
             this.theEyeball = new EyeBall(position, direction);
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
@@ -149,17 +149,57 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public int getEyeballRow() {
-        return this.theEyeball.getXPosition();
+        return this.theEyeball.getYPosition();
     }
 //
     @Override
     public int getEyeballColumn() {
-        return this.theEyeball.getYPosition();
+        return this.theEyeball.getXPosition();
     }
 
     @Override
     public Direction getEyeballDirection() {
-        return this.theEyeball.direction;
+        Direction direction;
+
+        int currentY= this.getEyeballRow();
+        int currentX = this.getEyeballColumn();
+
+        int newXDestination = this.theEyeball.getXPosition();
+        int newYDestination = this.theEyeball.getYPosition();
+
+        boolean isMovingVertical= newXDestination == currentX;
+        boolean isMovingHorizontal = newYDestination == currentY;
+
+        if (isMovingHorizontal) {
+            direction = newXDestination > currentX ? Direction.RIGHT : Direction.LEFT;
+
+        } else if (isMovingVertical) {
+            direction = newYDestination > currentY ? Direction.UP : Direction.DOWN;
+        } else {
+            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
+        }
+        return direction;
+        /*
+        Direction direction;
+//        Direction direction = this.theEyeball.getDirection();
+        int currentY= this.getEyeballRow();
+        int currentX = this.getEyeballColumn();
+
+        int newXDestination = this.theEyeball.getXPosition();
+        int newYDestination = this.theEyeball.getYPosition();
+
+        boolean isMovingVertical= newXDestination == currentX;
+        boolean isMovingHorizontal = newYDestination == currentY;
+
+        boolean isNotMovingBackward =  newXDestination >= currentX;
+        boolean isNotMovingDownward = newYDestination >= currentY;
+
+        boolean isMovingRight = isMovingHorizontal && isNotMovingBackward;
+        boolean isMovingLeft = isMovingHorizontal && !isNotMovingBackward;
+        boolean isMovingUp = isMovingVertical && isNotMovingDownward;
+        boolean isMovingDown = isMovingVertical && !isNotMovingDownward;
+
+        * */
     }
 
     @Override
@@ -210,62 +250,51 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public boolean isDirectionOK(int newYDestination, int newXDestination) {
-        boolean result = false;
-        Direction direction = this.getEyeballDirection();
+        boolean result;
+        Direction direction = this.theEyeball.getDirection();
         int currentY= this.getEyeballRow();
         int currentX = this.getEyeballColumn();
 
-        if (newYDestination == currentY) {
-            // Moving left or right
-            if (newXDestination < currentX) {
-                // Left
-                switch (direction) {
-                    case UP: result = true;
-                    case DOWN: result = true;
-                    case LEFT: result = true;
-                    case RIGHT: result = false;
-                }
+        boolean isMovingVertical= newXDestination == currentX;
+        boolean isMovingHorizontal = newYDestination == currentY;
 
-            } else {
-                // Right
-                switch (direction) {
-                    case UP: result = true;
-                    case DOWN: result = true;
-                    case LEFT: result = false;
-                    case RIGHT: result = true;
-                }
-            }
+//        boolean isPositiveMove = newYDestination > currentY || newXDestination > currentX;
+        boolean isNotMovingLeft =  newXDestination >= currentX;
+        boolean isNotMovingDownward = newYDestination >= currentY;
+//        boolean isNegativeMove = newYDestination < currentY || newXDestination < currentX;
 
-        } else if (newXDestination == currentX) {
-            // Moving up or down
-            if  (newYDestination > currentY) {
-                // Up
-                switch (direction) {
-                    case UP: result = true;
-                    case DOWN: result = false;
-                    case LEFT: result = true;
-                    case RIGHT: result = true;
-                }
-            } else {
-                // Down
-                switch (direction) {
-                    case UP: result = false;
-                    case DOWN: result = true;
-                    case LEFT: result = true;
-                    case RIGHT: result = true;
-                }
-            }
-        } else {
-            LOGGER.log(Level.WARNING, "Can not move to " + newYDestination + ", " + newXDestination);
-            // Invalid movement
-        }
+        // This will fail one of the conditions...
+        result = switch(direction) {
+            // Moving horizontal, AND moving left
+            case LEFT -> !isNotMovingLeft;
+                    //(isMovingHorizontal && !isMovingRight);
+            // Moving horizontal,AND moving right
+            case RIGHT -> isNotMovingLeft;
+                    //isMovingHorizontal && isMovingRight;
+            // Moving vertical, AND moving up
+            case UP -> isNotMovingDownward;
+                    //isMovingVertical && isNotMovingDownward;
+            // Moving vertical, AND moving down
+            case DOWN -> isNotMovingDownward;
+                    //isMovingVertical && isNotMovingDownward;
+
+//            default -> true;
+        };
+
         return result;
     }
 
     @Override
     public Message checkDirectionMessage(int row, int column) {
+        return this.isDirectionOK(row,column) ? Message.OK : Message.BACKWARDS_MOVE;
+//        Message message;
+//        if (this.isDirectionOK(row,column)) {
+//            message = Message.OK;
+//        } else {
+//            message = Message.BACKWARDS_MOVE;
+//        }
+//        return message;
 
-        return null;
     }
 
     @Override
