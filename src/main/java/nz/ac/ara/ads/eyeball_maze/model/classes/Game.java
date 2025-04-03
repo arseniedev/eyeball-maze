@@ -210,21 +210,61 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public boolean isDirectionOK(int newYDestination, int newXDestination) {
+        boolean result = false;
         Direction direction = this.getEyeballDirection();
-        boolean hasChangeInColumn = (newXDestination - this.getEyeballColumn()) > 0 || (newXDestination - this.getEyeballColumn()) < 0; // movement left or right
-        boolean hasChangeInRow = (newYDestination - this.getEyeballRow()) > 0 || (newYDestination - this.getEyeballRow()) < 0; // movement left or right
-//        boolean hasChangeInRow = (row -this.getEyeballRow()); // movement up or down
+        int currentY= this.getEyeballRow();
+        int currentX = this.getEyeballColumn();
 
-        return switch (direction) {
-            case DOWN, RIGHT -> hasChangeInColumn; // change left or right
-            case LEFT, UP -> !hasChangeInRow;
-        };
+        if (newYDestination == currentY) {
+            // Moving left or right
+            if (newXDestination < currentX) {
+                // Left
+                switch (direction) {
+                    case UP: result = true;
+                    case DOWN: result = true;
+                    case LEFT: result = true;
+                    case RIGHT: result = false;
+                }
 
-        // ToDO: observe and log the change in direction and axis
+            } else {
+                // Right
+                switch (direction) {
+                    case UP: result = true;
+                    case DOWN: result = true;
+                    case LEFT: result = false;
+                    case RIGHT: result = true;
+                }
+            }
+
+        } else if (newXDestination == currentX) {
+            // Moving up or down
+            if  (newYDestination > currentY) {
+                // Up
+                switch (direction) {
+                    case UP: result = true;
+                    case DOWN: result = false;
+                    case LEFT: result = true;
+                    case RIGHT: result = true;
+                }
+            } else {
+                // Down
+                switch (direction) {
+                    case UP: result = false;
+                    case DOWN: result = true;
+                    case LEFT: result = true;
+                    case RIGHT: result = true;
+                }
+            }
+        } else {
+            LOGGER.log(Level.WARNING, "Can not move to " + newYDestination + ", " + newXDestination);
+            // Invalid movement
+        }
+        return result;
     }
 
     @Override
     public Message checkDirectionMessage(int row, int column) {
+
         return null;
     }
 
