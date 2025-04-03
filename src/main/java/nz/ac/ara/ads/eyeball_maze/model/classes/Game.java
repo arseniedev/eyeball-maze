@@ -15,6 +15,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     protected GameLevel gameLevel;
     EyeBall theEyeball;
     protected int levelCount = 0;
+    private String currentStatusMessage;
 
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
@@ -113,7 +114,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         LOGGER.log(Level.INFO, "Getting square at: " + squareKey);
         Square square = this.squareCollection.get(squareKey);
         if (square == null) {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.SHAPE_NOT_FOUND));
+            throw new IllegalArgumentException(String.valueOf(ErrorCode.SQUARE_NOT_FOUND));
         }
         return square;
     }
@@ -167,21 +168,33 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + row + ", column: " + column);
         /*
          Check if this is a goal playable square
-        * Is it in bound
+        * Is it in bound -> does it exist
         * Same color and shape
+        * Is it a goal?
         * It is not the same cell
-        * */
+        */
+        //if (this.hasGoalAt(row,column)) {
+        Square square = this.getSquareAt(row, column);
+        if (square instanceof PlayableSquare) {
+            LOGGER.log(Level.INFO, "This is a valid cell");
+            // Getting the shape and color of the destination square
+//            Color targetColor = this.getColorAt(row,column);
+//            Shape targetShape = this.getShapeAt(row,column);
+            Color targetColor = square.getColor();
+            Shape targetShape = square.getShape();
 
-        if (this.hasGoalAt(row,column)) {
-            LOGGER.log(Level.INFO, "coordinate is a goal");
-            // check if it has shape or color
-            Color color = this.getSquareAt(row, column).getColor();
-            Shape shape = this.getSquareAt(row, column).getShape();
-
+            // Getting coordinates of the current/active square: Eyeball
+//            this currentEyeballColor = this.theEyeball.getColor();
             int eyeballRow = this.getEyeballRow();
             int eyeballColumn = this.getEyeballColumn();
 
-        result = this.getColorAt(eyeballRow,eyeballColumn) == color && this.getShapeAt(eyeballRow,eyeballColumn) == shape;
+            boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
+            //square.getColor().equals(color);
+
+            boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
+                //square.getShape().equals(shape);
+
+            result =  isSameColor || isSameShape;
 //            if (this.getColorAt(eyeballRow,eyeballColumn) == color && this.getShapeAt(eyeballRow,eyeballColumn) == shape) {
 //            }
         } else {
@@ -223,17 +236,28 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public void moveTo(int row, int column) {
-        if (this.hasGoalAt(row,column)) {
-            this.gameLevel.completedGoalCount++;
-            this.gameLevel.totalGoalCount--;
-        }
-//        return this.getCompletedGoalCount();
+        Square destinationSquare = this.getSquareAt(row, column);
+        String squareType = destinationSquare.getClass().getSimpleName();
 
+        if(destinationSquare instanceof PlayableSquare) {
+            LOGGER.log(Level.INFO, "This is a " + squareType);
+//            PlayableSquare playableSquare = (PlayableSquare) destinationSquare;
+
+            LOGGER.log(Level.INFO, "Moving " + squareType + " to " + row + ", " + column);
+            this.theEyeball.setPosition(row,column);
+
+            if (this.hasGoalAt(row,column)) {
+                this.gameLevel.completedGoalCount++;
+                this.gameLevel.totalGoalCount--;
+            }
+        } else {
+            LOGGER.log(Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
+        }
     }
 
     @Override
     public int getCompletedGoalCount() {
-        return this.gameLevel.totalGoalCount;
+        return this.gameLevel.completedGoalCount;
     }
 
 }

@@ -39,4 +39,8 @@ public class EyeBall {
     public Direction getDirection() {
         return direction;
     }
+
+    public void setPosition(int row, int column) {
+        this.position = new Position(row, column);
+    }
 }
