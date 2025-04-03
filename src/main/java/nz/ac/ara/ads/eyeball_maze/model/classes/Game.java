@@ -159,7 +159,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public Direction getEyeballDirection() {
-        return this.theEyeball.getDirection();
+        return this.theEyeball.direction;
     }
 
     @Override
@@ -200,7 +200,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } else {
             LOGGER.log(Level.WARNING, "Can not move to " + row + ", " + column);
         }
-
         return result;
     }
 
@@ -210,8 +209,18 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     @Override
-    public boolean isDirectionOK(int row, int column) {
-        return false;
+    public boolean isDirectionOK(int newYDestination, int newXDestination) {
+        Direction direction = this.getEyeballDirection();
+        boolean hasChangeInColumn = (newXDestination - this.getEyeballColumn()) > 0 || (newXDestination - this.getEyeballColumn()) < 0; // movement left or right
+        boolean hasChangeInRow = (newYDestination - this.getEyeballRow()) > 0 || (newYDestination - this.getEyeballRow()) < 0; // movement left or right
+//        boolean hasChangeInRow = (row -this.getEyeballRow()); // movement up or down
+
+        return switch (direction) {
+            case DOWN, RIGHT -> hasChangeInColumn; // change left or right
+            case LEFT, UP -> !hasChangeInRow;
+        };
+
+        // ToDO: observe and log the change in direction and axis
     }
 
     @Override
@@ -231,7 +240,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public Message messageIfMovingTo(int row, int column) {
-        return Message.OK;
+        if (this.canMoveTo(row,column)) {
+            return Message.OK;
+        } else {
+            return Message.DIFFERENT_SHAPE_OR_COLOR;
+        }
+
     }
 
     @Override

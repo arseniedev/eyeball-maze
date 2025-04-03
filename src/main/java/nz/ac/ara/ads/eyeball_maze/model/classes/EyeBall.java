@@ -7,7 +7,7 @@ public class EyeBall {
     * Uses singleton design pattern
     * */
     protected Position position;
-    protected Direction direction;
+    public Direction direction;
 
     private static EyeBall eyeBall;
 
@@ -36,9 +36,14 @@ public class EyeBall {
         return position.getColumn();
     }
 
-    public Direction getDirection() {
-        return direction;
-    }
+//    @Override
+//    public Direction getDirection() {
+//        return direction;
+//    }
+
+//    public Direction setDirection() {
+//        return direction;
+//    }
 
     public void setPosition(int row, int column) {
         this.position = new Position(row, column);
