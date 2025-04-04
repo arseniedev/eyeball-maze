@@ -11,6 +11,9 @@ import nz.ac.ara.ads.eyeball_maze.enums.*;
 import nz.ac.ara.ads.eyeball_maze.model.exceptions.InvalidCoordinateException;
 import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
     protected GameLevel gameLevel;
     EyeBall theEyeball;
@@ -85,7 +88,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } catch (Exception unknown) {
             LOGGER.log(Level.SEVERE, String.valueOf(ErrorCode.UNKNOWN_EXCEPTION) + unknown);
         } finally {
-            LOGGER.log(Level.INFO, "Goal addition process completed");
+            LOGGER.log(Level.INFO, "Goal addition process performed");
         }
     }
 
@@ -118,12 +121,19 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     private Square getSquareAt(int row, int column) {
-        String coordinateKey =  row + "," + column;
-        LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
-        Square square = this.squareCollection.get(coordinateKey);
+        Square square = null;
+        try {
+            String coordinateKey =  row + "," + column;
+            LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
+            square = this.squareCollection.get(coordinateKey);
 
-        if (square == null) {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.SQUARE_NOT_FOUND));
+            if (square == null) {
+                throw new IllegalArgumentException(String.valueOf(ErrorCode.SQUARE_NOT_FOUND));
+            }
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } finally {
+            LOGGER.log(Level.INFO, "Square retrieval process performed");
         }
         return square;
     }
@@ -148,7 +158,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         }  catch (Exception unknown) {
             LOGGER.log(Level.WARNING, ErrorCode.UNKNOWN_EXCEPTION.name(), unknown);
         } finally {
-            LOGGER.log(Level.INFO, "Square addition process completed");
+            LOGGER.log(Level.INFO, "Square addition process performed");
         }
     }
 
@@ -166,14 +176,13 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            LOGGER.log(Level.INFO, "Eyeball addition process completed");
+            LOGGER.log(Level.INFO, "Eyeball addition process performed");
         }
     }
     @Override
     public int getEyeballRow() {
         return this.theEyeball.getYPosition();
     }
-//
     @Override
     public int getEyeballColumn() {
         return this.theEyeball.getXPosition();
@@ -207,11 +216,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     @Override
-    public boolean canMoveTo(int row, int column) {
+    public boolean canMoveTo(int newYDestination, int newXDestination) {
         boolean result = false;
-        LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + row + ", column: " + column);
+        LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + newYDestination + ", column: " + newXDestination);
 
-        Square square = this.getSquareAt(row, column);
+        Square square = this.getSquareAt(newYDestination, newXDestination);
         if (square instanceof PlayableSquare) {
             LOGGER.log(Level.INFO, "This is a valid cell");
             // Getting the shape and color of the destination square
@@ -225,15 +234,53 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
 
             result =  isSameColor || isSameShape;
+            LOGGER.log(Level.INFO, "Can move to square at" + newYDestination + ", " + newXDestination + ": " + result);
+
         } else {
-            LOGGER.log(Level.WARNING, "Can not move to " + row + ", " + column);
+            LOGGER.log(Level.INFO, "Can not move to blank square" + newYDestination + ", " + newXDestination);
         }
         return result;
     }
 
     @Override
-    public boolean hasBlankFreePathTo(int row, int column) {
-        return false;
+    public boolean hasBlankFreePathTo(int newYDestination, int newXDestination) {
+        int currentX = theEyeball.currentXPosition;
+        int currentY = theEyeball.currentYPosition;
+        LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
+        Direction direction = this.getNewEyeballDirection(newYDestination,newXDestination);
+        LOGGER.log(Level.INFO, "Checking for direction: " + direction);
+        boolean isBlankFree = true;
+//
+        boolean isMovingHorizontal = direction == Direction.RIGHT || direction == Direction.LEFT;
+        boolean isMovingVertical = direction == Direction.UP || direction == Direction.DOWN;
+        if (isMovingHorizontal || isMovingVertical) {
+            /*
+             * https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html
+             * */
+            for (Map.Entry<String, Square> square: this.squareCollection.entrySet()) {
+                String coordinateKey = square.getKey();
+                int keyY = Integer.parseInt(coordinateKey.split(",")[0]);
+                int keyX = Integer.parseInt(coordinateKey.split(",")[1]);
+
+                Square squareValue = square.getValue();
+                boolean isABlankSquare = squareValue instanceof BlankSquare;
+                boolean isInBetweenOldAndNewPosition = isMovingHorizontal ?
+//                        (keyX >= min(currentX,newXDestination) && keyX <= max(currentX,newXDestination)): (keyY >= min(currentY,newYDestination) && keyY <= max(currentY,newYDestination));
+                        (keyX <= newXDestination && keyX >= currentX) || keyX >= newXDestination && keyX <= currentX:
+                        (keyY <= newYDestination && keyY >= currentY) || (keyY >= newYDestination && keyY <= currentY);
+                if (isABlankSquare && isInBetweenOldAndNewPosition) {
+//                    hasBlank = true;
+                    isBlankFree = false;
+                    break;
+                } else{
+                    LOGGER.log(Level.INFO, "Searching for blank squares...");
+                }
+            }
+        } else {
+//            hasBlank = false;
+            LOGGER.log(Level.INFO, String.valueOf(Message.MOVING_DIAGONALLY));
+        }
+        return isBlankFree;
     }
 
     @Override
@@ -265,40 +312,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public Message checkMessageForBlankOnPathTo(int newYDestination, int newXDestination) {
-        int currentX = theEyeball.currentXPosition;
-        int currentY = theEyeball.currentYPosition;
-        LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
-        Direction direction = this.getNewEyeballDirection(newYDestination,newXDestination);
-        LOGGER.log(Level.INFO, "Checking for direction: " + direction);
-        boolean hasBlank = false;
-
-        boolean isMovingHorizontal = direction == Direction.RIGHT || direction == Direction.LEFT;
-        boolean isMovingVertical = direction == Direction.UP || direction == Direction.DOWN;
-        if (isMovingHorizontal || isMovingVertical) {
-            /*
-            * https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html
-            * */
-            for (Map.Entry<String, Square> square: this.squareCollection.entrySet()) {
-                String coordinateKey = square.getKey();
-                int keyY = Integer.parseInt(coordinateKey.split(",")[0]);
-                int keyX = Integer.parseInt(coordinateKey.split(",")[1]);
-
-                Square squareValue = square.getValue();
-                boolean isABlankSquare = squareValue instanceof BlankSquare;
-                boolean isInBetweenOldAndNewPosition = isMovingHorizontal ?
-                        (keyX <= newXDestination && keyX >= currentX) || keyX >= newXDestination && keyX <= currentX:
-                        (keyY <= newYDestination && keyY >= currentY) || (keyY >= newYDestination && keyY <= currentY);
-                if (isABlankSquare && isInBetweenOldAndNewPosition) {
-                    hasBlank = true;
-                    break;
-                } else{
-                    LOGGER.log(Level.INFO, "Searching for blank squares...");
-                }
-            }
-        } else {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
-        }
-        return hasBlank? Message.MOVING_OVER_BLANK: Message.OK;
+        boolean isBlankFree = this.hasBlankFreePathTo(newYDestination, newXDestination);
+        return isBlankFree? Message.OK: Message.MOVING_OVER_BLANK;
     }
 
     @Override

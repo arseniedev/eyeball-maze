@@ -4,7 +4,6 @@ import nz.ac.ara.ads.eyeball_maze.model.classes.*;
 import nz.ac.ara.ads.eyeball_maze.enums.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,7 @@ class TestLeftMoves {
     Game game;
 
     @BeforeEach
-    void setUpVerticalLevel() throws Exception {
+    void setUpVerticalLevel() {
         game = new Game();
         game.addLevel(1, 9);
         game.addSquare(new PlayableSquare(Color.GREEN, Shape.STAR), 0, 0);
@@ -27,34 +26,34 @@ class TestLeftMoves {
 
     @Test
     void testOkToMoveToSameColorOrShape() {
-        boolean[] expected = {true, true};
+        boolean[] expected = { true, true };
         game.addEyeball(0, 6, Direction.LEFT);
-        boolean[] actual = {game.canMoveTo(0, 5), game.canMoveTo(0, 4)};
+        boolean[] actual = { game.canMoveTo(0, 5), game.canMoveTo(0, 4) };
         assertArrayEquals(expected, actual);
     }
 
     @Test
     void testNotOkToMovetoDifferentColorAndShape() {
-        boolean[] expected = {false, false};
+        boolean[] expected = { false, false };
         game.addEyeball(0, 6, Direction.LEFT);
-        boolean[] actual = {game.canMoveTo(0, 2), game.canMoveTo(0, 3)};
+        boolean[] actual = { game.canMoveTo(0, 2), game.canMoveTo(0, 3) };
         assertArrayEquals(expected, actual);
     }
 
     @Test
     void testNoErrorMessageWhenMovingToSameColorOrShape() {
-        Message[] expected = {Message.OK, Message.OK};
+        Message[] expected = { Message.OK, Message.OK };
         game.addEyeball(0, 6, Direction.LEFT);
-        Message[] actual = {game.messageIfMovingTo(0, 5), game.messageIfMovingTo(0, 4)};
+        Message[] actual = { game.messageIfMovingTo(0, 5), game.messageIfMovingTo(0, 4) };
         assertArrayEquals(expected, actual);
     }
 
     @Test
     void testGetsErrorMessageWhenMovingToDifferentColorAndShape() {
-        Message[] expected = {Message.DIFFERENT_SHAPE_OR_COLOR,
-                Message.DIFFERENT_SHAPE_OR_COLOR};
+        Message[] expected = { Message.DIFFERENT_SHAPE_OR_COLOR,
+                Message.DIFFERENT_SHAPE_OR_COLOR };
         game.addEyeball(0, 6, Direction.LEFT);
-        Message[] actual = {game.messageIfMovingTo(0, 2), game.messageIfMovingTo(0, 3)};
+        Message[] actual = { game.messageIfMovingTo(0, 2), game.messageIfMovingTo(0, 3) };
         assertArrayEquals(expected, actual);
     }
 
@@ -65,7 +64,6 @@ class TestLeftMoves {
         boolean actual = game.isDirectionOK(0, 5);
         assertEquals(expected, actual);
     }
-
     @Test
     void testOkWhenEyeballFacesUpOnMovingLeft() {
         boolean expected = true;
@@ -110,10 +108,10 @@ class TestLeftMoves {
     void testEyeballMovesToDestinationRowAndColumn() {
         int expectedRow = 0;
         int expectedColumn = 4;
-        int[] expected = {expectedRow, expectedColumn};
+        int[] expected = { expectedRow, expectedColumn };
         game.addEyeball(0, 6, Direction.LEFT);
         game.moveTo(0, 4);
-        int[] actual = {game.getEyeballRow(), game.getEyeballColumn()};
+        int[] actual = { game.getEyeballRow(), game.getEyeballColumn() };
         assertArrayEquals(expected, actual);
     }
 
