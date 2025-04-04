@@ -9,8 +9,10 @@ public class EyeBall {
     * */
     protected Position currenPosition;
     protected Position previousPosition;
+
     protected Direction currentDirection;
     protected Direction previousDirection;
+
     protected int currentYPosition;
     protected int currentXPosition;
 
@@ -36,7 +38,7 @@ public class EyeBall {
     public void updateEyeball(int row, int column) {
 //        this.previousPosition = new Position(this.currentYPosition, this.currentXPosition);
         this.previousDirection = this.currentDirection;
-        this.getNewEyeballFacingDirection(row, column);
+        this.currentDirection = this.getNewEyeballFacingDirection(row, column);
         this.currenPosition = new Position(row, column);
     }
 

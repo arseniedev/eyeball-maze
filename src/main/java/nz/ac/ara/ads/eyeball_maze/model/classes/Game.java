@@ -228,22 +228,37 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         if (square instanceof PlayableSquare) {
             LOGGER.log(Level.INFO, "This is a valid cell");
             // Getting the shape and color of the destination square
-            Color targetColor = square.getColor();
-            Shape targetShape = square.getShape();
-
-            int eyeballRow = this.getEyeballRow();
-            int eyeballColumn = this.getEyeballColumn();
-
-            boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
-            boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
-
-            result =  isSameColor || isSameShape;
+            result = isMatchingShapeOrColor(square);
+//            Color targetColor = square.getColor();
+//            Shape targetShape = square.getShape();
+//
+//            int eyeballRow = this.getEyeballRow();
+//            int eyeballColumn = this.getEyeballColumn();
+//
+//            boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
+//            boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
+//
+//            result =  isSameColor || isSameShape;
             LOGGER.log(Level.INFO, "Can move to square at " + newYDestination + ", " + newXDestination + ": " + result);
 
         } else {
             LOGGER.log(Level.INFO, "Can not move to blank square" + newYDestination + ", " + newXDestination);
         }
         return result;
+    }
+
+    private boolean isMatchingShapeOrColor(Square targetSquare) {
+        Color targetColor = targetSquare.getColor();
+        Shape targetShape = targetSquare.getShape();
+
+        int eyeballRow = this.getEyeballRow();
+        int eyeballColumn = this.getEyeballColumn();
+
+        boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
+        boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
+
+        return isSameColor || isSameShape;
+//        LOGGER.log(Level.INFO, "Can move to square at " + newYDestination + ", " + newXDestination + ": " + result);
     }
 
     @Override
@@ -291,18 +306,22 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         this.theEyeball.updateEyeball(newYDestination, newXDestination);
         Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
 
-        // This will handle what it should not be ...
-        result = switch(eyeBallFacingDirection) {
-            // Moving horizontal, AND moving left
-            case LEFT -> newDirection != Direction.RIGHT;
-            // Moving horizontal,AND moving right
-            case RIGHT -> newDirection != Direction.LEFT;
-            // Moving vertical, AND moving up
-            case UP -> newDirection != Direction.DOWN;
-            // Moving vertical, AND moving down
-            case DOWN -> newDirection != Direction.UP;
-            case DIAGONAL -> false;
-        };
+        if (newDirection == Direction.DIAGONAL) {
+            result = false;
+        } else {
+            // This will handle what it should not be ...
+            result = switch(eyeBallFacingDirection) {
+                // Moving horizontal, AND moving left
+                case LEFT -> newDirection != Direction.RIGHT;
+                // Moving horizontal,AND moving right
+                case RIGHT -> newDirection != Direction.LEFT;
+                // Moving vertical, AND moving up
+                case UP -> newDirection != Direction.DOWN;
+                // Moving vertical, AND moving down
+                case DOWN -> newDirection != Direction.UP;
+                case DIAGONAL -> false;
+            };
+        }
         return result;
     }
 
