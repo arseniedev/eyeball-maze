@@ -76,9 +76,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                     this.addSquare(square, row, column);
                     LOGGER.log(Level.INFO, "Empty PlayableSquare added for a goal");
                 }
-//                else {
                 square.isGoal = true;
-//                }
                 this.gameLevel.totalGoalCount++;
             } else {
                 throw new InvalidCoordinateException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
@@ -126,15 +124,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
             square = this.squareCollection.get(coordinateKey);
 
-//            if (square == null) {
-//                throw new IllegalArgumentException(String.valueOf(ErrorCode.SQUARE_NOT_FOUND));
-//            }
-//        }
-//        catch (IllegalArgumentException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            LOGGER.log(Level.INFO, "Square retrieval process performed");
-//        }
         return square;
     }
 
@@ -192,27 +181,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return this.theEyeball.getXPosition();
     }
 
-//    private Direction getNewEyeballDirection(int newYDestination, int newXDestination) {
-////         Returns the direction it is taking
-//        Direction direction;
-//
-//        int currentY= this.theEyeball.currentYPosition;
-//        int currentX = this.theEyeball.currentXPosition;
-//
-//        if (newYDestination == currentY) {
-//            // moving horizontal: left(decrease)/right(increase)
-//            direction = newXDestination > currentX ? Direction.RIGHT : Direction.LEFT;
-//
-//        } else if (newXDestination == currentX) {
-//            // moving vertical: up (decrease)/down(increase)
-//            direction = newYDestination < currentY ? Direction.UP : Direction.DOWN;
-//        } else {
-//            direction = Direction.DIAGONAL;
-////            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
-//        }
-//        return direction;
-//    }
-
     @Override
     public Direction getEyeballDirection() {
 //         Returns what is the direction it is facing
@@ -228,17 +196,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         if (square instanceof PlayableSquare) {
             LOGGER.log(Level.INFO, "This is a valid cell");
             // Getting the shape and color of the destination square
+
             result = isMatchingShapeOrColor(square);
-//            Color targetColor = square.getColor();
-//            Shape targetShape = square.getShape();
-//
-//            int eyeballRow = this.getEyeballRow();
-//            int eyeballColumn = this.getEyeballColumn();
-//
-//            boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
-//            boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
-//
-//            result =  isSameColor || isSameShape;
+
             LOGGER.log(Level.INFO, "Can move to square at " + newYDestination + ", " + newXDestination + ": " + result);
 
         } else {
@@ -258,7 +218,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
 
         return isSameColor || isSameShape;
-//        LOGGER.log(Level.INFO, "Can move to square at " + newYDestination + ", " + newXDestination + ": " + result);
     }
 
     @Override
@@ -269,7 +228,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         Direction direction = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
         LOGGER.log(Level.INFO, "Checking for direction: " + direction);
         boolean isBlankFree = true;
-//
         boolean isMovingHorizontal = direction == Direction.RIGHT || direction == Direction.LEFT;
         boolean isMovingVertical = direction == Direction.UP || direction == Direction.DOWN;
         if (isMovingHorizontal || isMovingVertical) {
