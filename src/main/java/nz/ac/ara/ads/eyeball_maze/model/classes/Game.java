@@ -11,13 +11,11 @@ import nz.ac.ara.ads.eyeball_maze.enums.*;
 import nz.ac.ara.ads.eyeball_maze.model.exceptions.InvalidCoordinateException;
 import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
     protected GameLevel gameLevel;
     EyeBall theEyeball;
     protected int levelCount;
+    private Square currentSquare;
 
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
@@ -125,7 +123,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private Square getSquareAt(int row, int column) {
         Square square;
 //        try {
-            String coordinateKey =  row + "," + column;
+            String coordinateKey = this.generateCoordinateKey(row,column);
             LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
             square = this.squareCollection.get(coordinateKey);
 
@@ -141,11 +139,15 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return square;
     }
 
+    private String generateCoordinateKey(int row, int column){
+        return row + "," + column;
+    }
+
     @Override
     public void addSquare(Square square, int row, int column) {
         try {
             if (this.isValidCoordinate(row,column)) {
-                String coordinateKey = row + "," + column;
+                String coordinateKey = this.generateCoordinateKey(row,column);
                 this.squareCollection.put(coordinateKey,square);
 
                 LOGGER.log(Level.INFO, "Square cell added." +
@@ -326,8 +328,23 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     }
 
+    private void updateGoalSquare() {
+        int row = this.getEyeballRow();
+        int column = this.getEyeballColumn();
+//        String key = this.generateCoordinateKey(row,column);
+
+//        if (this.hasGoalAt(row,column)) {
+//            this.gameLevel.completedGoalCount++;
+//            this.gameLevel.totalGoalCount--;
+//            currentSquare.isGoal = false;
+            currentSquare = new BlankSquare();
+            this.addSquare(currentSquare, row,column);
+//        }
+    }
+
     @Override
     public void moveTo(int row, int column) {
+        this.updateGoalSquare();
         Square destinationSquare = this.getSquareAt(row, column);
         String squareType = destinationSquare.getClass().getSimpleName();
 
@@ -341,6 +358,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 this.gameLevel.completedGoalCount++;
                 this.gameLevel.totalGoalCount--;
                 destinationSquare.isGoal = false;
+            } else {
+//                destinationSquare = new BlankSquare();
+//                this.addSquare(destinationSquare, row,column);
             }
         } else {
             LOGGER.log(Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
