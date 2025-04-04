@@ -77,20 +77,21 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 newSquare.isGoal = true;
                 this.gameLevel.totalGoalCount++;
             } else {
-                throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
+                throw new InvalidCoordinateException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
             }
-        } catch (IllegalArgumentException exception) {
+        } catch (InvalidCoordinateException exception) {
             LOGGER.log(Level.SEVERE, "Failed to add goal:" + exception);
-        } catch (Exception unkown) {
-            LOGGER.log(Level.SEVERE, String.valueOf(ErrorCode.UNKNOWN_EXCEPTION) + unkown);
+            throw new IllegalArgumentException(exception.getMessage());
+        } catch (Exception unknown) {
+            LOGGER.log(Level.SEVERE, String.valueOf(ErrorCode.UNKNOWN_EXCEPTION) + unknown);
         } finally {
             LOGGER.log(Level.INFO, "Goal addition process completed");
         }
     }
 
     private boolean isValidCoordinate(int row, int column) {
-        int widthBoundary = this.gameLevel.getLevelWidth();
-        int heightBoundary = this.gameLevel.getLevelHeight();
+        int widthBoundary = this.getLevelWidth();
+        int heightBoundary = this.getLevelHeight();
 
         return row <= heightBoundary && row >= 0 && column <= widthBoundary && column >= 0;
     }
@@ -131,15 +132,13 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public void addSquare(Square square, int row, int column) {
         try {
             if (this.isValidCoordinate(row,column)) {
-                String squareType = square.getClass().getSimpleName();
-                /*
-                * https://www.tutorialspoint.com/java/lang/class_getsimplename.htm
-                */
-
-                LOGGER.log(Level.INFO, "Adding a "+ squareType + " shape: " + square.getShape() + ", color: " + square.getColor() + " at row: " + row + ", column: " + column);
-
                 String coordinateKey = row + "," + column;
                 this.squareCollection.put(coordinateKey,square);
+
+                LOGGER.log(Level.INFO, "Square cell added." +
+                        "\nShape: " + square.getShape() +
+                        "\nColor: " + square.getColor() +
+                        "\nKey:" + coordinateKey);
 
             } else {
                 throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
@@ -164,11 +163,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             }
         } catch (InvalidCoordinateException e) {
             throw new IllegalArgumentException (String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
-        }
-//        catch (IllegalArgumentException e) {
-//            LOGGER.log(Level.SEVERE, "Failed to add eyeball:" + e);
-//        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             LOGGER.log(Level.INFO, "Eyeball addition process completed");
@@ -206,7 +201,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public Direction getEyeballDirection() {
-////         Returns what is the direction it is facing
+//         Returns what is the direction it is facing
         return this.theEyeball.getDirection();
 
     }

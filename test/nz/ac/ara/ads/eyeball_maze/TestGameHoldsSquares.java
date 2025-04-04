@@ -40,10 +40,14 @@ class TestGameHoldsSquares {
     @Test
     void testColoursAreAsAdded() {
         setup();
-        Color[] expectedColors = {Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN, Color.BLANK,
-                Color.PURPLE};
-        Color[] actualColors = {game.getColorAt(2, 0), game.getColorAt(3, 0), game.getColorAt(4, 0),
-                game.getColorAt(5, 0), game.getColorAt(7, 0), game.getColorAt(6, 0)};
+        Color[] expectedColors = {
+                Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN, Color.BLANK,
+                Color.PURPLE
+        };
+        Color[] actualColors = {
+                game.getColorAt(2, 0), game.getColorAt(3, 0), game.getColorAt(4, 0),
+                game.getColorAt(5, 0), game.getColorAt(7, 0), game.getColorAt(6, 0)
+        };
         assertArrayEquals(expectedColors, actualColors);
     }
 

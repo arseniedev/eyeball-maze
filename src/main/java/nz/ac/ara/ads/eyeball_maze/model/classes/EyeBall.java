@@ -15,22 +15,11 @@ public class EyeBall {
     protected int currentXPosition;
     private static EyeBall eyeBall;
 
-    private EyeBall() {
-    }
-
     public EyeBall(int newYPosition,int newXPosition, Direction eyeballDirection) {
         this.currentYPosition = newYPosition;
         this.currentXPosition = newXPosition;
         this.currenPosition = new Position(newYPosition,newXPosition);
         this.currentDirection = eyeballDirection;
-    }
-
-    public static EyeBall getEyeBall() {
-        if (eyeBall == null) {
-            eyeBall = new EyeBall();
-        }
-
-        return eyeBall;
     }
 
     public int getXPosition() {
