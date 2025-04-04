@@ -11,7 +11,7 @@ class TestGameHoldsEyeball {
     Game game;
 
     @BeforeEach
-    void add7High3WideLevel() throws Exception {
+    void add7High3WideLevel() {
         game = new Game();
         game.addLevel(7, 3);
     }

@@ -1,7 +1,7 @@
 package nz.ac.ara.ads.eyeball_maze.model.interfaces;
 
 public interface IGoalHolder {
-    public void addGoal(int row, int column);
+    public void addGoal(int row, int column) throws Exception;
     public int getGoalCount();
     public boolean hasGoalAt(int targetRow, int targetColumn);
     public int getCompletedGoalCount();

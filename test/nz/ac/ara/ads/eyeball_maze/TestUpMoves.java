@@ -11,7 +11,7 @@ public class TestUpMoves {
     Game game;
 
     @BeforeEach
-    void setUpVerticalLevel() throws Exception {
+    void setUpVerticalLevel() {
         game = new Game();
         game.addLevel(9, 1);
         game.addSquare(new PlayableSquare(Color.GREEN, Shape.STAR), 0, 0);

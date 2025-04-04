@@ -7,7 +7,6 @@ public class EyeBall {
     /*
     * Uses singleton design pattern
     * */
-    protected Position newPosition;
     protected Position currenPosition;
     protected Position previousPosition;
     protected Direction currentDirection;
@@ -47,7 +46,6 @@ public class EyeBall {
     }
 
     public void updateEyeball(int row, int column) {
-//        this.previousPosition = this.currenPosition;
         this.previousPosition = new Position(this.currentYPosition, this.currentXPosition);
         this.previousDirection = this.currentDirection;
         this.setNewEyeballFacingDirection(row, column);
@@ -69,7 +67,7 @@ public class EyeBall {
             direction = targetX > currentX ? Direction.RIGHT : Direction.LEFT;
 
         } else if (isMovingVertical) {
-            direction = targetY > currentY ? Direction.UP : Direction.DOWN;
+            direction = targetY < currentY ? Direction.UP : Direction.DOWN;
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
         }

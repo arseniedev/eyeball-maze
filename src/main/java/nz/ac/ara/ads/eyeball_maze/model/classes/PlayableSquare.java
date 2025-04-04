@@ -9,7 +9,6 @@ public class PlayableSquare extends Square {
     public boolean isGoal = false;
 
     public PlayableSquare() {
-
     }
 
     public PlayableSquare(Color color, Shape shape) {
@@ -26,18 +25,4 @@ public class PlayableSquare extends Square {
     public Shape getShape() {
         return this.shape;
     }
-
-    public void setAsGoal() {
-        this.isGoal = true;
-    }
-
-//    @Override
-//    public boolean hasGoalAt(int row, int column) {
-//        return false;
-//    }
-//
-//    @Override
-//    public void addGoal(int row, int column) {
-//        this.isGoal = true;
-//    }
 }
