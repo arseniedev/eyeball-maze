@@ -73,11 +73,15 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         try {
             if (this.isValidCoordinate(row,column)) {
                 LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
-
-                Square newSquare = new PlayableSquare();
-                this.addSquare(newSquare, row, column);
-
-                newSquare.isGoal = true;
+                Square square = this.getSquareAt(row, column);
+                if (square == null) {
+                    square = new PlayableSquare();
+                    this.addSquare(square, row, column);
+                    LOGGER.log(Level.INFO, "Empty PlayableSquare added for a goal");
+                }
+//                else {
+                square.isGoal = true;
+//                }
                 this.gameLevel.totalGoalCount++;
             } else {
                 throw new InvalidCoordinateException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
@@ -85,8 +89,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } catch (InvalidCoordinateException exception) {
             LOGGER.log(Level.SEVERE, "Failed to add goal:" + exception);
             throw new IllegalArgumentException(exception.getMessage());
-        } catch (Exception unknown) {
-            LOGGER.log(Level.SEVERE, String.valueOf(ErrorCode.UNKNOWN_EXCEPTION) + unknown);
         } finally {
             LOGGER.log(Level.INFO, "Goal addition process performed");
         }
@@ -121,20 +123,21 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     private Square getSquareAt(int row, int column) {
-        Square square = null;
-        try {
+        Square square;
+//        try {
             String coordinateKey =  row + "," + column;
             LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
             square = this.squareCollection.get(coordinateKey);
 
-            if (square == null) {
-                throw new IllegalArgumentException(String.valueOf(ErrorCode.SQUARE_NOT_FOUND));
-            }
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } finally {
-            LOGGER.log(Level.INFO, "Square retrieval process performed");
-        }
+//            if (square == null) {
+//                throw new IllegalArgumentException(String.valueOf(ErrorCode.SQUARE_NOT_FOUND));
+//            }
+//        }
+//        catch (IllegalArgumentException e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            LOGGER.log(Level.INFO, "Square retrieval process performed");
+//        }
         return square;
     }
 
@@ -234,7 +237,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
 
             result =  isSameColor || isSameShape;
-            LOGGER.log(Level.INFO, "Can move to square at" + newYDestination + ", " + newXDestination + ": " + result);
+            LOGGER.log(Level.INFO, "Can move to square at " + newYDestination + ", " + newXDestination + ": " + result);
 
         } else {
             LOGGER.log(Level.INFO, "Can not move to blank square" + newYDestination + ", " + newXDestination);
@@ -265,11 +268,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 Square squareValue = square.getValue();
                 boolean isABlankSquare = squareValue instanceof BlankSquare;
                 boolean isInBetweenOldAndNewPosition = isMovingHorizontal ?
-//                        (keyX >= min(currentX,newXDestination) && keyX <= max(currentX,newXDestination)): (keyY >= min(currentY,newYDestination) && keyY <= max(currentY,newYDestination));
                         (keyX <= newXDestination && keyX >= currentX) || keyX >= newXDestination && keyX <= currentX:
                         (keyY <= newYDestination && keyY >= currentY) || (keyY >= newYDestination && keyY <= currentY);
                 if (isABlankSquare && isInBetweenOldAndNewPosition) {
-//                    hasBlank = true;
                     isBlankFree = false;
                     break;
                 } else{
@@ -277,7 +278,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 }
             }
         } else {
-//            hasBlank = false;
             LOGGER.log(Level.INFO, String.valueOf(Message.MOVING_DIAGONALLY));
         }
         return isBlankFree;
@@ -340,6 +340,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             if (this.hasGoalAt(row,column)) {
                 this.gameLevel.completedGoalCount++;
                 this.gameLevel.totalGoalCount--;
+                destinationSquare.isGoal = false;
             }
         } else {
             LOGGER.log(Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
