@@ -15,7 +15,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     protected GameLevel gameLevel;
     EyeBall theEyeball;
     protected int levelCount;
-    private Square currentSquare;
 
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
@@ -193,26 +192,26 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return this.theEyeball.getXPosition();
     }
 
-    private Direction getNewEyeballDirection(int newYDestination, int newXDestination) {
-//         Returns the direction it is taking
-        Direction direction;
-
-        int currentY= this.theEyeball.currentYPosition;
-        int currentX = this.theEyeball.currentXPosition;
-
-        if (newYDestination == currentY) {
-            // moving horizontal: left(decrease)/right(increase)
-            direction = newXDestination > currentX ? Direction.RIGHT : Direction.LEFT;
-
-        } else if (newXDestination == currentX) {
-            // moving vertical: up (decrease)/down(increase)
-            direction = newYDestination < currentY ? Direction.UP : Direction.DOWN;
-        } else {
-            direction = Direction.DIAGONAL;
-//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
-        }
-        return direction;
-    }
+//    private Direction getNewEyeballDirection(int newYDestination, int newXDestination) {
+////         Returns the direction it is taking
+//        Direction direction;
+//
+//        int currentY= this.theEyeball.currentYPosition;
+//        int currentX = this.theEyeball.currentXPosition;
+//
+//        if (newYDestination == currentY) {
+//            // moving horizontal: left(decrease)/right(increase)
+//            direction = newXDestination > currentX ? Direction.RIGHT : Direction.LEFT;
+//
+//        } else if (newXDestination == currentX) {
+//            // moving vertical: up (decrease)/down(increase)
+//            direction = newYDestination < currentY ? Direction.UP : Direction.DOWN;
+//        } else {
+//            direction = Direction.DIAGONAL;
+////            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
+//        }
+//        return direction;
+//    }
 
     @Override
     public Direction getEyeballDirection() {
@@ -252,7 +251,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         int currentX = theEyeball.currentXPosition;
         int currentY = theEyeball.currentYPosition;
         LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
-        Direction direction = this.getNewEyeballDirection(newYDestination,newXDestination);
+        Direction direction = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
         LOGGER.log(Level.INFO, "Checking for direction: " + direction);
         boolean isBlankFree = true;
 //
@@ -290,7 +289,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         boolean result;
         Direction eyeBallFacingDirection = this.theEyeball.getDirection();
         this.theEyeball.updateEyeball(newYDestination, newXDestination);
-        Direction newDirection = this.getNewEyeballDirection(newYDestination,newXDestination);
+        Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
 
         // This will handle what it should not be ...
         result = switch(eyeBallFacingDirection) {
@@ -309,7 +308,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public Message checkDirectionMessage(int newYDestination, int newXDestination) {
-        Direction newDirection = this.getNewEyeballDirection(newYDestination,newXDestination);
+        Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
 
         if (newDirection == Direction.DIAGONAL) {
             return Message.MOVING_DIAGONALLY;
@@ -336,7 +335,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private void updateGoalSquare() {
         int row = this.getEyeballRow();
         int column = this.getEyeballColumn();
-        currentSquare = new BlankSquare();
+        Square currentSquare = new BlankSquare();
         this.addSquare(currentSquare, row,column);
     }
 

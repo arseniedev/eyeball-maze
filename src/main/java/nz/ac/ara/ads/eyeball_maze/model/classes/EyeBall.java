@@ -36,11 +36,11 @@ public class EyeBall {
     public void updateEyeball(int row, int column) {
 //        this.previousPosition = new Position(this.currentYPosition, this.currentXPosition);
         this.previousDirection = this.currentDirection;
-        this.setNewEyeballFacingDirection(row, column);
+        this.getNewEyeballFacingDirection(row, column);
         this.currenPosition = new Position(row, column);
     }
 
-    private void setNewEyeballFacingDirection(int targetY, int targetX) {
+    public Direction getNewEyeballFacingDirection(int targetY, int targetX) {
 //        Returns the direction it is taking
         Direction direction;
 
@@ -58,9 +58,10 @@ public class EyeBall {
             direction = targetY < currentY ? Direction.UP : Direction.DOWN;
         } else {
             direction = Direction.DIAGONAL;
-//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
         }
-        this.currentDirection = direction;
+//        this.currentDirection = direction;
+
+        return direction;
     }
 
 }
