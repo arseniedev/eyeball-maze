@@ -119,7 +119,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     private Square getSquareAt(int row, int column) {
         Square square;
-//        try {
             String coordinateKey = this.generateCoordinateKey(row,column);
             LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
             square = this.squareCollection.get(coordinateKey);
@@ -193,26 +192,31 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + newYDestination + ", column: " + newXDestination);
 
         Square square = this.getSquareAt(newYDestination, newXDestination);
-        if (square instanceof PlayableSquare) {
-            LOGGER.log(Level.INFO, "This is a valid cell");
-            // Getting the shape and color of the destination square
+//        Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination, newXDestination);
 
-            result = isMatchingShapeOrColor(square);
-
-            LOGGER.log(Level.INFO, "Can move to square at " + newYDestination + ", " + newXDestination + ": " + result);
-
-        } else {
-            LOGGER.log(Level.INFO, "Can not move to blank square" + newYDestination + ", " + newXDestination);
-        }
-        return result;
+//        if (
+           return square instanceof PlayableSquare
+            && this.isDirectionOK(newYDestination, newXDestination)
+            &&  isMatchingShapeOrColor(square);
+//        ) {
+//            LOGGER.log(Level.INFO, "This is a valid cell");
+//            LOGGER.log(Level.INFO, "Can move to square at " + newYDestination + ", " + newXDestination + ": " + result);
+//        } else {
+//            LOGGER.log(Level.INFO, ErrorCode.INVALID_MOVE.name());
+//        }
+//        return result;
     }
 
     private boolean isMatchingShapeOrColor(Square targetSquare) {
         Color targetColor = targetSquare.getColor();
         Shape targetShape = targetSquare.getShape();
 
-        int eyeballRow = this.getEyeballRow();
-        int eyeballColumn = this.getEyeballColumn();
+//        int eyeballRow = this.getEyeballRow();
+//        int eyeballColumn = this.getEyeballColumn();
+
+        int eyeballRow = this.theEyeball.currentYPosition;
+        int eyeballColumn = this.theEyeball.currentXPosition;
+
 
         boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
         boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
@@ -224,6 +228,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public boolean hasBlankFreePathTo(int newYDestination, int newXDestination) {
         int currentX = theEyeball.currentXPosition;
         int currentY = theEyeball.currentYPosition;
+
+//
+//        int currentX = this.getEyeballColumn();
+//        int currentY = this.getEyeballRow();
+
         LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
         Direction direction = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
         LOGGER.log(Level.INFO, "Checking for direction: " + direction);
@@ -262,7 +271,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         boolean result;
         Direction eyeBallFacingDirection = this.theEyeball.getDirection();
         this.theEyeball.updateEyeball(newYDestination, newXDestination);
-        Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
+//        Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
+
+        Direction newDirection = this.theEyeball.currentDirection;
 
         if (newDirection == Direction.DIAGONAL) {
             result = false;

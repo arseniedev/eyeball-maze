@@ -1,7 +1,6 @@
 package nz.ac.ara.ads.eyeball_maze.model.classes;
 import nz.ac.ara.ads.eyeball_maze.enums.Direction;
 
-
 public class EyeBall {
     /*
     * Uses singleton design pattern
@@ -35,7 +34,9 @@ public class EyeBall {
 
     public void updateEyeball(int row, int column) {
         this.previousDirection = this.currentDirection;
-        this.currentDirection = this.getNewEyeballFacingDirection(row, column);
+//        this.getNewEyeballFacingDirection(row, column);
+//        this.currentDirection =
+                this.getNewEyeballFacingDirection(row, column);
         this.currenPosition = new Position(row, column);
     }
 
@@ -43,8 +44,8 @@ public class EyeBall {
 //        Returns the direction it is taking
         Direction direction;
 
-        int currentY= this.currentYPosition;
-        int currentX = this.currentXPosition;
+        int currentY= this.getYPosition();
+        int currentX = this.getXPosition();
 
 
         boolean isMovingVertical= targetX == currentX;
@@ -58,6 +59,7 @@ public class EyeBall {
         } else {
             direction = Direction.DIAGONAL;
         }
+        this.currentDirection = direction;
 
         return direction;
     }
