@@ -21,7 +21,7 @@
 //    }
 //
 //    @Test
-//    void testNotOkWhenMovingToUpLeft() {a
+//    void testNotOkWhenMovingToUpLeft() {
 //        boolean expected = false;
 //        game.addEyeball(9, 9, Direction.UP);
 //        boolean actual = game.isDirectionOK(rand.nextInt(9), rand.nextInt(9));

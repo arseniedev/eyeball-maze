@@ -17,7 +17,6 @@ public class EyeBall {
     private static EyeBall eyeBall;
 
     private EyeBall() {
-
     }
 
     public EyeBall(int newYPosition,int newXPosition, Direction eyeballDirection) {
@@ -43,14 +42,9 @@ public class EyeBall {
         return currenPosition.getRow();
     }
 
-//    @Override
     public Direction getDirection() {
         return currentDirection;
     }
-
-//    public Direction setNewDirection(int newYDestination, int newXDestination) {
-//        return direction;
-//    }
 
     public void updateEyeball(int row, int column) {
 //        this.previousPosition = this.currenPosition;
@@ -61,7 +55,7 @@ public class EyeBall {
     }
 
     private void setNewEyeballFacingDirection(int targetY, int targetX) {
-////         Returns the direction it is taking
+//        Returns the direction it is taking
         Direction direction;
 
         int currentY= this.currentYPosition;
@@ -79,9 +73,7 @@ public class EyeBall {
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
         }
-
         this.currentDirection = direction;
-//        return direction;
     }
 
 }

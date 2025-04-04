@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import nz.ac.ara.ads.eyeball_maze.enums.*;
 import nz.ac.ara.ads.eyeball_maze.model.interfaces.*;
-import org.jetbrains.annotations.NotNull;
 
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
     protected GameLevel gameLevel;
@@ -19,9 +18,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
+//    Map <Position, Square> blankSquareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
     public Game() {
         this.levelCount = 0;
     }
@@ -110,9 +109,10 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     private Square getSquareAt(int row, int column) {
-        String squareKey =  row + "," + column;
-        LOGGER.log(Level.INFO, "Getting square at: " + squareKey);
-        Square square = this.squareCollection.get(squareKey);
+        String coordinateKey =  row + "," + column;
+        LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
+        Square square = this.squareCollection.get(coordinateKey);
+
         if (square == null) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.SQUARE_NOT_FOUND));
         }
@@ -141,8 +141,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public void addEyeball(int currentY, int currentX, Direction direction) {
         if (this.isValidCoordinate(currentY,currentX)) {
             LOGGER.log(Level.INFO, "Creating an eyeball at: " + currentY + ", " + currentX);
-//            Position position = new Position(currentY,currentX);
-            this.theEyeball = new EyeBall(currentY,currentX, direction);
+            this.theEyeball = new EyeBall(currentY, currentX, direction);
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }
@@ -156,23 +155,20 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public int getEyeballColumn() {
         return this.theEyeball.getXPosition();
     }
-    private Direction getNewEyeballDirection() {
-////         Returns the direction it is taking
+
+    private Direction getNewEyeballDirection(int newYDestination, int newXDestination) {
+//         Returns the direction it is taking
         Direction direction;
 
         int currentY= this.theEyeball.currentYPosition;
         int currentX = this.theEyeball.currentXPosition;
 
-        int newYDestination = this.getEyeballRow();
-        int newXDestination = this.getEyeballColumn();
-
-        boolean isMovingVertical= newXDestination == currentX;
-        boolean isMovingHorizontal = newYDestination == currentY;
-
-        if (isMovingHorizontal) {
+        if (newYDestination == currentY) {
+            // moving horizontal: left/right
             direction = newXDestination > currentX ? Direction.RIGHT : Direction.LEFT;
 
-        } else if (isMovingVertical) {
+        } else if (newXDestination == currentX) {
+            // moving vertical: up/down
             direction = newYDestination > currentY ? Direction.UP : Direction.DOWN;
         } else {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
@@ -203,24 +199,17 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         if (square instanceof PlayableSquare) {
             LOGGER.log(Level.INFO, "This is a valid cell");
             // Getting the shape and color of the destination square
-//            Color targetColor = this.getColorAt(row,column);
-//            Shape targetShape = this.getShapeAt(row,column);
             Color targetColor = square.getColor();
             Shape targetShape = square.getShape();
 
-            // Getting coordinates of the current/active square: Eyeball
 //            this currentEyeballColor = this.theEyeball.getColor();
             int eyeballRow = this.getEyeballRow();
             int eyeballColumn = this.getEyeballColumn();
 
             boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
-            //square.getColor().equals(color);
-
             boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
-                //square.getShape().equals(shape);
 
             result =  isSameColor || isSameShape;
-//            if (this.getColorAt(eyeballRow,eyeballColumn) == color && this.getShapeAt(eyeballRow,eyeballColumn) == shape) {
 //            }
         } else {
             LOGGER.log(Level.WARNING, "Can not move to " + row + ", " + column);
@@ -237,39 +226,19 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public boolean isDirectionOK(int newYDestination, int newXDestination) {
         boolean result;
         Direction eyeBallFacingDirection = this.theEyeball.getDirection();
-//        Direction newDirection = this.setNewEyeballDirection(newYDestination, newXDestination);
         this.theEyeball.updateEyeball(newYDestination, newXDestination);
-        Direction newDirection = this.getNewEyeballDirection();
+        Direction newDirection = this.getNewEyeballDirection(newYDestination,newXDestination);
 
-//        Direction newDirection = this.getNewEyeballDirection();
-//
-//        int currentY= this.getEyeballRow();
-//        int currentX = this.getEyeballColumn();
-
-//        boolean isMovingVertical= newXDestination == currentX;
-//        boolean isMovingHorizontal = newYDestination == currentY;
-//
-////        boolean isPositiveMove = newYDestination > currentY || newXDestination > currentX;
-//        boolean isNotMovingLeft =  newXDestination >= currentX;
-//        boolean isNotMovingDownward = newYDestination >= currentY;
-////        boolean isNegativeMove = newYDestination < currentY || newXDestination < currentX;
-//
         // This will handle what it should not be ...
         result = switch(eyeBallFacingDirection) {
             // Moving horizontal, AND moving left
             case LEFT -> newDirection != Direction.RIGHT;
-                    //(isMovingHorizontal && !isMovingRight);
             // Moving horizontal,AND moving right
             case RIGHT -> newDirection != Direction.LEFT;
-                    //isMovingHorizontal && isMovingRight;
             // Moving vertical, AND moving up
             case UP -> newDirection != Direction.DOWN;
-                    //isMovingVertical && isNotMovingDownward;
             // Moving vertical, AND moving down
             case DOWN -> newDirection != Direction.UP;
-                    //isMovingVertical && isNotMovingDownward;
-
-//            default -> true;
         };
 
         return result;
@@ -278,25 +247,81 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     @Override
     public Message checkDirectionMessage(int row, int column) {
         return this.isDirectionOK(row,column) ? Message.OK : Message.BACKWARDS_MOVE;
-//        Message message;
-//        if (this.isDirectionOK(row,column)) {
-//            message = Message.OK;
-//        } else {
-//            message = Message.BACKWARDS_MOVE;
-//        }
-//        return message;
-
     }
 
     @Override
-    public Message checkMessageForBlankOnPathTo(int row, int column) {
-//        Color color = this.getColorAt(row,column);
-//        Shape shape = this.getShapeAt(row,column);
-//        if (shape == Shape.BLANK && color == Color.BLANK) {
-//            return Message.MOVING_OVER_BLANK;
-//        }
-        return null;
+    public Message checkMessageForBlankOnPathTo(int newYDestination, int newXDestination) {
+        int currentX = theEyeball.currentXPosition;
+        int currentY = theEyeball.currentYPosition;
+        LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
+        Direction direction = this.getNewEyeballDirection(newYDestination,newXDestination);
+        LOGGER.log(Level.INFO, "Checking for direction: " + direction);
+        boolean hasBlank = false;
+
+        boolean isMovingHorizontal = direction == Direction.RIGHT || direction == Direction.LEFT;
+        boolean isMovingVertical = direction == Direction.UP || direction == Direction.DOWN;
+        if (isMovingHorizontal || isMovingVertical) {
+            for (Map.Entry<String, Square> square: this.squareCollection.entrySet()) {
+                String coordinateKey = square.getKey();
+                int keyY = Integer.parseInt(coordinateKey.split(",")[0]);
+                int keyX = Integer.parseInt(coordinateKey.split(",")[1]);
+
+                Square squareValue = square.getValue();
+                boolean isABlankSquare = squareValue instanceof BlankSquare;
+                boolean isInBetweenOldAndNewPosition = isMovingHorizontal ?
+                        (keyX <= newXDestination && keyX >= currentX) :
+                        (keyY <= newYDestination && keyY >= currentY);
+                if (isABlankSquare && isInBetweenOldAndNewPosition) {
+                    hasBlank = true;
+                    break;
+                } else{
+                    LOGGER.log(Level.INFO, "Searching for blank squares...");
+                }
+            }
+        } else {
+            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
+        }
+        return hasBlank? Message.MOVING_OVER_BLANK: Message.OK;
     }
+//    public Message checkMessageForBlankOnPathTo(int newYDestination, int newXDestination) {
+//        int currentX = theEyeball.currentXPosition;
+//        int currentY = theEyeball.currentYPosition;
+//        LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
+//        Direction direction = this.getNewEyeballDirection(newYDestination,newXDestination);
+//        LOGGER.log(Level.INFO, "Checking for direction: " + direction);
+//        boolean hasBlank = false;
+//
+//        if (direction == Direction.RIGHT || direction == Direction.LEFT) {
+//            for (Map.Entry<Position, Square> square: this.squareCollection.entrySet()) {
+//                Position coordinateKey = square.getKey();
+//                Square squareValue = square.getValue();
+//                if (squareValue instanceof BlankSquare && (coordinateKey.column <= newXDestination && coordinateKey.column >= currentX
+//                || coordinateKey.column >= newYDestination && coordinateKey.column <= currentX)) {
+//                    hasBlank = true;
+//                    break;
+//                } else {
+////                LOGGER.log(level.In);
+//            }
+//
+//        }
+//        } else if (direction == Direction.UP || direction == Direction.DOWN) {
+//            for (Map.Entry<Position, Square> square: this.squareCollection.entrySet()) {
+//                Position coordinateKey = square.getKey();
+//                Square squareValue = square.getValue();
+//                if (squareValue instanceof BlankSquare && (coordinateKey.row <= newYDestination && coordinateKey.row >= currentX
+//                        || coordinateKey.row >= newYDestination && coordinateKey.row <= currentX)) {
+//                    hasBlank = true;
+//                    break;
+//                } else {
+//                    throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
+//                }
+////                LOGGER.log(level.In);
+//                }
+//        } else {
+//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
+//        }
+//        return hasBlank? Message.MOVING_OVER_BLANK: Message.OK;
+//    }
 
     @Override
     public Message messageIfMovingTo(int row, int column) {

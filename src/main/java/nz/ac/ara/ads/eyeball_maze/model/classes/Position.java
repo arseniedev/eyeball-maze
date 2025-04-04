@@ -1,8 +1,8 @@
 package nz.ac.ara.ads.eyeball_maze.model.classes;
 
 public class Position {
-    protected int row;
-    protected int column;
+    public int row;
+    public int column;
 
     public Position(int row, int column) {
         this.row = row;
