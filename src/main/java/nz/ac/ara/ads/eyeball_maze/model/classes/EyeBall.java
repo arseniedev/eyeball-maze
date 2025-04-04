@@ -13,7 +13,6 @@ public class EyeBall {
     protected Direction previousDirection;
     protected int currentYPosition;
     protected int currentXPosition;
-    private static EyeBall eyeBall;
 
     public EyeBall(int newYPosition,int newXPosition, Direction eyeballDirection) {
         this.currentYPosition = newYPosition;
@@ -35,7 +34,7 @@ public class EyeBall {
     }
 
     public void updateEyeball(int row, int column) {
-        this.previousPosition = new Position(this.currentYPosition, this.currentXPosition);
+//        this.previousPosition = new Position(this.currentYPosition, this.currentXPosition);
         this.previousDirection = this.currentDirection;
         this.setNewEyeballFacingDirection(row, column);
         this.currenPosition = new Position(row, column);
@@ -58,7 +57,8 @@ public class EyeBall {
         } else if (isMovingVertical) {
             direction = targetY < currentY ? Direction.UP : Direction.DOWN;
         } else {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
+            direction = Direction.DIAGONAL;
+//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
         }
         this.currentDirection = direction;
     }

@@ -208,7 +208,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             // moving vertical: up (decrease)/down(increase)
             direction = newYDestination < currentY ? Direction.UP : Direction.DOWN;
         } else {
-            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
+            direction = Direction.DIAGONAL;
+//            throw new IllegalArgumentException(String.valueOf(ErrorCode.INVALID_MOVE));
         }
         return direction;
     }
@@ -217,7 +218,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public Direction getEyeballDirection() {
 //         Returns what is the direction it is facing
         return this.theEyeball.getDirection();
-
     }
 
     @Override
@@ -302,14 +302,20 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             case UP -> newDirection != Direction.DOWN;
             // Moving vertical, AND moving down
             case DOWN -> newDirection != Direction.UP;
+            case DIAGONAL -> false;
         };
-
         return result;
     }
 
     @Override
-    public Message checkDirectionMessage(int row, int column) {
-        return this.isDirectionOK(row,column) ? Message.OK : Message.BACKWARDS_MOVE;
+    public Message checkDirectionMessage(int newYDestination, int newXDestination) {
+        Direction newDirection = this.getNewEyeballDirection(newYDestination,newXDestination);
+
+        if (newDirection == Direction.DIAGONAL) {
+            return Message.MOVING_DIAGONALLY;
+        } else {
+            return this.isDirectionOK(newYDestination,newXDestination) ? Message.OK : Message.BACKWARDS_MOVE;
+        }
     }
 
     @Override
@@ -325,21 +331,13 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } else {
             return Message.DIFFERENT_SHAPE_OR_COLOR;
         }
-
     }
 
     private void updateGoalSquare() {
         int row = this.getEyeballRow();
         int column = this.getEyeballColumn();
-//        String key = this.generateCoordinateKey(row,column);
-
-//        if (this.hasGoalAt(row,column)) {
-//            this.gameLevel.completedGoalCount++;
-//            this.gameLevel.totalGoalCount--;
-//            currentSquare.isGoal = false;
-            currentSquare = new BlankSquare();
-            this.addSquare(currentSquare, row,column);
-//        }
+        currentSquare = new BlankSquare();
+        this.addSquare(currentSquare, row,column);
     }
 
     @Override
@@ -358,9 +356,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 this.gameLevel.completedGoalCount++;
                 this.gameLevel.totalGoalCount--;
                 destinationSquare.isGoal = false;
-            } else {
-//                destinationSquare = new BlankSquare();
-//                this.addSquare(destinationSquare, row,column);
             }
         } else {
             LOGGER.log(Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
@@ -371,5 +366,4 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public int getCompletedGoalCount() {
         return this.gameLevel.completedGoalCount;
     }
-
 }
