@@ -1,9 +1,6 @@
 package nz.ac.ara.ads.eyeball_maze.model.classes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -217,18 +214,20 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         int currentX = theEyeball.currentXPosition;
         int currentY = theEyeball.currentYPosition;
 
-
         LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
         Direction direction = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
+
         LOGGER.log(Level.INFO, "Checking for direction: " + direction);
-        boolean isBlankFree = true;
-        boolean isMovingHorizontal = direction == Direction.RIGHT || direction == Direction.LEFT;
+
+        boolean isNotBlank = true;
+        boolean isMovingHorizontal =  direction == Direction.RIGHT|| direction == Direction.LEFT;
         boolean isMovingVertical = direction == Direction.UP || direction == Direction.DOWN;
         if (isMovingHorizontal || isMovingVertical) {
             /*
              * https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html
-             * */
+             *
             for (Map.Entry<String, Square> square: this.squareCollection.entrySet()) {
+
                 String coordinateKey = square.getKey();
                 int keyY = Integer.parseInt(coordinateKey.split(",")[0]);
                 int keyX = Integer.parseInt(coordinateKey.split(",")[1]);
@@ -239,16 +238,34 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                         (keyX <= newXDestination && keyX >= currentX) || keyX >= newXDestination && keyX <= currentX:
                         (keyY <= newYDestination && keyY >= currentY) || (keyY >= newYDestination && keyY <= currentY);
                 if (isABlankSquare && isInBetweenOldAndNewPosition) {
-                    isBlankFree = false;
+                    isNotBlank = false;
                     break;
                 } else{
                     LOGGER.log(Level.INFO, "Searching for blank squares...");
                 }
             }
+             *  */
+            Iterator<Map.Entry<String,Square>> iterator = this.squareCollection.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String,Square> entry = iterator.next();
+                String[] coordinates = entry.getKey().split(",");
+                int targetY = Integer.parseInt(coordinates[0]);
+                int targetX = Integer.parseInt(coordinates[1]);
+
+                Square square = entry.getValue();
+                boolean isABlankSquare = square instanceof BlankSquare;
+                boolean isInBetweenOldAndNewPosition = isMovingHorizontal ?
+                        (targetX <= newXDestination && targetX >= currentX) || targetX >= newXDestination && targetX <= currentX:
+                        (targetY <= newYDestination && targetY >= currentY) || (targetY >= newYDestination && targetY <= currentY);
+                if (isABlankSquare && isInBetweenOldAndNewPosition) {
+                    isNotBlank = false;
+                    break;
+                }
+            }
         } else {
             LOGGER.log(Level.INFO, String.valueOf(Message.MOVING_DIAGONALLY));
         }
-        return isBlankFree;
+        return isNotBlank;
     }
 
     @Override
