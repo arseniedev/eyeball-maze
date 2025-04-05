@@ -301,7 +301,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         if (newDirection == Direction.DIAGONAL) {
             return Message.MOVING_DIAGONALLY;
         } else {
-            return this.isDirectionOK(newYDestination,newXDestination) ? Message.OK : Message.BACKWARDS_MOVE;
+            return this.isDirectionOK(newYDestination,newXDestination) ? Message.BACKWARDS_MOVE : Message.OK;
         }
     }
 
