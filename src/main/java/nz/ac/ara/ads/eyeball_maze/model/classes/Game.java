@@ -223,28 +223,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         boolean isMovingHorizontal =  direction == Direction.RIGHT|| direction == Direction.LEFT;
         boolean isMovingVertical = direction == Direction.UP || direction == Direction.DOWN;
         if (isMovingHorizontal || isMovingVertical) {
-            /*
-             * https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html
-             *
-            for (Map.Entry<String, Square> square: this.squareCollection.entrySet()) {
-
-                String coordinateKey = square.getKey();
-                int keyY = Integer.parseInt(coordinateKey.split(",")[0]);
-                int keyX = Integer.parseInt(coordinateKey.split(",")[1]);
-
-                Square squareValue = square.getValue();
-                boolean isABlankSquare = squareValue instanceof BlankSquare;
-                boolean isInBetweenOldAndNewPosition = isMovingHorizontal ?
-                        (keyX <= newXDestination && keyX >= currentX) || keyX >= newXDestination && keyX <= currentX:
-                        (keyY <= newYDestination && keyY >= currentY) || (keyY >= newYDestination && keyY <= currentY);
-                if (isABlankSquare && isInBetweenOldAndNewPosition) {
-                    isNotBlank = false;
-                    break;
-                } else{
-                    LOGGER.log(Level.INFO, "Searching for blank squares...");
-                }
-            }
-             *  */
             Iterator<Map.Entry<String,Square>> iterator = this.squareCollection.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String,Square> entry = iterator.next();
