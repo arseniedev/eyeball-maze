@@ -34,8 +34,6 @@ public class EyeBall {
 
     public void updateEyeball(int row, int column) {
         this.previousDirection = this.currentDirection;
-//        this.getNewEyeballFacingDirection(row, column);
-//        this.currentDirection =
                 this.getNewEyeballFacingDirection(row, column);
         this.currenPosition = new Position(row, column);
     }

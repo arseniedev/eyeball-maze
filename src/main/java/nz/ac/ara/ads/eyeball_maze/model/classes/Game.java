@@ -192,27 +192,15 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + newYDestination + ", column: " + newXDestination);
 
         Square square = this.getSquareAt(newYDestination, newXDestination);
-//        Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination, newXDestination);
 
-//        if (
            return square instanceof PlayableSquare
             && this.isDirectionOK(newYDestination, newXDestination)
             &&  isMatchingShapeOrColor(square);
-//        ) {
-//            LOGGER.log(Level.INFO, "This is a valid cell");
-//            LOGGER.log(Level.INFO, "Can move to square at " + newYDestination + ", " + newXDestination + ": " + result);
-//        } else {
-//            LOGGER.log(Level.INFO, ErrorCode.INVALID_MOVE.name());
-//        }
-//        return result;
     }
 
     private boolean isMatchingShapeOrColor(Square targetSquare) {
         Color targetColor = targetSquare.getColor();
         Shape targetShape = targetSquare.getShape();
-
-//        int eyeballRow = this.getEyeballRow();
-//        int eyeballColumn = this.getEyeballColumn();
 
         int eyeballRow = this.theEyeball.currentYPosition;
         int eyeballColumn = this.theEyeball.currentXPosition;
@@ -229,9 +217,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         int currentX = theEyeball.currentXPosition;
         int currentY = theEyeball.currentYPosition;
 
-//
-//        int currentX = this.getEyeballColumn();
-//        int currentY = this.getEyeballRow();
 
         LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
         Direction direction = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
@@ -271,7 +256,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         boolean result;
         Direction eyeBallFacingDirection = this.theEyeball.getDirection();
         this.theEyeball.updateEyeball(newYDestination, newXDestination);
-//        Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
 
         Direction newDirection = this.theEyeball.currentDirection;
 
