@@ -1,9 +1,0 @@
-package nz.ac.ara.ads.eyeball_maze.views.enums;
-
-public enum Message {
-    OK,
-    DIFFERENT_SHAPE_OR_COLOR,
-    BACKWARDS_MOVE,
-    MOVING_OVER_BLANK,
-    MOVING_DIAGONALLY
-}
