@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             fireNotification();
         }
     }
-
     private void showPermissionExplanationDialog() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.notification_permission_needed_title) // Use string resources
@@ -103,11 +102,9 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton(R.string.cancel, null) // Use string resources
                 .show();
     }
-
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
     public void showToast(View view) {
         /*
          * https://developer.android.com/guide/topics/ui/notifiers/toasts

@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("nz.ac.ara.xul.toastsnackbarnotificationmediaplayerdemo", appContext.getPackageName());
+        assertEquals("nz.ac.ara.ads.eyeballmaze", appContext.getPackageName());
     }
 }

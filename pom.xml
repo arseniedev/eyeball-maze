@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>nz.ac.ara.ac.eyeballmaze</groupId>
     <artifactId>EyeballMaze</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -22,19 +22,19 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
+            <groupId>nz.ac.ara.ac.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
+            <groupId>nz.ac.ara.ac.testng</groupId>
             <artifactId>testng</artifactId>
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.example</groupId>
+            <groupId>nz.ac.ara.ac.example</groupId>
             <artifactId>EyeballMaze</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
