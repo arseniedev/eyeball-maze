@@ -9,49 +9,46 @@
 
     <Button
         android:id="@+id/button_toast"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="664dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="@color/colorPrimary"
         android:onClick="showToast"
         android:text="@string/button_label_toast"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="666dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="15dp"
         android:background="@color/colorPrimary"
         android:onClick="countUp"
         android:text="@string/button_label_count"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/button_toast"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/show_count"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#FFFF00"
+        android:background="#000000"
         android:gravity="center"
         android:text="@string/count_initial_value"
         android:textColor="@color/colorPrimary"
@@ -63,5 +60,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_toast"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/levelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Level"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="33dp" />
+
+    <nz.ac.ara.ads.eyeballmaze.EyeballBoard
+        android:id="@+id/eyeballBoard"
+        android:layout_width="3dp"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteX="198dp"
+        tools:layout_editor_absoluteY="318dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
