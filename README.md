@@ -35,3 +35,8 @@ allprojects {
         mavenCentral()
     }
 }
+
+Link: 
+- https://youtu.be/myjSxtAk9XM?list=PLS1QulWo1RIbb1cYyzZpLFCKvdYV_yJ-E
+- https://www.youtube.com/watch?v=8sJvzZ-y9bw&list=PLXiaMWHbNgp3JCTw0qrPLISkfXWdQUW1Q&index=19
+
