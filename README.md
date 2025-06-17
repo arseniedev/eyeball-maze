@@ -35,6 +35,21 @@ allprojects {
         mavenCentral()
     }
 }
+```
+
+
+----
+Packages to install: - Sources for Android 36 (sources;android-36)
+- Android SDK Platform 36 (platforms;android-36)
+- Android SDK Platform-Tools (platform-tools)
+- Android Auto API Simulators (extras;google;simulators)
+- Android Emulator (emulator)
+- Android SDK Build-Tools 36 (build-tools;36.0.0)
+
+
+Preparing "Install Sources for Android 36 (revision 1)".
+Downloading https://dl.google.com/android/repository/source-36_r01.zip
+
 
 Link: 
 - https://youtu.be/myjSxtAk9XM?list=PLS1QulWo1RIbb1cYyzZpLFCKvdYV_yJ-E
