@@ -128,6 +128,15 @@ Disk usage:
 - Estimated download size: 19.1 GB
 - Estimated disk space to be additionally occupied on SDK partition after installation: 76.5 GB
 - Currently available disk space in SDK root (C:\Users\ads0417\AppData\Local\platform-tools): 305.2 GB
+Packages to install: - Android Emulator (emulator)
+
+
+Preparing "Install Android Emulator v.35.5.10".
+Package "Android Emulator" (emulator) should be installed in 
+"C:\Users\ads0417\AppData\Local\platform-tools\emulator" but 
+it already exists.
+Installing in "C:\Users\ads0417\AppData\Local\platform-tools\emulator-5" instead.
+Downloading https://dl.google.com/android/repository/emulator-windows_x64-13402964.zip
 
 -->
 
