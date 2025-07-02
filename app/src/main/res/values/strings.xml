@@ -12,4 +12,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="snackbar_restored_message">Snackbar message is restored!</string>
+
+    <string name="label_current_level">Current Level</string>
+    <string name="label_goals_remaining">Goals Remaining</string>
+    <string name="label_moves_made">Moves Made</string>
 </resources>

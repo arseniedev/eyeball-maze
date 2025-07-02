@@ -7,6 +7,157 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/statusSection"
+        android:layout_width="410dp"
+        android:layout_height="60dp"
+        android:background="#64DDE5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--Current Level-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+        <TextView
+            android:id="@+id/currentLevel"
+            android:text="@string/label_current_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+            <TextView
+                android:id="@+id/currentLevelValue"
+                android:text="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="23sp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--Goals RemainingLevel-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <TextView
+                android:id="@+id/goalsRemaining"
+                android:text="@string/label_goals_remaining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <TextView
+                android:id="@+id/goalsRemainingValue"
+                android:text="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="23sp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--Moves Made-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/movesMade"
+                android:text="@string/label_moves_made"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <TextView
+                android:id="@+id/movesMadeValue"
+                android:text="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="23sp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--        <TextView-->
+<!--            android:id="@+id/remainingGoals"-->
+<!--            android:text="@string/label_goals_remaining"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="12sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/movesMade"-->
+<!--            android:text="@string/label_moves_made"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="12sp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            />-->
+
+
+        <!--        <TextView-->
+<!--            android:id="@+id/goalsRemaining"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="28dp"-->
+<!--            android:text="@string/label_goals_remaining"-->
+<!--            android:textSize="16sp"-->
+
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_goneMarginStart="10dp"-->
+<!--            app:layout_goneMarginTop="1dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            />-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <Button
         android:id="@+id/button_toast"
         android:layout_width="180dp"
@@ -61,20 +212,13 @@
         app:layout_constraintTop_toBottomOf="@+id/button_toast"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/levelName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Level"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        tools:layout_editor_absoluteX="180dp"
-        tools:layout_editor_absoluteY="33dp" />
 
-    <nz.ac.ara.ads.eyeballmaze.EyeballBoard
-        android:id="@+id/eyeballBoard"
-        android:layout_width="3dp"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteX="198dp"
-        tools:layout_editor_absoluteY="318dp" />
+
+<!--    <nz.ac.ara.ads.eyeballmaze.EyeballBoard-->
+<!--        android:id="@+id/eyeballBoard"-->
+<!--        android:layout_width="3dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        tools:layout_editor_absoluteX="198dp"-->
+<!--        tools:layout_editor_absoluteY="318dp" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
