@@ -18,4 +18,5 @@
     <string name="label_moves_made">Moves Made</string>
 
     <string name="label_button_start">Start Game</string>
+    <string name="grid_desc">Grid</string>
 </resources>

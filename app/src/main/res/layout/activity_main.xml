@@ -137,36 +137,45 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid1"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:src="@drawable/line_bottom"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cellGrid0"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid2"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cellGrid1"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/shape_flower_red"
+            />
         <ImageView
             android:id="@+id/cellGrid3"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cellGrid2"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
 
         <!--ROW 2-->
         <ImageView
@@ -175,36 +184,44 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/shape_cross_blue"
+            />
         <ImageView
             android:id="@+id/cellGrid5"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid1"
             app:layout_constraintStart_toEndOf="@+id/cellGrid4"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/shape_flower_yellow"
+            />
         <ImageView
             android:id="@+id/cellGrid6"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid2"
             app:layout_constraintStart_toEndOf="@+id/cellGrid5"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/shape_diamond_yellow"
+            />
         <ImageView
             android:id="@+id/cellGrid7"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid3"
             app:layout_constraintStart_toEndOf="@+id/cellGrid6"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/shape_cross_green"
+            />
 
         <!--ROW 3-->
         <ImageView
@@ -213,36 +230,44 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid4"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/shape_cross_green"
+            />
         <ImageView
             android:id="@+id/cellGrid9"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid5"
             app:layout_constraintStart_toEndOf="@+id/cellGrid8"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid10"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid6"
             app:layout_constraintStart_toEndOf="@+id/cellGrid9"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid11"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid7"
             app:layout_constraintStart_toEndOf="@+id/cellGrid10"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
 
         <!--ROW 4-->
         <ImageView
@@ -251,36 +276,44 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid8"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid13"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid9"
             app:layout_constraintStart_toEndOf="@+id/cellGrid12"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid14"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid10"
             app:layout_constraintStart_toEndOf="@+id/cellGrid13"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid15"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid11"
             app:layout_constraintStart_toEndOf="@+id/cellGrid14"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
 
         <!--ROW 5-->
         <ImageView
@@ -289,36 +322,44 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid12"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid17"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid13"
             app:layout_constraintStart_toEndOf="@+id/cellGrid16"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid18"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid14"
             app:layout_constraintStart_toEndOf="@+id/cellGrid17"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid19"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid15"
             app:layout_constraintStart_toEndOf="@+id/cellGrid18"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
 
         <!--ROW 6-->
         <ImageView
@@ -327,36 +368,44 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid16"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid21"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid17"
             app:layout_constraintStart_toEndOf="@+id/cellGrid20"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid22"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid18"
             app:layout_constraintStart_toEndOf="@+id/cellGrid21"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
         <ImageView
             android:id="@+id/cellGrid23"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid19"
             app:layout_constraintStart_toEndOf="@+id/cellGrid22"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/line_bottom"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--Bottom Labels-->
@@ -390,51 +439,42 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-<!--    <Button-->
-<!--        android:id="@+id/button_count"-->
-<!--        android:layout_width="180dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginStart="29dp"-->
-<!--        android:layout_marginTop="666dp"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:layout_marginBottom="15dp"-->
-<!--        android:background="@color/colorPrimary"-->
-<!--        android:onClick="countUp"-->
-<!--        android:text="@string/button_label_count"-->
-<!--        android:textColor="@android:color/white"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/button_toast"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/button_count"-->
+    <!--        android:layout_width="180dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginStart="29dp"-->
+    <!--        android:layout_marginTop="666dp"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:layout_marginBottom="15dp"-->
+    <!--        android:background="@color/colorPrimary"-->
+    <!--        android:onClick="countUp"-->
+    <!--        android:text="@string/button_label_count"-->
+    <!--        android:textColor="@android:color/white"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/button_toast"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/show_count"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:layout_marginBottom="8dp"-->
-<!--        android:background="#000000"-->
-<!--        android:gravity="center"-->
-<!--        android:text="@string/count_initial_value"-->
-<!--        android:textColor="@color/colorPrimary"-->
-<!--        android:textSize="160sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/button_count"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/button_toast"-->
-<!--        app:layout_constraintVertical_bias="0.0" />-->
-
-
-
-<!--    <nz.ac.ara.ads.eyeballmaze.EyeballBoard-->
-<!--        android:id="@+id/eyeballBoard"-->
-<!--        android:layout_width="3dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        tools:layout_editor_absoluteX="198dp"-->
-<!--        tools:layout_editor_absoluteY="318dp" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/show_count"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginStart="8dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:layout_marginBottom="8dp"-->
+    <!--        android:background="#000000"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="@string/count_initial_value"-->
+    <!--        android:textColor="@color/colorPrimary"-->
+    <!--        android:textSize="160sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/button_count"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/button_toast"-->
+    <!--        app:layout_constraintVertical_bias="0.0" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
