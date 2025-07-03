@@ -16,7 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:adjustViewBounds="true"
+        >
 
         <!--Current Level-->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,28 +122,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:id="@+id/gameBoard"
+        android:padding="12dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="45dp"
-
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorBoard"
+        app:layout_constraintTop_toBottomOf="@id/statusSection"
+        app:layout_constraintBottom_toTopOf="@id/bottomSection"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/statusSection"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomSection"
-
-        android:background="@color/colorBoard"
-        >
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.5">
         <!--ROW 1-->
         <ImageView
             android:id="@+id/cellGrid0"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/line_none"
             />
         <ImageView
             android:id="@+id/cellGrid1"
@@ -148,11 +158,15 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:src="@drawable/line_bottom"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cellGrid0"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/line_none"
             />
         <ImageView
             android:id="@+id/cellGrid2"
@@ -160,6 +174,10 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cellGrid1"
@@ -170,11 +188,16 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cellGrid2"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/line_none"
             />
 
         <!--ROW 2-->
@@ -184,6 +207,10 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid0"
             app:layout_constraintStart_toStartOf="parent"
@@ -195,6 +222,10 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid1"
             app:layout_constraintStart_toEndOf="@+id/cellGrid4"
@@ -206,6 +237,10 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid2"
             app:layout_constraintStart_toEndOf="@+id/cellGrid5"
@@ -217,6 +252,10 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid3"
             app:layout_constraintStart_toEndOf="@+id/cellGrid6"
@@ -230,10 +269,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid4"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/shape_cross_green"
+            app:srcCompat="@drawable/shape_flower_green"
             />
         <ImageView
             android:id="@+id/cellGrid9"
@@ -241,10 +284,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid5"
             app:layout_constraintStart_toEndOf="@+id/cellGrid8"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_star_red"
             />
         <ImageView
             android:id="@+id/cellGrid10"
@@ -252,10 +299,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid6"
             app:layout_constraintStart_toEndOf="@+id/cellGrid9"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_star_green"
             />
         <ImageView
             android:id="@+id/cellGrid11"
@@ -263,10 +314,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid7"
             app:layout_constraintStart_toEndOf="@+id/cellGrid10"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_diamond_yellow"
             />
 
         <!--ROW 4-->
@@ -276,10 +331,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid8"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_flower_red"
             />
         <ImageView
             android:id="@+id/cellGrid13"
@@ -287,10 +346,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid9"
             app:layout_constraintStart_toEndOf="@+id/cellGrid12"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_flower_blue"
             />
         <ImageView
             android:id="@+id/cellGrid14"
@@ -298,10 +361,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid10"
             app:layout_constraintStart_toEndOf="@+id/cellGrid13"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_star_red"
             />
         <ImageView
             android:id="@+id/cellGrid15"
@@ -309,10 +376,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid11"
             app:layout_constraintStart_toEndOf="@+id/cellGrid14"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_flower_green"
             />
 
         <!--ROW 5-->
@@ -322,10 +393,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid12"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_star_blue"
             />
         <ImageView
             android:id="@+id/cellGrid17"
@@ -333,10 +408,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid13"
             app:layout_constraintStart_toEndOf="@+id/cellGrid16"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_diamond_red"
             />
         <ImageView
             android:id="@+id/cellGrid18"
@@ -344,10 +423,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid14"
             app:layout_constraintStart_toEndOf="@+id/cellGrid17"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_flower_blue"
             />
         <ImageView
             android:id="@+id/cellGrid19"
@@ -355,10 +438,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid15"
             app:layout_constraintStart_toEndOf="@+id/cellGrid18"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_diamond_blue"
             />
 
         <!--ROW 6-->
@@ -368,10 +455,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid16"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/line_none"
             />
         <ImageView
             android:id="@+id/cellGrid21"
@@ -379,10 +470,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid17"
             app:layout_constraintStart_toEndOf="@+id/cellGrid20"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/shape_diamond_blue"
             />
         <ImageView
             android:id="@+id/cellGrid22"
@@ -390,10 +485,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid18"
             app:layout_constraintStart_toEndOf="@+id/cellGrid21"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/line_none"
             />
         <ImageView
             android:id="@+id/cellGrid23"
@@ -401,10 +500,14 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1:1"
+            android:adjustViewBounds="true"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid19"
             app:layout_constraintStart_toEndOf="@+id/cellGrid22"
-            app:srcCompat="@drawable/line_bottom"
+            app:srcCompat="@drawable/line_none"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -420,6 +523,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
         android:background="@color/colorPrimary"
+        android:adjustViewBounds="true"
         >
         <Button
             android:id="@+id/button_start"
