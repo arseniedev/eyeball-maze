@@ -10,7 +10,7 @@
     <!--Top Labels-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/statusSection"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#64DDE5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,99 +22,95 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="26dp"
             android:layout_marginBottom="5dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            >
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/currentLevel"
-            android:text="@string/label_current_level"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <TextView
+                android:id="@+id/currentLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_current_level"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/currentLevelValue"
-                android:text="0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="5dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="0"
                 android:textSize="23sp"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--Goals RemainingLevel-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            >
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
             <TextView
                 android:id="@+id/goalsRemaining"
-                android:text="@string/label_goals_remaining"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/label_goals_remaining"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/goalsRemainingValue"
-                android:text="0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="5dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="0"
                 android:textSize="23sp"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--Moves Made-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="58dp"
+            android:layout_marginEnd="26dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            >
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5">
 
             <TextView
                 android:id="@+id/movesMade"
-                android:text="@string/label_moves_made"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/label_moves_made"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/movesMadeValue"
-                android:text="0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="5dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="0"
                 android:textSize="23sp"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -174,7 +170,7 @@
 
         <!--ROW 2-->
         <ImageView
-            android:id="@+id/cellGrid5"
+            android:id="@+id/cellGrid4"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
@@ -183,12 +179,21 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
         <ImageView
-            android:id="@+id/cellGrid6"
+            android:id="@+id/cellGrid5"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid1"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid4"
+            tools:srcCompat="@tools:sample/avatars" />
+        <ImageView
+            android:id="@+id/cellGrid6"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid2"
             app:layout_constraintStart_toEndOf="@+id/cellGrid5"
             tools:srcCompat="@tools:sample/avatars" />
         <ImageView
@@ -197,20 +202,20 @@
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid2"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid3"
             app:layout_constraintStart_toEndOf="@+id/cellGrid6"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <!--ROW 3-->
         <ImageView
             android:id="@+id/cellGrid8"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid3"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid7"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid4"
+            app:layout_constraintStart_toStartOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
-
-        <!--ROW 3-->
         <ImageView
             android:id="@+id/cellGrid9"
             android:layout_width="70dp"
@@ -218,7 +223,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid8"
             tools:srcCompat="@tools:sample/avatars" />
         <ImageView
             android:id="@+id/cellGrid10"
@@ -238,6 +243,8 @@
             app:layout_constraintTop_toBottomOf="@+id/cellGrid7"
             app:layout_constraintStart_toEndOf="@+id/cellGrid10"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <!--ROW 4-->
         <ImageView
             android:id="@+id/cellGrid12"
             android:layout_width="70dp"
@@ -245,10 +252,8 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid8"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid11"
+            app:layout_constraintStart_toStartOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
-
-        <!--ROW 4-->
         <ImageView
             android:id="@+id/cellGrid13"
             android:layout_width="70dp"
@@ -256,7 +261,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid9"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid12"
             tools:srcCompat="@tools:sample/avatars" />
         <ImageView
             android:id="@+id/cellGrid14"
@@ -276,6 +281,8 @@
             app:layout_constraintTop_toBottomOf="@+id/cellGrid11"
             app:layout_constraintStart_toEndOf="@+id/cellGrid14"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <!--ROW 5-->
         <ImageView
             android:id="@+id/cellGrid16"
             android:layout_width="70dp"
@@ -283,10 +290,8 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid12"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid15"
+            app:layout_constraintStart_toStartOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
-
-        <!--ROW 5-->
         <ImageView
             android:id="@+id/cellGrid17"
             android:layout_width="70dp"
@@ -294,7 +299,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid13"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid16"
             tools:srcCompat="@tools:sample/avatars" />
         <ImageView
             android:id="@+id/cellGrid18"
@@ -312,8 +317,10 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid15"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid14"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid18"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <!--ROW 6-->
         <ImageView
             android:id="@+id/cellGrid20"
             android:layout_width="70dp"
@@ -321,10 +328,8 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid16"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid15"
+            app:layout_constraintStart_toStartOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
-
-        <!--ROW 6-->
         <ImageView
             android:id="@+id/cellGrid21"
             android:layout_width="70dp"
@@ -332,7 +337,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid17"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid20"
             tools:srcCompat="@tools:sample/avatars" />
         <ImageView
             android:id="@+id/cellGrid22"
@@ -351,15 +356,6 @@
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/cellGrid19"
             app:layout_constraintStart_toEndOf="@+id/cellGrid22"
-            tools:srcCompat="@tools:sample/avatars" />
-        <ImageView
-            android:id="@+id/cellGrid24"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid20"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid23"
             tools:srcCompat="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -381,10 +377,9 @@
             android:layout_width="180dp"
             android:layout_height="50dp"
 
-            android:onClick="showToast"
             android:text="@string/label_button_start"
             android:textColor="@android:color/white"
-
+            android:background="@color/colorStartButton"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
