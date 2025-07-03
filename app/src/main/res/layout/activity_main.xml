@@ -7,17 +7,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--Top Labels-->
+    <!--Title Labels-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/statusSection"
+        android:id="@+id/gameTitle"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#64DDE5"
+        android:background="@color/colorTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
+        android:adjustViewBounds="true"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="30sp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Top Labels-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/statusSection"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorHeader"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameTitle"
         android:adjustViewBounds="true"
         >
 

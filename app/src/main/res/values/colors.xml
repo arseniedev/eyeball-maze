@@ -12,4 +12,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorBoard">#E6E2E3</color>
     <color name="colorStartButton">#33020A</color>
+    <color name="colorTitle">#00091A</color>
+    <color name="colorHeader">#6294F6</color>
 </resources>
