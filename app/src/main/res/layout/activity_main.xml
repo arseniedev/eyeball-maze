@@ -476,7 +476,6 @@
             app:layout_constraintStart_toEndOf="@+id/cellGrid18"
             app:srcCompat="@drawable/shape_diamond_blue"
             />
-
         <!--ROW 6-->
         <ImageView
             android:id="@+id/cellGrid20"
