@@ -1,5 +1,9 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,12 +132,26 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return row + "," + column;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     @Override
     public void addSquare(Square square, int row, int column) {
         try {
             if (this.isValidCoordinate(row,column)) {
                 String coordinateKey = this.generateCoordinateKey(row,column);
                 this.squareCollection.put(coordinateKey,square);
+
+                StringBuilder squareAddedStatus = new StringBuilder(
+                        """
+                        Square cell added:
+                        Shape: %s
+                        Color: %s
+                        Key %s
+                        """.formatted(
+                                square.getShape(),
+                                square.getColor(),
+                                coordinateKey
+                        )
+                );
 
                 LOGGER.log(Level.INFO, "Square cell added." +
                         "\nShape: " + square.getShape() +
