@@ -153,10 +153,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                         )
                 );
 
-                LOGGER.log(Level.INFO, "Square cell added." +
-                        "\nShape: " + square.getShape() +
-                        "\nColor: " + square.getColor() +
-                        "\nKey:" + coordinateKey);
+                LOGGER.log(Level.INFO, String.valueOf(squareAddedStatus));
+
+//                LOGGER.log(Level.INFO, "Square cell added." +
+//                        "\nShape: " + square.getShape() +
+//                        "\nColor: " + square.getColor() +
+//                        "\nKey:" + coordinateKey);
 
             } else {
                 throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
