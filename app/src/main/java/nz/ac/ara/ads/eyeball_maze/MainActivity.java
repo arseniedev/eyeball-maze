@@ -21,63 +21,43 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ConstraintLayout mainLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        setupEdgeToEdge();
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars()).toPlatformInsets();
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        applyWindowInsetsPadding();
 
         // Get the main layout
-        ConstraintLayout mainLayout = findViewById(R.id.main);
+        mainLayout = findViewById(R.id.main);
 
         // Create and configure the TextView
-        TextView textView = new TextView(this);
-
-        /*
-        https://developer.android.com/guide/topics/resources/providing-resources#Accessing
-        R class contains resource IDs for all the resources in your res/
-        directory. For each type of resource, there is an R subclass, such as
-        R.drawable for all drawable resources. And for each resource of that
-        type, there is a static integer, for example, R.drawable.icon. This
-        integer is the resource ID that you can use to retrieve your resource.
-
-        https://developer.android.com/guide/topics/resources/more-resources#Id
-        A unique resource ID defined in XML. Using the name you provide in the
-        <item> element, the Android developer tools create a unique integer in
-        your project's R.java class, which you can use as an identifier for an
-        application resources, such as a View in your UI layout, or a unique
-        integer for use in your application code, such as an ID for a dialog
-        or a result code.
-
-        Alternative: using int textViewId = View.generateViewId();
-        */
-        textView.setId(R.id.text_msg);
-        textView.setText(R.string.msg);
-        textView.setTextSize(22);
+        TextView textView = createConfiguredTextView();
         mainLayout.addView(textView);
-
-        // https://stackoverflow.com/questions/40275152/how-to-programmatically-add-views-and-constraints-to-a-constraintlayout
-        // https://developer.android.com/reference/android/support/constraint/ConstraintSet
-        // Configure constraints for the TextView
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(mainLayout);
-        constraintSet.connect(textView.getId(), ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 6);
-        constraintSet.connect(textView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 6);
-        constraintSet.constrainHeight(textView.getId(), ConstraintSet.WRAP_CONTENT);
-        constraintSet.constrainWidth(textView.getId(), ConstraintSet.WRAP_CONTENT);
-        constraintSet.applyTo(mainLayout);
+        applyTextViewConstraints(textView);
 
         // Create and configure the ImageView
-        ImageView imageView = new ImageView(this);
+        ImageView imageView = createConfiguredImageView(textView.getId());
+        mainLayout.addView(imageView);
+        applyImageViewConstraints(imageView, textView.getId());
         // https://developer.android.com/reference/android/view/View.html#generateViewId()
-        // Generate a unique ID for the ImageView
-        imageView.setId(View.generateViewId());
-        imageView.setImageResource(R.drawable.snapchat);
+
+//        imageView.setId(View.generateViewId());
+//        imageView.setImageResource(R.drawable.snapchat);
+
+
+//        mainLayout.addView(textView);
+
+//        ConstraintSet constraintSet = new ConstraintSet();
+//        constraintSet.clone(mainLayout);
+//        constraintSet.connect(textView.getId(), ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 6);
+//        constraintSet.connect(textView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 6);
+//        constraintSet.constrainHeight(textView.getId(), ConstraintSet.WRAP_CONTENT);
+//        constraintSet.constrainWidth(textView.getId(), ConstraintSet.WRAP_CONTENT);
+//        constraintSet.applyTo(mainLayout);
+
 
         // Support different screen sizes
         // https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes#java
@@ -104,36 +84,98 @@ public class MainActivity extends AppCompatActivity {
         Insets insets = windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars());
 
         // This calculates the total width and height of the insets.
-        int insetsWidth = insets.right + insets.left;
-        int insetsHeight = insets.top + insets.bottom;
+//        int insetsWidth = insets.right + insets.left;
+//        int insetsHeight = insets.top + insets.bottom;
 
         /*
          This gets the bounds of the entire window,
          which represents the full area a window may occupy, including insets.
          */
-        final Rect bounds = metrics.getBounds();
+//        final Rect bounds = metrics.getBounds();
         /*
          This calculates the size of the window excluding the insets from the total window size.
         * */
-        final Size legacySize = new Size(bounds.width() - insetsWidth,
-                bounds.height() - insetsHeight);
+//        final Size legacySize = new Size(bounds.width() - insetsWidth,
+//                bounds.height() - insetsHeight);
         /*
          This retrieves the width of the window excluding the insets,
          i.e., the width of the usable screen space.
          */
-        int width = legacySize.getWidth();
+//        int width = legacySize.getWidth();
 
         /*
          This calculates the width of an ImageView that should take up
          half of the available window width, excluding the insets.
          */
-        int imageViewWidth = width / 7;
-        imageView.setLayoutParams(new ConstraintLayout.LayoutParams(imageViewWidth, imageViewWidth));
-        mainLayout.addView(imageView);
+//        int imageViewWidth = width / 7;
+//        imageView.setLayoutParams(new ConstraintLayout.LayoutParams(imageViewWidth, imageViewWidth));
+//        mainLayout.addView(imageView);
 
+//        constraintSet.clone(mainLayout);
+//        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, textView.getId(), ConstraintSet.BOTTOM, 16);
+//        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 20);
+//        constraintSet.applyTo(mainLayout);
+    }
+
+    private void setupEdgeToEdge() {
+        EdgeToEdge.enable(this);
+    }
+
+    private void applyWindowInsetsPadding() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars()).toPlatformInsets();
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
+
+    private TextView createConfiguredTextView() {
+        TextView textView = new TextView(this);
+        textView.setId(R.id.text_msg);
+        textView.setText(R.string.msg);
+        textView.setTextSize(12);
+        return textView;
+    }
+    private void applyTextViewConstraints(TextView textView) {
+        ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(mainLayout);
-        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, textView.getId(), ConstraintSet.BOTTOM, 16);
-        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 20);
+        constraintSet.connect(textView.getId(), constraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 6);
+        constraintSet.connect(textView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 6);
+        constraintSet.constrainHeight(textView.getId(), ConstraintSet.WRAP_CONTENT);
+        constraintSet.constrainWidth(textView.getId(), ConstraintSet.WRAP_CONTENT);
         constraintSet.applyTo(mainLayout);
+    }
+    private ImageView createConfiguredImageView(int anchorViewId) {
+        // Create and configure the ImageView
+        ImageView imageView = new ImageView(this);
+        // Generate a unique ID for the ImageView
+        imageView.setId(R.id.text_msg);
+        imageView.setImageResource(R.drawable.snapchat);
+
+        int imageSize = calculateImageViewSize();
+        imageView.setLayoutParams(new ConstraintLayout.LayoutParams(imageSize,imageSize));
+
+        return imageView;
+    }
+
+    private void applyImageViewConstraints(ImageView imageView, int anchorViewId) {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(mainLayout);
+        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, anchorViewId, ConstraintSet.BOTTOM, 26);
+        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 26);
+
+//        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 26);
+//        constraintSet.constrainHeight(imageView.getId(), ConstraintSet.WRAP_CONTENT);
+//        constraintSet.constrainWidth(imageView.getId(), ConstraintSet.WRAP_CONTENT);
+        constraintSet.applyTo(mainLayout);
+    }
+
+    private int calculateImageViewSize() {
+        WindowMetrics metrics = getWindowManager().getCurrentWindowMetrics();
+        Insets insets = metrics.getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.systemBars());
+        Rect bounds = metrics.getBounds();
+
+        int usableWidth = bounds.width() - insets.left - insets.right;
+        return usableWidth / 7;
     }
 }
