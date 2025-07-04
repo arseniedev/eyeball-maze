@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import nz.ac.ara.ads.eyeball_maze.R;
-import nz.ac.ara.ads.eyeball_maze.model.classes.HeaderLabel;
 
 public class GameView {
 
@@ -94,7 +93,7 @@ public class GameView {
         set.applyTo(mainLayout);
     }
 
-    public HeaderLabel createHeaderView(String value, String label) {
+    public void createCurrentLevelView(String value, String label) {
         ConstraintLayout container = new ConstraintLayout(context);
         int containerId = View.generateViewId();
         container.setId(containerId);
@@ -116,13 +115,14 @@ public class GameView {
 
         ConstraintSet subSet = new ConstraintSet();
         subSet.clone(container);
-        subSet.connect(valueText.getId(), ConstraintSet.TOP, container.getId(), ConstraintSet.TOP);
-        subSet.connect(valueText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
-        subSet.connect(valueText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 50);
-
+        subSet.connect(valueText.getId(), ConstraintSet.TOP, container.getId(), ConstraintSet.TOP, 4);
         subSet.connect(labelText.getId(), ConstraintSet.TOP, valueText.getId(), ConstraintSet.BOTTOM, 4);
+
+        subSet.connect(valueText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
         subSet.connect(labelText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
-        subSet.connect(labelText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 50);
+
+        subSet.connect(valueText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 180);
+        subSet.connect(labelText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 180);
         subSet.applyTo(container);
 
         mainLayout.addView(container);
@@ -132,11 +132,92 @@ public class GameView {
         mainSet.connect(containerId, ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 40);
         mainSet.connect(containerId, ConstraintSet.START, mainLayout.getId(), ConstraintSet.START, 2);
         mainSet.applyTo(mainLayout);
-
-        return new HeaderLabel(valueText, labelText);
     }
+    public void createGoalsRemainlView(String value, String label) {
+        ConstraintLayout container = new ConstraintLayout(context);
+        int containerId = View.generateViewId();
+        container.setId(containerId);
 
+        TextView valueText = new TextView(context);
+        valueText.setId(View.generateViewId());
+        valueText.setText(value);
+        valueText.setTextSize(18);
+        valueText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        TextView labelText = new TextView(context);
+        labelText.setId(View.generateViewId());
+        labelText.setText(label);
+        labelText.setTextSize(12);
+        labelText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        container.addView(valueText);
+        container.addView(labelText);
+
+        ConstraintSet subSet = new ConstraintSet();
+        subSet.clone(container);
+        subSet.connect(valueText.getId(), ConstraintSet.TOP, container.getId(), ConstraintSet.TOP, 4);
+        subSet.connect(labelText.getId(), ConstraintSet.TOP, valueText.getId(), ConstraintSet.BOTTOM, 4);
+
+        subSet.connect(valueText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
+        subSet.connect(labelText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
+
+        subSet.connect(valueText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 180);
+        subSet.connect(labelText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 180);
+        subSet.applyTo(container);
+
+        mainLayout.addView(container);
+
+        ConstraintSet mainSet = new ConstraintSet();
+        mainSet.clone(mainLayout);
+        mainSet.connect(containerId, ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 40);
+        mainSet.connect(containerId, ConstraintSet.START, mainLayout.getId(), ConstraintSet.START, 2);
+        mainSet.applyTo(mainLayout);
+    }
+    public void createMovesMade(String value, String label) {
+        ConstraintLayout container = new ConstraintLayout(context);
+        int containerId = View.generateViewId();
+        container.setId(containerId);
+
+        TextView valueText = new TextView(context);
+        valueText.setId(View.generateViewId());
+        valueText.setText(value);
+        valueText.setTextSize(18);
+        valueText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        TextView labelText = new TextView(context);
+        labelText.setId(View.generateViewId());
+        labelText.setText(label);
+        labelText.setTextSize(12);
+        labelText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        container.addView(valueText);
+        container.addView(labelText);
+
+        ConstraintSet subSet = new ConstraintSet();
+        subSet.clone(container);
+        subSet.connect(valueText.getId(), ConstraintSet.TOP, container.getId(), ConstraintSet.TOP, 4);
+        subSet.connect(labelText.getId(), ConstraintSet.TOP, valueText.getId(), ConstraintSet.BOTTOM, 4);
+
+        subSet.connect(valueText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
+        subSet.connect(labelText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
+
+        subSet.connect(valueText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 180);
+        subSet.connect(labelText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 180);
+        subSet.applyTo(container);
+
+        mainLayout.addView(container);
+
+        ConstraintSet mainSet = new ConstraintSet();
+        mainSet.clone(mainLayout);
+        mainSet.connect(containerId, ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 40);
+        mainSet.connect(containerId, ConstraintSet.START, mainLayout.getId(), ConstraintSet.START, 2);
+        mainSet.applyTo(mainLayout);
+    }
     public int getMainLayoutId() {
         return mainLayout.getId();
+    }
+
+    public void createThreeHeadersHorizontally(String[] values, String[] labels) {
+//
     }
 }
