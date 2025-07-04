@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">Android Manual View Demo</string>
+    <string name="app_name">EyeBall Maze</string>
     <string name="todo">TODO</string>
+    <string name="msg">programmatically created UI views</string>
 </resources>

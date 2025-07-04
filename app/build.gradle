@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace 'nz.ac.ara.xul.androidmanualviewdemo'
+    namespace 'nz.ac.ara.ads.eyeball_maze'
     compileSdk 36
 
     defaultConfig {
-        applicationId "nz.ac.ara.xul.androidmanualviewdemo"
-        minSdk 28
+        applicationId "nz.ac.ara.ads.eyeball_maze"
+        minSdk 34
         targetSdk 36
         versionCode 1
         versionName "1.0"
