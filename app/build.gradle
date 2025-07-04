@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "nz.ac.ara.ads.eyeballmaze"
-        minSdk 28
+        minSdk 32
         targetSdk 36
         versionCode 1
         versionName "1.0"
@@ -27,6 +27,13 @@ android {
         targetCompatibility JavaVersion.VERSION_21
     }
     buildToolsVersion '36.0.0'
+    buildFeatures {
+        viewBinding true
+    }
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
+    }
 }
 
 dependencies {
