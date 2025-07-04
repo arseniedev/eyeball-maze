@@ -1,4 +1,4 @@
-package nz.ac.ara.xul.androidmanualviewdemo;
+package nz.ac.ara.ads.androidmanualviewdemo;
 
 import android.content.Context;
 
