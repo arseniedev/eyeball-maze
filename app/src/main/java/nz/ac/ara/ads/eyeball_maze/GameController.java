@@ -23,9 +23,9 @@ public class GameController {
         gameView.setupWindowInsetsPadding();
 
         // Create header view (you can pass actual values)
-        gameView.displayurrentLevelView("Level " + currentLevel, "Current Level");
-        gameView.displayGoalsRemain("" + 0, "Goal\");
-        gameView.displayMovesMadeVIew(0, "Moves Made\");
+        gameView.displayCurrentLevelView("Level " + currentLevel, "Current Level");
+//        gameView.displayGoalsRemain("" + 0, "Goal\");
+//        gameView.displayMovesMadeVIew(0, "Moves Made\");
 //        String[] values = {
 //                String.valueOf(currentLevel),
 //                String.valueOf(goalsRemaining),
@@ -36,7 +36,7 @@ public class GameController {
 //                "Goals Remaining",
 //                "Moves Made"
 //        };
-        gameView.createThreeHeadersHorizontally(values, labels);
+//        gameView.createThreeHeadersHorizontally(values, labels);
 
         // Calculate image size and generate grid
         int imageSize = gameView.calculateImageViewSize();
