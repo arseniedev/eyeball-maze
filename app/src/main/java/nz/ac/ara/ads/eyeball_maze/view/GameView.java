@@ -117,12 +117,12 @@ public class GameView {
         ConstraintSet subSet = new ConstraintSet();
         subSet.clone(container);
         subSet.connect(valueText.getId(), ConstraintSet.TOP, container.getId(), ConstraintSet.TOP);
-        subSet.connect(valueText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START);
-        subSet.connect(valueText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END);
+        subSet.connect(valueText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
+        subSet.connect(valueText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 50);
 
         subSet.connect(labelText.getId(), ConstraintSet.TOP, valueText.getId(), ConstraintSet.BOTTOM, 4);
-        subSet.connect(labelText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START);
-        subSet.connect(labelText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END);
+        subSet.connect(labelText.getId(), ConstraintSet.START, container.getId(), ConstraintSet.START, 50);
+        subSet.connect(labelText.getId(), ConstraintSet.END, container.getId(), ConstraintSet.END, 50);
         subSet.applyTo(container);
 
         mainLayout.addView(container);
