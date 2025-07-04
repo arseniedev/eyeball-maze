@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -39,34 +40,11 @@ public class MainActivity extends AppCompatActivity {
         applyTextViewConstraints(textView);
 
         // Create and configure the ImageView
-        ImageView imageView = createConfiguredImageView(textView.getId());
+        ImageView imageView = createConfiguredImageView();
         mainLayout.addView(imageView);
         applyImageViewConstraints(imageView, textView.getId());
         // https://developer.android.com/reference/android/view/View.html#generateViewId()
 
-//        imageView.setId(View.generateViewId());
-//        imageView.setImageResource(R.drawable.snapchat);
-
-
-//        mainLayout.addView(textView);
-
-//        ConstraintSet constraintSet = new ConstraintSet();
-//        constraintSet.clone(mainLayout);
-//        constraintSet.connect(textView.getId(), ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 6);
-//        constraintSet.connect(textView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 6);
-//        constraintSet.constrainHeight(textView.getId(), ConstraintSet.WRAP_CONTENT);
-//        constraintSet.constrainWidth(textView.getId(), ConstraintSet.WRAP_CONTENT);
-//        constraintSet.applyTo(mainLayout);
-
-
-        // Support different screen sizes
-        // https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes#java
-        // https://developer.android.com/reference/android/view/WindowMetrics
-        // Calculate screen dimensions to adjust ImageView size
-        /*
-         This retrieves information about the current window metrics, which includes information
-         about the size, density, and font scale of the current window.
-         */
         final WindowMetrics metrics;
         metrics = getWindowManager().getCurrentWindowMetrics();
 
@@ -83,38 +61,7 @@ public class MainActivity extends AppCompatActivity {
          */
         Insets insets = windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars());
 
-        // This calculates the total width and height of the insets.
-//        int insetsWidth = insets.right + insets.left;
-//        int insetsHeight = insets.top + insets.bottom;
-
-        /*
-         This gets the bounds of the entire window,
-         which represents the full area a window may occupy, including insets.
-         */
-//        final Rect bounds = metrics.getBounds();
-        /*
-         This calculates the size of the window excluding the insets from the total window size.
-        * */
-//        final Size legacySize = new Size(bounds.width() - insetsWidth,
-//                bounds.height() - insetsHeight);
-        /*
-         This retrieves the width of the window excluding the insets,
-         i.e., the width of the usable screen space.
-         */
-//        int width = legacySize.getWidth();
-
-        /*
-         This calculates the width of an ImageView that should take up
-         half of the available window width, excluding the insets.
-         */
-//        int imageViewWidth = width / 7;
-//        imageView.setLayoutParams(new ConstraintLayout.LayoutParams(imageViewWidth, imageViewWidth));
-//        mainLayout.addView(imageView);
-
-//        constraintSet.clone(mainLayout);
-//        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, textView.getId(), ConstraintSet.BOTTOM, 16);
-//        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 20);
-//        constraintSet.applyTo(mainLayout);
+        generateGridBoard(5, 6, 100); // 5 columns, 6 rows, 100px cell size
     }
 
     private void setupEdgeToEdge() {
@@ -129,27 +76,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @NonNull
     private TextView createConfiguredTextView() {
         TextView textView = new TextView(this);
-        textView.setId(R.id.text_msg);
+        textView.setId(View.generateViewId());
         textView.setText(R.string.msg);
-        textView.setTextSize(12);
+        int textSize = 15;
+        textView.setTextSize(textSize);
         return textView;
     }
-    private void applyTextViewConstraints(TextView textView) {
+    private void applyTextViewConstraints(@NonNull TextView textView) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(mainLayout);
-        constraintSet.connect(textView.getId(), constraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 6);
-        constraintSet.connect(textView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 6);
+        int textMargin = 15;
+        constraintSet.connect(textView.getId(), ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 30);
+        constraintSet.connect(textView.getId(), ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.BOTTOM, textMargin);
+        constraintSet.connect(textView.getId(), ConstraintSet.START, mainLayout.getId(), ConstraintSet.END, textMargin);
         constraintSet.constrainHeight(textView.getId(), ConstraintSet.WRAP_CONTENT);
         constraintSet.constrainWidth(textView.getId(), ConstraintSet.WRAP_CONTENT);
         constraintSet.applyTo(mainLayout);
     }
-    private ImageView createConfiguredImageView(int anchorViewId) {
+    @NonNull
+    private ImageView createConfiguredImageView() {
         // Create and configure the ImageView
         ImageView imageView = new ImageView(this);
         // Generate a unique ID for the ImageView
-        imageView.setId(R.id.text_msg);
+        imageView.setId(View.generateViewId());
         imageView.setImageResource(R.drawable.snapchat);
 
         int imageSize = calculateImageViewSize();
@@ -157,13 +109,13 @@ public class MainActivity extends AppCompatActivity {
 
         return imageView;
     }
-
-    private void applyImageViewConstraints(ImageView imageView, int anchorViewId) {
+    private void applyImageViewConstraints(@NonNull ImageView imageView, int anchorViewId) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(mainLayout);
-        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, anchorViewId, ConstraintSet.BOTTOM, 26);
-        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 26);
-
+        int imageMargin = 6;
+        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, anchorViewId, ConstraintSet.BOTTOM, imageMargin);
+        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, imageMargin);
+        constraintSet.setHorizontalBias(imageView.getId(), 0.5f);
 //        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 26);
 //        constraintSet.constrainHeight(imageView.getId(), ConstraintSet.WRAP_CONTENT);
 //        constraintSet.constrainWidth(imageView.getId(), ConstraintSet.WRAP_CONTENT);
@@ -176,6 +128,47 @@ public class MainActivity extends AppCompatActivity {
         Rect bounds = metrics.getBounds();
 
         int usableWidth = bounds.width() - insets.left - insets.right;
-        return usableWidth / 7;
+        int gridCount = 5;
+        return usableWidth / gridCount;
     }
+
+    private void generateGridBoard(int width, int height, int cellSize) {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(mainLayout);
+
+        int[][] viewIds = new int[height][width];
+
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                ImageView cell = new ImageView(this);
+                int cellId = View.generateViewId();
+                cell.setId(cellId);
+                cell.setImageResource(R.drawable.snapchat); // Or custom cell drawable
+                cell.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(cellSize, cellSize);
+                cell.setLayoutParams(params);
+
+                mainLayout.addView(cell);
+                viewIds[row][col] = cellId;
+
+                // Top constraint
+                if (row == 0) {
+                    constraintSet.connect(cellId, ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 16);
+                } else {
+                    constraintSet.connect(cellId, ConstraintSet.TOP, viewIds[row - 1][col], ConstraintSet.BOTTOM, 8);
+                }
+
+                // Start constraint
+                if (col == 0) {
+                    constraintSet.connect(cellId, ConstraintSet.START, mainLayout.getId(), ConstraintSet.START, 16);
+                } else {
+                    constraintSet.connect(cellId, ConstraintSet.START, viewIds[row][col - 1], ConstraintSet.END, 8);
+                }
+            }
+        }
+
+        constraintSet.applyTo(mainLayout);
+    }
+
 }
