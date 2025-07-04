@@ -24,8 +24,8 @@ public class GameController {
 
         // Create header view (you can pass actual values)
         gameView.createCurrentLevelView("Level " + currentLevel, "Current Level");
-        gameView.createHeaderView("" + goalsRemaining, "Goals Remaining");
-        gameView.createHeaderView("" + movesMade, "Moves Made");
+        gameView.createGoalsRemain("" + goalsRemaining, "Goals Remaining");
+        gameView.movesMade);
 //        String[] values = {
 //                String.valueOf(currentLevel),
 //                String.valueOf(goalsRemaining),
