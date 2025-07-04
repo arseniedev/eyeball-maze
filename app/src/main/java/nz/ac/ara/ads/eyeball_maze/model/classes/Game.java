@@ -32,7 +32,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public int getLevelWidth() {
         return this.gameLevel.getLevelWidth();
     }
-
     @Override
     public int getLevelHeight() {
         return this.gameLevel.getLevelHeight();

@@ -63,7 +63,6 @@ public class GameView {
         imageView.setLayoutParams(params);
         return imageView;
     }
-
     private void applyGridConstraints(int[][] ids, int spacing, int topAnchorId) {
         ConstraintSet set = new ConstraintSet();
         set.clone(mainLayout);
@@ -92,7 +91,6 @@ public class GameView {
         }
         set.applyTo(mainLayout);
     }
-
     public void createCurrentLevelView(String value, String label) {
         ConstraintLayout container = new ConstraintLayout(context);
         int containerId = View.generateViewId();
@@ -173,7 +171,7 @@ public class GameView {
         mainSet.connect(containerId, ConstraintSet.START, mainLayout.getId(), ConstraintSet.START, 2);
         mainSet.applyTo(mainLayout);
     }
-    public void createMovesMade(String value, String label) {
+    public void createMovesMadeVIew(String value, String label) {
         ConstraintLayout container = new ConstraintLayout(context);
         int containerId = View.generateViewId();
         container.setId(containerId);
@@ -217,7 +215,7 @@ public class GameView {
         return mainLayout.getId();
     }
 
-    public void createThreeHeadersHorizontally(String[] values, String[] labels) {
+    public void intrp values, String labels) {
 //
     }
 }
