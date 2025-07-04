@@ -18,7 +18,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
-        this.levelCount = 0;
+        this.levelCount = 1;
     }
 
     @Override

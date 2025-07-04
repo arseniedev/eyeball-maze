@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">EyeBall Maze</string>
-    <string name="todo">TODO</string>
     <string name="msg">Programmatically created UI views</string>
 
     <string name="label_current_level">Current Level</string>
