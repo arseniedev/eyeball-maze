@@ -74,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Legacy ImageView (Optional)
-    private ImageView createConfiguredImageView() {
-        ImageView imageView = new ImageView(this);
-        imageView.setId(View.generateViewId());
-        imageView.setImageResource(R.drawable.snapchat);
-        int imageSize = calculateImageViewSize();
-        imageView.setLayoutParams(new ConstraintLayout.LayoutParams(imageSize, imageSize));
-        return imageView;
-    }
+//    private ImageView createConfiguredImageView() {
+//        ImageView imageView = new ImageView(this);
+//        imageView.setId(View.generateViewId());
+//        imageView.setImageResource(R.drawable.snapchat);
+//        int imageSize = calculateImageViewSize();
+//        imageView.setLayoutParams(new ConstraintLayout.LayoutParams(imageSize, imageSize));
+//        return imageView;
+//    }
 
     private void applyImageViewConstraints(ImageView imageView, int anchorViewId) {
         ConstraintSet constraintSet = new ConstraintSet();
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView createGridImageView(int sizePx) {
         ImageView imageView = new ImageView(this);
         imageView.setId(View.generateViewId());
-        imageView.setImageResource(R.drawable.snapchat);
+        imageView.setImageResource(R.drawable.line_full);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(sizePx, sizePx);
         imageView.setLayoutParams(params);
@@ -140,10 +140,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
         set.applyTo(mainLayout);
     }
-
     private int calculateImageViewSize() {
         WindowMetrics metrics = getWindowManager().getCurrentWindowMetrics();
         Insets insets = metrics.getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.systemBars());
