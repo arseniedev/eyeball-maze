@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
         // Configure constraints for the TextView
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(mainLayout);
-        constraintSet.connect(textView.getId(), ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 16);
-        constraintSet.connect(textView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 16);
+        constraintSet.connect(textView.getId(), ConstraintSet.TOP, mainLayout.getId(), ConstraintSet.TOP, 6);
+        constraintSet.connect(textView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 6);
         constraintSet.constrainHeight(textView.getId(), ConstraintSet.WRAP_CONTENT);
         constraintSet.constrainWidth(textView.getId(), ConstraintSet.WRAP_CONTENT);
         constraintSet.applyTo(mainLayout);
@@ -127,13 +127,13 @@ public class MainActivity extends AppCompatActivity {
          This calculates the width of an ImageView that should take up
          half of the available window width, excluding the insets.
          */
-        int imageViewWidth = width / 2;
+        int imageViewWidth = width / 7;
         imageView.setLayoutParams(new ConstraintLayout.LayoutParams(imageViewWidth, imageViewWidth));
         mainLayout.addView(imageView);
 
         constraintSet.clone(mainLayout);
         constraintSet.connect(imageView.getId(), ConstraintSet.TOP, textView.getId(), ConstraintSet.BOTTOM, 16);
-        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 0);
+        constraintSet.connect(imageView.getId(), ConstraintSet.END, mainLayout.getId(), ConstraintSet.END, 20);
         constraintSet.applyTo(mainLayout);
     }
 }
