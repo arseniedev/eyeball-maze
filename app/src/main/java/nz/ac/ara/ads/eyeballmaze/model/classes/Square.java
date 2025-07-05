@@ -28,4 +28,5 @@ public abstract class Square {
         return new int[] { this.row, this.col };
     }
 
+    public abstract boolean isCurrent();
 }

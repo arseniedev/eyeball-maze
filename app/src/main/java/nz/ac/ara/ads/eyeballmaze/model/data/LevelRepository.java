@@ -163,7 +163,7 @@ public class LevelRepository {
                 3,
                 16,
                 17,
-                2,
+                1,
                 Direction.UP,
                 squaresForLevel3
         ));

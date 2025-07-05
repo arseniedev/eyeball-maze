@@ -93,20 +93,14 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
             return;
         }
-//        Direction direction = levelData.eyeBallDirection();
-//        Direction direction = GAME.getEyeballDirection();
-//        Direction direction = Direction.UP;
         LOGGER.log(Level.INFO, "Setting Level " + currentLevel);
 
         GAME.addLevel(levelData.levelHeight(), levelData.levelWidth());
-//        GAME.setLevel(currentLevel);
-
         for (PlayableSquare square : levelData.squares()) {
             handleInitialMarker(square);
             handleCellAt(square);
         }
-
-        if (currentLevel >= maxLevel) {
+        if (currentLevel > maxLevel) {
             GAME.setLevel(1);
 //            GAME.getCompletedGoalCount();
             updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
@@ -128,8 +122,14 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         ImageView cell = findCell(square.row, square.col);
 
         if (cell != null) {
-            Drawable base = ContextCompat.getDrawable(this, drawableRes); // getDrawable(drawableRes);
-            Drawable overlay = getOverlay(square);
+            Drawable base = ContextCompat.getDrawable(this, drawableRes);
+            Drawable overlay = getOverlay(square); // move this outside if-block
+
+            if (square.isCurrent()) {
+                LOGGER.log(Level.INFO, "Currently at: row=" + square.row + ", col=" + square.col);
+                overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
+//                GAME.addEyeball(square.row, square.col, direction);
+            }
 
             applyDrawableToCell(cell, base, overlay, drawableRes);
             attachClickListener(cell, square);
@@ -137,9 +137,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             logMissingCell(square.row, square.col);
         }
     }
-//    private Drawable getDrawable(int resId) {
-//        return ContextCompat.getDrawable(this, resId);
-//    }
     private Drawable getOverlay(@NonNull PlayableSquare square) {
         Drawable overlay = null;
 
@@ -154,7 +151,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         return overlay;
     }
     private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {
-        if (overlay != null && base != null) {
+        if (overlay != null || base != null) {
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
             cell.setImageDrawable(layeredDrawable);
         } else {
@@ -162,7 +159,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         }
     }
 
-    private void attachClickListener(ImageView cell, PlayableSquare square) {
+    private void attachClickListener(@NonNull ImageView cell, PlayableSquare square) {
         cell.setOnClickListener(v -> handleCellClick(square));
     }
     private void logMissingCell(int row, int col) {
@@ -179,28 +176,19 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
 
         LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
 
-        // Check if the square is playable or empty
-        boolean isPlayable = GAME.getShapeAt(row, col) != null && GAME.getColorAt(row, col) != null;
-
-        // Increment move count
-//        GAME.moveCount++;
-
-        // Call validator methods (replace with actual method names)
-        boolean isValidMove = GAME.canMoveTo(row, col);
-        LOGGER.log(Level.INFO, "Is valid move: " + isValidMove);
-
-        // Optional: add feedback to UI
-        if (!isPlayable) {
-            Toast.makeText(this, "Empty square!", Toast.LENGTH_SHORT).show();
-        } else if (isValidMove) {
-            Toast.makeText(this, "Valid move!", Toast.LENGTH_SHORT).show();
-            GAME.moveTo(square.row, square.col);
-            GAME.moveCount++;
-            //update eyball
-        } else {
-            Toast.makeText(this, "Invalid move!", Toast.LENGTH_SHORT).show();
+        // 🧹 Remove eyeball from the previous current square
+        PlayableSquare previous = GAME.getCurrentSquare();
+        if (previous != null) {
+            previous.setCurrent(false);
+            handleCellAt(previous);  // Refresh UI for previous
         }
-        // Update move count display
+
+        // 🎯 Set new square as current and refresh UI
+        square.setCurrent(true);
+        handleCellAt(square);
+
+        // 🎮 Optionally track move count
+        GAME.moveCount++;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private ImageView findCell(int row, int col) {

@@ -18,6 +18,10 @@ public class PlayableSquare extends Square {
         this.isGoal = isGoal;
     }
 
+    public PlayableSquare() {
+
+    }
+
     @Override
     public Color getColor() {
         return this.color;
@@ -34,4 +38,12 @@ public class PlayableSquare extends Square {
     public void setCurrent(boolean current) {
         isCurrent = current;
     }
+
+//    public void setCurrent(PlayableSquare square) {
+//        if (this != null) {
+//            isCurrent =  setCurrent(false);
+//        }
+//        this = square;
+//        this.setCurrent(true);
+//    }
 }
