@@ -5,538 +5,674 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#160345"
     tools:context=".MainActivity">
 
     <!--Title Labels-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/gameTitle"
+        android:id="@+id/gameInstruction"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:adjustViewBounds="true"
         android:background="@color/colorTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        android:adjustViewBounds="true"
-        >
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible">
+
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/instructionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="30sp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
+                android:paddingStart="0.2dp"
+                android:paddingTop="0.2dp"
+                android:paddingEnd="0.2dp"
+                android:paddingBottom="0.2dp"
+                android:text="@string/game_instructions"
                 android:textColor="@android:color/white"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="RtlSymmetry" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--Top Labels-->
+
+    <!--The Board-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/statusSection"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="0dp"
+        android:adjustViewBounds="true"
         android:background="@color/colorHeader"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameTitle"
-        android:adjustViewBounds="true"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/gameInstruction"
+        tools:ignore="RtlSymmetry">
 
         <!--Current Level-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="26dp"
-            android:layout_marginBottom="5dp"
+            android:id="@+id/constraintLayout9"
+            android:layout_width="135dp"
+            android:layout_height="58dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout8"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="1dp">
 
             <TextView
                 android:id="@+id/currentLevel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_current_level"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/currentLevelValue" />
 
             <TextView
                 android:id="@+id/currentLevelValue"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="5dp"
                 android:text="0"
                 android:textSize="23sp"
+                app:layout_constraintBottom_toTopOf="@+id/currentLevel"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--Goals RemainingLevel-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
+            android:id="@+id/constraintLayout8"
+            android:layout_width="139dp"
+            android:layout_height="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout9"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/goalsRemaining"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_goals_remaining"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/goalsRemainingValue" />
 
             <TextView
                 android:id="@+id/goalsRemainingValue"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="5dp"
                 android:text="0"
                 android:textSize="23sp"
+                app:layout_constraintBottom_toTopOf="@+id/goalsRemaining"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--Moves Made-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/constraintLayout10"
+            android:layout_width="136dp"
             android:layout_height="58dp"
-            android:layout_marginEnd="26dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5">
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout8"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/movesMade"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_moves_made"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movesMadeValue" />
 
             <TextView
                 android:id="@+id/movesMadeValue"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="5dp"
                 android:text="0"
                 android:textSize="23sp"
+                app:layout_constraintBottom_toTopOf="@+id/movesMade"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--The Board-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
         android:id="@+id/gameBoard"
-        android:padding="12dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorBoard"
-        app:layout_constraintTop_toBottomOf="@id/statusSection"
+        android:background="#160345"
         app:layout_constraintBottom_toTopOf="@id/bottomSection"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintHorizontal_bias="0.5">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusSection">
         <!--ROW 1-->
+
         <ImageView
             android:id="@+id/cellGrid0"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
             android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
             android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid4"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/line_none"
-            />
-        <ImageView
-            android:id="@+id/cellGrid1"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:src="@drawable/line_bottom"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid0"
-            app:srcCompat="@drawable/line_none"
-            />
-        <ImageView
-            android:id="@+id/cellGrid2"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid1"
-            app:srcCompat="@drawable/shape_flower_red"
-            />
-        <ImageView
-            android:id="@+id/cellGrid3"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid2"
-            app:srcCompat="@drawable/line_none"
-            />
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/line_none" />
 
-        <!--ROW 2-->
-        <ImageView
-            android:id="@+id/cellGrid4"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/shape_cross_blue"
-            />
-        <ImageView
-            android:id="@+id/cellGrid5"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid1"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid4"
-            app:srcCompat="@drawable/shape_flower_yellow"
-            />
-        <ImageView
-            android:id="@+id/cellGrid6"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid2"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid5"
-            app:srcCompat="@drawable/shape_diamond_yellow"
-            />
-        <ImageView
-            android:id="@+id/cellGrid7"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid3"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid6"
-            app:srcCompat="@drawable/shape_cross_green"
-            />
-
-        <!--ROW 3-->
-        <ImageView
-            android:id="@+id/cellGrid8"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/shape_flower_green"
-            />
-        <ImageView
-            android:id="@+id/cellGrid9"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid5"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid8"
-            app:srcCompat="@drawable/shape_star_red"
-            />
-        <ImageView
-            android:id="@+id/cellGrid10"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid6"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid9"
-            app:srcCompat="@drawable/shape_star_green"
-            />
-        <ImageView
-            android:id="@+id/cellGrid11"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid7"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid10"
-            app:srcCompat="@drawable/shape_diamond_yellow"
-            />
-
-        <!--ROW 4-->
-        <ImageView
-            android:id="@+id/cellGrid12"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid8"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/shape_flower_red"
-            />
-        <ImageView
-            android:id="@+id/cellGrid13"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid9"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid12"
-            app:srcCompat="@drawable/shape_flower_blue"
-            />
-        <ImageView
-            android:id="@+id/cellGrid14"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid10"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid13"
-            app:srcCompat="@drawable/shape_star_red"
-            />
-        <ImageView
-            android:id="@+id/cellGrid15"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid11"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid14"
-            app:srcCompat="@drawable/shape_flower_green"
-            />
-
-        <!--ROW 5-->
-        <ImageView
-            android:id="@+id/cellGrid16"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid12"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/shape_star_blue"
-            />
-        <ImageView
-            android:id="@+id/cellGrid17"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid13"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid16"
-            app:srcCompat="@drawable/shape_diamond_red"
-            />
-        <ImageView
-            android:id="@+id/cellGrid18"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid14"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid17"
-            app:srcCompat="@drawable/shape_flower_blue"
-            />
-        <ImageView
-            android:id="@+id/cellGrid19"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid15"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid18"
-            app:srcCompat="@drawable/shape_diamond_blue"
-            />
-        <!--ROW 6-->
-        <ImageView
-            android:id="@+id/cellGrid20"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid16"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/line_none"
-            />
-        <ImageView
-            android:id="@+id/cellGrid21"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
-            android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid17"
-            app:layout_constraintStart_toEndOf="@+id/cellGrid20"
-            app:srcCompat="@drawable/shape_diamond_blue"
-            />
         <ImageView
             android:id="@+id/cellGrid22"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
             android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid18"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid23"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toEndOf="@+id/cellGrid21"
-            app:srcCompat="@drawable/line_none"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid18"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/line_none" />
+
         <ImageView
             android:id="@+id/cellGrid23"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            android:scaleType="fitXY"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_marginEnd="29dp"
             android:adjustViewBounds="true"
-            app:layout_constraintHorizontal_chainStyle="spread"
             android:contentDescription="@string/grid_desc"
-            app:layout_constraintTop_toBottomOf="@+id/cellGrid19"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toEndOf="@+id/cellGrid22"
-            app:srcCompat="@drawable/line_none"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid19"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/line_none" />
+
+        <ImageView
+            android:id="@+id/cellGrid21"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid22"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid20"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid17"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_diamond_blue" />
+
+        <ImageView
+            android:id="@+id/cellGrid16"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid20"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid17"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid12"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_star_blue" />
+
+        <ImageView
+            android:id="@+id/cellGrid20"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid21"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid16"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/line_none" />
+
+        <ImageView
+            android:id="@+id/cellGrid17"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid21"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid18"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid16"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid13"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_diamond_red" />
+
+        <ImageView
+            android:id="@+id/cellGrid18"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid22"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid19"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid17"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid14"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_flower_blue" />
+
+        <ImageView
+            android:id="@+id/cellGrid19"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="29dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid23"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid18"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid15"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_diamond_blue" />
+
+        <ImageView
+            android:id="@+id/cellGrid15"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="29dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid19"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid14"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid11"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_flower_green" />
+
+        <ImageView
+            android:id="@+id/cellGrid14"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid18"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid15"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid13"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid10"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_star_red" />
+
+        <ImageView
+            android:id="@+id/cellGrid13"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid17"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid14"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid12"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid9"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_flower_blue" />
+
+        <ImageView
+            android:id="@+id/cellGrid12"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid16"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid13"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid8"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_flower_red" />
+
+        <ImageView
+            android:id="@+id/cellGrid8"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid12"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid9"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid4"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_flower_green" />
+
+        <ImageView
+            android:id="@+id/cellGrid9"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid13"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid8"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid5"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_star_red" />
+
+        <ImageView
+            android:id="@+id/cellGrid10"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid14"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid11"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid9"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid6"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_star_green" />
+
+        <ImageView
+            android:id="@+id/cellGrid11"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="29dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid15"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid10"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid7"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_diamond_yellow" />
+
+        <ImageView
+            android:id="@+id/cellGrid7"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="29dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid11"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid6"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid3"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_cross_green" />
+
+        <ImageView
+            android:id="@+id/cellGrid6"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid10"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid5"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid2"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_diamond_yellow" />
+
+        <ImageView
+            android:id="@+id/cellGrid5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid9"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid4"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid1"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_flower_yellow" />
+
+        <ImageView
+            android:id="@+id/cellGrid4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid8"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cellGrid0"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/shape_cross_blue" />
+
+        <ImageView
+            android:id="@+id/cellGrid2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid6"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/shape_flower_red" />
+
+        <ImageView
+            android:id="@+id/cellGrid3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="29dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid7"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/line_none" />
+
+        <ImageView
+            android:id="@+id/cellGrid1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/grid_desc"
+            android:scaleType="fitXY"
+            android:src="@drawable/line_bottom"
+            app:layout_constraintBottom_toTopOf="@+id/cellGrid5"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/cellGrid2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cellGrid0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/line_none" />
+
+        <!--ROW 2-->
+
+        <!--ROW 3-->
+
+        <!--ROW 4-->
+
+        <!--ROW 5-->
+
+        <!--ROW 6-->
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="cellGrid22,cellGrid23,cellGrid21,cellGrid16,cellGrid20,cellGrid17,cellGrid18,cellGrid19,cellGrid15,cellGrid14,cellGrid13,cellGrid12,cellGrid8,cellGrid9,cellGrid10,cellGrid11,cellGrid7,cellGrid6,cellGrid5,cellGrid0,cellGrid4,cellGrid1,cellGrid2,cellGrid3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--Bottom Labels-->
@@ -545,28 +681,27 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
 
-        app:layout_constraintHorizontal_bias="0.027"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        android:background="@color/colorPrimary"
         android:adjustViewBounds="true"
-        >
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent">
+
         <Button
             android:id="@+id/button_start"
             android:layout_width="180dp"
             android:layout_height="50dp"
 
+            android:background="@color/colorStartButton"
             android:text="@string/label_button_start"
             android:textColor="@android:color/white"
-            android:background="@color/colorStartButton"
 
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
