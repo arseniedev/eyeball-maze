@@ -1,6 +1,7 @@
 package nz.ac.ara.ads.eyeballmaze;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -8,6 +9,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
+import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
@@ -26,6 +28,7 @@ import java.util.*;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
@@ -107,7 +110,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             updateStatusViews(currentLevel, levelData.totalGoalCount());
         }
     }
-    private void handleInitialMarker(PlayableSquare square) {
+    private void handleInitialMarker(@NonNull PlayableSquare square) {
         System.out.println("  Shape: " + square.getShape() +
                 ", Color: " + square.getColor() +
                 ", Goal: " + square.isGoal +
@@ -115,7 +118,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
 
         GAME.addSquare(square, square.row, square.col);
     }
-    private void handleCellAt(PlayableSquare square) {
+    private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
         ImageView cell = findCell(square.row, square.col);
 
@@ -125,8 +128,9 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
 
             if (GAME.hasGoalAt(square.row, square.col)) {
                 overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
-                if (overlay != null) overlay.setAlpha(200);
+                if (overlay != null) overlay.setAlpha(100);
             } else if (square.isCurrent()) {
+                GAME.addEyeball(square.row, square.col, Direction.UP);
                 overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
             }
 
@@ -136,6 +140,9 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             } else {
                 cell.setImageResource(drawableRes);
             }
+
+            // 🔘 Add Click Listener here
+            cell.setOnClickListener(v -> handleCellClick(square));
         } else {
             LOGGER.log(Level.WARNING, "Cell not found at: [" + square.row + "][" + square.col + "]");
         }
@@ -143,6 +150,34 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     private void updateStatusViews(int currentLevel, int goalCount) {
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
         updateTextView(R.id.goalsRemainingValue, String.valueOf(goalCount));
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+    }
+    private void handleCellClick(PlayableSquare square) {
+        int row = square.row;
+        int col = square.col;
+
+        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
+
+        // Check if the square is playable or empty
+        boolean isPlayable = GAME.getShapeAt(row, col) != null && GAME.getColorAt(row, col) != null;
+
+        // Increment move count
+        GAME.moveCount++;
+
+        // Call validator methods (replace with actual method names)
+        boolean isValidMove = GAME.canMoveTo(row, col);
+        LOGGER.log(Level.INFO, "Is valid move: " + isValidMove);
+
+        // Optional: add feedback to UI
+        if (!isPlayable) {
+            Toast.makeText(this, "Empty square!", Toast.LENGTH_SHORT).show();
+        } else if (isValidMove) {
+            Toast.makeText(this, "Valid move!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Invalid move!", Toast.LENGTH_SHORT).show();
+        }
+
+        // Update move count display
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private ImageView findCell(int row, int col) {
