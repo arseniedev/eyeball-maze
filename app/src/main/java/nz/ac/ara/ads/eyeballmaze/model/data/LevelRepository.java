@@ -16,7 +16,7 @@ public class LevelRepository {
     static {
         // Squares for level 1
         List<PlayableSquare> squaresForLevel1 = new ArrayList<>();
-        squaresForLevel1.add(new PlayableSquare(0, 2, Color.RED, Shape.FLOWER, true, true));
+        squaresForLevel1.add(new PlayableSquare(0, 2, Color.RED, Shape.FLOWER, true, false));
 
         squaresForLevel1.add(new PlayableSquare(1, 0, Color.BLUE, Shape.CROSS, false, false));
         squaresForLevel1.add(new PlayableSquare(1, 1, Color.YELLOW, Shape.FLOWER, false, false));
@@ -38,7 +38,7 @@ public class LevelRepository {
         squaresForLevel1.add(new PlayableSquare(4, 2, Color.BLUE, Shape.FLOWER, false, false));
         squaresForLevel1.add(new PlayableSquare(4, 3, Color.BLUE, Shape.DIAMOND, false, false));
 
-        squaresForLevel1.add(new PlayableSquare(5, 1, Color.BLUE, Shape.DIAMOND, false, false));
+        squaresForLevel1.add(new PlayableSquare(5, 1, Color.BLUE, Shape.DIAMOND, false, true));
 
         LEVELS.put("level1", new LevelData(
                 1,
@@ -50,7 +50,7 @@ public class LevelRepository {
 
         // Squares for level 2
         List<PlayableSquare> squaresForLevel2 = new ArrayList<>();
-        squaresForLevel2.add(new PlayableSquare(0, 2, Color.GREEN, Shape.CROSS, true, true));
+        squaresForLevel2.add(new PlayableSquare(0, 2, Color.GREEN, Shape.CROSS, true, false));
 
         squaresForLevel2.add(new PlayableSquare(1, 0, Color.RED, Shape.CROSS, false, false));
         squaresForLevel2.add(new PlayableSquare(1, 1, Color.RED, Shape.STAR, false, false));
@@ -80,7 +80,7 @@ public class LevelRepository {
         squaresForLevel2.add(new PlayableSquare(4, 4, Color.GREEN, Shape.FLOWER, false, false));
         squaresForLevel2.add(new PlayableSquare(4, 5, Color.BLUE, Shape.FLOWER, false, false));
 
-        squaresForLevel2.add(new PlayableSquare(5, 1, Color.YELLOW, Shape.FLOWER, false, false));
+        squaresForLevel2.add(new PlayableSquare(5, 1, Color.YELLOW, Shape.FLOWER, false, true));
 
         LEVELS.put("level2", new LevelData(
                 2,
