@@ -44,9 +44,25 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
 
     static {
         shapeColorDrawableMap.put("STAR_RED", R.drawable.shape_star_red);
+        shapeColorDrawableMap.put("STAR_BLUE", R.drawable.shape_star_blue);
+        shapeColorDrawableMap.put("STAR_YELLOW", R.drawable.shape_star_yellow);
+        shapeColorDrawableMap.put("STAR_GREEN", R.drawable.shape_star_green);
+
+        shapeColorDrawableMap.put("CROSS_RED", R.drawable.shape_cross_red);
         shapeColorDrawableMap.put("CROSS_BLUE", R.drawable.shape_cross_blue);
+        shapeColorDrawableMap.put("CROSS_YELLOW", R.drawable.shape_cross_yellow);
+        shapeColorDrawableMap.put("CROSS_GREEN", R.drawable.shape_cross_green);
+
+        shapeColorDrawableMap.put("DIAMOND_RED", R.drawable.shape_diamond_red);
+        shapeColorDrawableMap.put("DIAMOND_BLUE", R.drawable.shape_diamond_blue);
+        shapeColorDrawableMap.put("DIAMOND_YELLOW", R.drawable.shape_diamond_yellow);
         shapeColorDrawableMap.put("DIAMOND_GREEN", R.drawable.shape_diamond_green);
+
+        shapeColorDrawableMap.put("FLOWER_RED", R.drawable.shape_flower_red);
+        shapeColorDrawableMap.put("FLOWER_BLUE", R.drawable.shape_flower_blue);
         shapeColorDrawableMap.put("FLOWER_YELLOW", R.drawable.shape_flower_yellow);
+        shapeColorDrawableMap.put("FLOWER_GREEN", R.drawable.shape_flower_green);
+
         shapeColorDrawableMap.put("EMPTY", R.drawable.line_none);
     }
     int[][] gridIds = {
@@ -74,50 +90,92 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             return insets;
         });
     }
-    public void handleStartButtonClick(View view) {
-        LOGGER.log(Level.INFO, "Clear Grid");
-        clearGrid();
-        GAME.addLevel(15,11);
+//    public void handleStartButtonClick(View view) {
+//        LOGGER.log(Level.INFO, "Clear Grid");
+//        clearGrid();
+//        LevelData levelData = LevelRepository.LEVELS.get(GAME.getLevelCount());
+//
+//        LOGGER.log(Level.INFO, "Setting level:");
+//
+//
+//        if (levelData == null) {
+//            LOGGER.log(Level.WARNING, "Level not found: " + GAME.getLevelCount());
+//            return;
+//        }
+//        GAME.addLevel(15,11);
+//        for (PlayableSquare square : levelData.squares()) {
+//            int row = square.row;
+//            int col = square.col;
+//
+////            int drawableRes = getDrawableFrom(Shape.CROSS, Color.RED);
+//            int drawableRes = getDrawableFrom(GAME.getShapeAt(row,col), GAME.getColorAt(row,col));
+//
+//            ImageView cell = findViewById(gridIds[row][col]);
+//            if (cell != null) {
+//                cell.setImageResource(drawableRes);
+//            }
+//        }
+//        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
+//        updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getGoalCount()));
+//    }
+public void handleStartButtonClick(View view) {
+    LOGGER.log(Level.INFO, "Clear Grid");
+    clearGrid();
+    LevelData levelData = LevelRepository.LEVELS.get("level"+GAME.getLevelCount());
 
-        LOGGER.log(Level.INFO, "Setting level:");
 
-        LevelData levelData = LevelRepository.LEVELS.get(GAME.getLevelCount());
-        if (levelData == null) {
-            LOGGER.log(Level.WARNING, "Level not found: " + GAME.getLevelCount());
-            return;
-        }
-        for (PlayableSquare square : levelData.squares()) {
-            int row = square.row;
-            int col = square.col;
+    if (levelData == null) {
+        LOGGER.log(Level.WARNING, "Level not found: " + GAME.getLevelCount());
+        return;
+    } else {
 
-            GAME.addSquare(square, row,col);
-            LOGGER.log(Level.INFO, "Color: " + square.getColor() +
-                    ", Shape: " + square.getShape() +
-                    ", Is Goal: " + square.isGoal +
-                    ", Coordinates: [" + square.row + ", " + square.col + "]");
+        int currentLevel = levelData.levelNumber();
+        int goalCount = levelData.totalGoalCount();
 
-//            Shape shape = square.getShape();
-//            Color color = square.getColor();
+        LOGGER.log(Level.INFO, "Setting Level " + currentLevel);
 
-//            GAME.setShapeAt(row, col, shape);
-//            GAME.setColorAt(row, col, color);
 
-//            int drawableRes = getDrawableFrom(Shape.CROSS, Color.RED);
-            int drawableRes = getDrawableFrom(GAME.getShapeAt(row,col), GAME.getColorAt(row,col));
+        int height = levelData.levelHeight();
+        int width = levelData.levelWidth();
 
-            ImageView cell = findViewById(gridIds[row][col]);
-            if (cell != null) {
-                cell.setImageResource(drawableRes);
+        // Add level dimensions to GAME
+        GAME.addLevel(height, width);
+
+        for (Map.Entry<String, LevelData> entry : LevelRepository.LEVELS.entrySet()) {
+            String key = entry.getKey();
+            LevelData data = entry.getValue();
+
+            System.out.println("Key: " + key + ", Level: " + data.levelNumber());
+            for (PlayableSquare square : data.squares()) {
+                System.out.println("  Shape: " + square.getShape() +
+                        ", Color: " + square.getColor() +
+                        ", Goal: " + square.isGoal +
+                        ", At [" + square.row + "," + square.col + "]");
+
+                // Add square to game state
+                GAME.addSquare(square, square.row, square.col);
+
+                // Set drawable based on shape and color
+                int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
+
+                // Set drawable to ImageView
+                ImageView cell = findViewById(gridIds[square.row][square.col]);
+                if (cell != null) {
+                    cell.setImageResource(drawableRes);
+                } else {
+                    LOGGER.log(Level.WARNING, "Cell not found at: [" + square.row + "][" + square.col + "]");
+                }
             }
         }
 
-        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-        updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getGoalCount()));
     }
+}
     private int getDrawableFrom(Shape shape, Color color) {
+
         String key = (shape != null && color != null)
                 ? shape.name() + "_" + color.name()
                 : "EMPTY";
+        LOGGER.log(Level.WARNING, "DrawableKey: " + key);
 
         return shapeColorDrawableMap.getOrDefault(key, R.drawable.line_none);
     }

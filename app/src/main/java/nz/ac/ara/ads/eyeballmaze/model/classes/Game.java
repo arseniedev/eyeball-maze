@@ -23,7 +23,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
-        this.levelNumber = 0;
+        this.levelNumber = 1;
     }
 
     @Override
@@ -50,6 +50,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public void setLevel(int newLevel) {
+//        List<PlayableSquare> squaresForLevel = LevelRepository.SQUARES_MAP.get(currentLevel);
         LevelData levelData = LevelRepository.LEVELS.get(levelNumber);
         if (levelData == null) {
             System.out.println("Level not found: " + levelNumber);
