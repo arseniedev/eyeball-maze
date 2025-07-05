@@ -1,8 +1,11 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
+import android.widget.ImageView;
+
 import java.util.*;
 import java.util.logging.Logger;
 
+import nz.ac.ara.ads.eyeballmaze.R;
 import nz.ac.ara.ads.eyeballmaze.enums.*;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
@@ -73,7 +76,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(java.util.logging.Level.INFO, "Setting level count: " + this.levelNumber);
         }
     }
-
     @Override
     public void addGoal(int row, int column) {
         try {
@@ -145,8 +147,15 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public void addSquare(Square square, int row, int column) {
         try {
             if (this.isValidCoordinate(row,column)) {
+//                Metadata
                 String coordinateKey = this.generateCoordinateKey(row,column);
+
                 this.squareCollection.put(coordinateKey,square);
+
+//                //Drawable
+//                ImageView cell = findViewById(gridIds[row][col]);
+//                cell.setImageResource(R.drawable.shape_cross_yellow); // replace with your desired image
+//
 
                 StringBuilder squareAddedStatus = new StringBuilder(
                         """
@@ -155,11 +164,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                         Color: %s
                         Key %s
                         """
-//                                .formatted(
-//                                square.getShape(),
-//                                square.getColor(),
-//                                coordinateKey
-//                        )
                 );
 
                 LOGGER.log(java.util.logging.Level.INFO, String.valueOf(squareAddedStatus));
@@ -181,6 +185,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         }
     }
 
+//    private void getDrawableFromSquare(Square square) {
+//        Shape shape = square.getShape();
+//        Color color = square.getColor();
+//
+////        if(shape==Shape.CIRCLE)
+//    }
     @Override
     public void addEyeball(int currentY, int currentX, Direction direction) {
         try {

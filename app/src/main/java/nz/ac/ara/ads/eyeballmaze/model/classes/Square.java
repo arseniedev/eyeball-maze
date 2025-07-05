@@ -2,6 +2,8 @@ package nz.ac.ara.ads.eyeballmaze.model.classes;
 
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 
 public abstract class Square {
     public boolean isGoal;

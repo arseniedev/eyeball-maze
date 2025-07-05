@@ -10,7 +10,11 @@ import androidx.core.view.WindowInsetsCompat;
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
+import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Square;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
+
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +40,15 @@ public class MainActivity extends AppCompatActivity {
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 //    Button startButton = findViewById(R.id.button_start);
+public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
 
+    static {
+        shapeColorDrawableMap.put("STAR_RED", R.drawable.shape_star_red);
+        shapeColorDrawableMap.put("CROSS_BLUE", R.drawable.shape_cross_blue);
+        shapeColorDrawableMap.put("DIAMOND_GREEN", R.drawable.shape_diamond_green);
+        shapeColorDrawableMap.put("FLOWER_YELLOW", R.drawable.shape_flower_yellow);
+        shapeColorDrawableMap.put("EMPTY", R.drawable.line_none);
+    }
     int[][] gridIds = {
             { R.id.cellGrid_1_1, R.id.cellGrid_1_2, R.id.cellGrid_1_3, R.id.cellGrid_1_4, R.id.cellGrid_1_5, R.id.cellGrid_1_6, R.id.cellGrid_1_7 },
             { R.id.cellGrid_2_1, R.id.cellGrid_2_2, R.id.cellGrid_2_3, R.id.cellGrid_2_4, R.id.cellGrid_2_5, R.id.cellGrid_2_6, R.id.cellGrid_2_7 },
@@ -65,24 +77,50 @@ public class MainActivity extends AppCompatActivity {
     public void handleStartButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
         clearGrid();
-        GAME.addLevel(5,2);
+        GAME.addLevel(15,11);
 
         LOGGER.log(Level.INFO, "Setting level:");
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 4; col++) {
-                ImageView cell = findViewById(gridIds[row][col]);
-                    cell.setImageResource(R.drawable.shape_cross_yellow); // replace with your desired image
+
+        LevelData levelData = LevelRepository.LEVELS.get(GAME.getLevelCount());
+        if (levelData == null) {
+            LOGGER.log(Level.WARNING, "Level not found: " + GAME.getLevelCount());
+            return;
+        }
+        for (PlayableSquare square : levelData.squares()) {
+            int row = square.row;
+            int col = square.col;
+
+            GAME.addSquare(square, row,col);
+            LOGGER.log(Level.INFO, "Color: " + square.getColor() +
+                    ", Shape: " + square.getShape() +
+                    ", Is Goal: " + square.isGoal +
+                    ", Coordinates: [" + square.row + ", " + square.col + "]");
+
+//            Shape shape = square.getShape();
+//            Color color = square.getColor();
+
+//            GAME.setShapeAt(row, col, shape);
+//            GAME.setColorAt(row, col, color);
+
+//            int drawableRes = getDrawableFrom(Shape.CROSS, Color.RED);
+            int drawableRes = getDrawableFrom(GAME.getShapeAt(row,col), GAME.getColorAt(row,col));
+
+            ImageView cell = findViewById(gridIds[row][col]);
+            if (cell != null) {
+                cell.setImageResource(drawableRes);
             }
         }
-//        GAME.setLevel(1);
 
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getGoalCount()));
     }
-//    private void initialiseGame() {
-////        GAME.addLevel(8,7);
-////        GAME.addGoal(0,0);
-//    }
+    private int getDrawableFrom(Shape shape, Color color) {
+        String key = (shape != null && color != null)
+                ? shape.name() + "_" + color.name()
+                : "EMPTY";
+
+        return shapeColorDrawableMap.getOrDefault(key, R.drawable.line_none);
+    }
     private void clearGrid() {
         // Clear grid first (optional)
         for (int row = 0; row < 8; row++) {
@@ -93,12 +131,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void getDrawableFromSquare(Square square) {
-        Shape shape = square.getShape();
-        Color color = square.getColor();
-
-//        if(shape==Shape.CIRCLE)
-    }
 
     public void updateTextView(int viewId, String newText) {
         TextView textView = findViewById(viewId);
