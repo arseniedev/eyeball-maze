@@ -132,7 +132,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return row + "," + column;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+//    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     @Override
     public void addSquare(Square square, int row, int column) {
         try {
@@ -146,11 +146,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                         Shape: %s
                         Color: %s
                         Key %s
-                        """.formatted(
-                                square.getShape(),
-                                square.getColor(),
-                                coordinateKey
-                        )
+                        """
+//                                .formatted(
+//                                square.getShape(),
+//                                square.getColor(),
+//                                coordinateKey
+//                        )
                 );
 
                 LOGGER.log(Level.INFO, String.valueOf(squareAddedStatus));
