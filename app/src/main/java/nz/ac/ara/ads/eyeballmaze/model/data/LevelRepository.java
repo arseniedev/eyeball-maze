@@ -50,29 +50,37 @@ public class LevelRepository {
 
         // Squares for level 2
         List<PlayableSquare> squaresForLevel2 = new ArrayList<>();
-        squaresForLevel2.add(new PlayableSquare(0, 2, Color.GREEN, Shape.FLOWER, true));
+        squaresForLevel2.add(new PlayableSquare(0, 2, Color.GREEN, Shape.CROSS, true));
 
-        squaresForLevel2.add(new PlayableSquare(1, 0, Color.BLUE, Shape.CROSS, false));
-        squaresForLevel2.add(new PlayableSquare(1, 1, Color.BLUE, Shape.FLOWER, false));
-        squaresForLevel2.add(new PlayableSquare(1, 2, Color.BLUE, Shape.DIAMOND, false));
-        squaresForLevel2.add(new PlayableSquare(1, 3, Color.GREEN, Shape.CROSS, false));
+        squaresForLevel2.add(new PlayableSquare(1, 0, Color.RED, Shape.CROSS, false));
+        squaresForLevel2.add(new PlayableSquare(1, 1, Color.RED, Shape.STAR, false));
+        squaresForLevel2.add(new PlayableSquare(1, 2, Color.YELLOW, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(1, 3, Color.BLUE, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(1, 4, Color.RED, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(1, 5, Color.YELLOW, Shape.STAR, false));
 
-        squaresForLevel2.add(new PlayableSquare(2, 0, Color.GREEN, Shape.FLOWER, false));
-        squaresForLevel2.add(new PlayableSquare(2, 1, Color.RED, Shape.STAR, false));
-        squaresForLevel2.add(new PlayableSquare(2, 2, Color.GREEN, Shape.STAR, false));
-        squaresForLevel2.add(new PlayableSquare(2, 3, Color.YELLOW, Shape.FLOWER, false));
+        squaresForLevel2.add(new PlayableSquare(2, 0, Color.YELLOW, Shape.STAR, false));
+        squaresForLevel2.add(new PlayableSquare(2, 1, Color.YELLOW, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(2, 2, Color.RED, Shape.STAR, false));
+        squaresForLevel2.add(new PlayableSquare(2, 3, Color.GREEN, Shape.CROSS, false));
+        squaresForLevel2.add(new PlayableSquare(2, 4, Color.GREEN, Shape.STAR, false));
+        squaresForLevel2.add(new PlayableSquare(2, 5, Color.GREEN, Shape.FLOWER, false));
 
         squaresForLevel2.add(new PlayableSquare(3, 0, Color.RED, Shape.FLOWER, false));
-        squaresForLevel2.add(new PlayableSquare(3, 1, Color.GREEN, Shape.DIAMOND, false));
-        squaresForLevel2.add(new PlayableSquare(3, 2, Color.RED, Shape.STAR, false));
-        squaresForLevel2.add(new PlayableSquare(3, 3, Color.YELLOW, Shape.STAR, false));
+        squaresForLevel2.add(new PlayableSquare(3, 1, Color.RED, Shape.CROSS, false));
+        squaresForLevel2.add(new PlayableSquare(3, 2, Color.GREEN, Shape.STAR, false));
+        squaresForLevel2.add(new PlayableSquare(3, 3, Color.BLUE, Shape.FLOWER, false));
+        squaresForLevel2.add(new PlayableSquare(3, 4, Color.YELLOW, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(3, 5, Color.YELLOW, Shape.CROSS, false));
 
-        squaresForLevel2.add(new PlayableSquare(4, 0, Color.GREEN, Shape.CROSS, false));
-        squaresForLevel2.add(new PlayableSquare(4, 1, Color.RED, Shape.STAR, false));
-        squaresForLevel2.add(new PlayableSquare(4, 2, Color.BLUE, Shape.FLOWER, false));
-        squaresForLevel2.add(new PlayableSquare(4, 3, Color.GREEN, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(4, 0, Color.GREEN, Shape.STAR, false));
+        squaresForLevel2.add(new PlayableSquare(4, 1, Color.RED, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(4, 2, Color.YELLOW, Shape.CROSS, false));
+        squaresForLevel2.add(new PlayableSquare(4, 3, Color.YELLOW, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(4, 4, Color.GREEN, Shape.FLOWER, false));
+        squaresForLevel2.add(new PlayableSquare(4, 5, Color.BLUE, Shape.FLOWER, false));
 
-        squaresForLevel2.add(new PlayableSquare(5, 1, Color.BLUE, Shape.DIAMOND, false));
+        squaresForLevel2.add(new PlayableSquare(5, 1, Color.YELLOW, Shape.FLOWER, false));
 
         LEVELS.put("level2", new LevelData(
                 2,
