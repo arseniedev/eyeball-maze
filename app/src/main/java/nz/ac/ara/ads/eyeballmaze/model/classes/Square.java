@@ -7,7 +7,8 @@ public abstract class Square {
     public boolean isGoal;
     protected  Color color;
     protected Shape shape;
-
+    public int row;
+    public int col;
     public Square() {
         this.color = Color.BLANK;
         this.shape = Shape.BLANK;
@@ -19,6 +20,10 @@ public abstract class Square {
 
     public Shape getShape() {
         return this.shape;
+    }
+
+    public int[] getCoordinates() {
+        return new int[] { this.row, this.col };
     }
 
 }

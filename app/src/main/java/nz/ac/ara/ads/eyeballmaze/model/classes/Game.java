@@ -1,35 +1,32 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nz.ac.ara.ads.eyeballmaze.enums.*;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
 import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
-    protected GameLevel gameLevel;
+    protected Level gameLevel;
     EyeBall theEyeball;
-    protected int levelCount;
+    protected int levelNumber;
+    int completedGoalCount;
 
-    private final List<GameLevel> levelCollection =  new ArrayList<>();
+    private final List<Level> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
-        this.levelCount = 1;
+        this.levelNumber = 1;
     }
 
     @Override
     public void addLevel(int height, int width) {
-        this.gameLevel = new GameLevel(this.levelCount, height, width);
+        this.gameLevel = new Level(this.levelNumber, height, width);
         this.levelCollection.add(this.gameLevel);
-        this.levelCount ++;
+        this.levelNumber ++;
     }
 
     @Override
@@ -44,25 +41,25 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public int getLevelCount() {
-        return this.levelCount;
+        return this.levelNumber;
     }
 
     @Override
     public void setLevel(int newLevel) {
         try {
-            LOGGER.log(Level.INFO, "Setting level: " + newLevel);
+            LOGGER.log(java.util.logging.Level.INFO, "Setting level: " + newLevel);
 
-            this.levelCount = newLevel;
+            this.levelNumber = newLevel;
             this.gameLevel = this.levelCollection.get(newLevel);
 
-            LOGGER.log(Level.INFO, Message.OK.name());
+            LOGGER.log(java.util.logging.Level.INFO, Message.OK.name());
 
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         } catch(Exception unknown) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.UNKNOWN_EXCEPTION));
         } finally {
-            LOGGER.log(Level.INFO, "Setting level count: " + this.levelCount);
+            LOGGER.log(java.util.logging.Level.INFO, "Setting level count: " + this.levelNumber);
         }
     }
 
@@ -70,12 +67,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public void addGoal(int row, int column) {
         try {
             if (this.isValidCoordinate(row,column)) {
-                LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
+                LOGGER.log(java.util.logging.Level.INFO, "Adding a goal at: " + row + ", " + column);
                 Square square = this.getSquareAt(row, column);
                 if (square == null) {
                     square = new PlayableSquare();
                     this.addSquare(square, row, column);
-                    LOGGER.log(Level.INFO, "Empty PlayableSquare added for a goal");
+                    LOGGER.log(java.util.logging.Level.INFO, "Empty PlayableSquare added for a goal");
                 }
                 square.isGoal = true;
                 this.gameLevel.totalGoalCount++;
@@ -83,10 +80,10 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 throw new InvalidCoordinateException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
             }
         } catch (InvalidCoordinateException exception) {
-            LOGGER.log(Level.SEVERE, "Failed to add goal:" + exception);
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed to add goal:" + exception);
             throw new IllegalArgumentException(exception.getMessage());
         } finally {
-            LOGGER.log(Level.INFO, "Goal addition process performed");
+            LOGGER.log(java.util.logging.Level.INFO, "Goal addition process performed");
         }
     }
     private boolean isValidCoordinate(int row, int column) {
@@ -119,7 +116,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private Square getSquareAt(int row, int column) {
         Square square;
         String coordinateKey = this.generateCoordinateKey(row,column);
-        LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
+        LOGGER.log(java.util.logging.Level.INFO, "Getting square at: " + coordinateKey);
         square = this.squareCollection.get(coordinateKey);
 
         return square;
@@ -151,7 +148,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 //                        )
                 );
 
-                LOGGER.log(Level.INFO, String.valueOf(squareAddedStatus));
+                LOGGER.log(java.util.logging.Level.INFO, String.valueOf(squareAddedStatus));
 
 //                LOGGER.log(Level.INFO, "Square cell added." +
 //                        "\nShape: " + square.getShape() +
@@ -164,9 +161,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } catch (IllegalArgumentException  e) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }  catch (Exception unknown) {
-            LOGGER.log(Level.WARNING, ErrorCode.UNKNOWN_EXCEPTION.name(), unknown);
+            LOGGER.log(java.util.logging.Level.WARNING, ErrorCode.UNKNOWN_EXCEPTION.name(), unknown);
         } finally {
-            LOGGER.log(Level.INFO, "Square addition process performed");
+            LOGGER.log(java.util.logging.Level.INFO, "Square addition process performed");
         }
     }
 
@@ -174,7 +171,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public void addEyeball(int currentY, int currentX, Direction direction) {
         try {
             if (this.isValidCoordinate(currentY,currentX)) {
-                LOGGER.log(Level.INFO, "Creating an eyeball at: " + currentY + ", " + currentX);
+                LOGGER.log(java.util.logging.Level.INFO, "Creating an eyeball at: " + currentY + ", " + currentX);
                 this.theEyeball = new EyeBall(currentY, currentX, direction);
             } else {
                 throw new InvalidCoordinateException (String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
@@ -184,7 +181,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            LOGGER.log(Level.INFO, "Eyeball addition process performed");
+            LOGGER.log(java.util.logging.Level.INFO, "Eyeball addition process performed");
         }
     }
     @Override
@@ -205,7 +202,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     @Override
     public boolean canMoveTo(int newYDestination, int newXDestination) {
         boolean result = false;
-        LOGGER.log(Level.INFO, "Checking if canMoveTo at row: " + newYDestination + ", column: " + newXDestination);
+        LOGGER.log(java.util.logging.Level.INFO, "Checking if canMoveTo at row: " + newYDestination + ", column: " + newXDestination);
 
         Square square = this.getSquareAt(newYDestination, newXDestination);
 
@@ -233,10 +230,10 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         int currentX = theEyeball.currentXPosition;
         int currentY = theEyeball.currentYPosition;
 
-        LOGGER.log(Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
+        LOGGER.log(java.util.logging.Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
         Direction direction = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
 
-        LOGGER.log(Level.INFO, "Checking for direction: " + direction);
+        LOGGER.log(java.util.logging.Level.INFO, "Checking for direction: " + direction);
 
         boolean isNotBlank = true;
         boolean isMovingHorizontal =  direction == Direction.RIGHT|| direction == Direction.LEFT;
@@ -260,7 +257,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 }
             }
         } else {
-            LOGGER.log(Level.INFO, String.valueOf(Message.MOVING_DIAGONALLY));
+            LOGGER.log(java.util.logging.Level.INFO, String.valueOf(Message.MOVING_DIAGONALLY));
         }
         return isNotBlank;
     }
@@ -331,9 +328,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         String squareType = destinationSquare.getClass().getSimpleName();
 
         if(destinationSquare instanceof PlayableSquare) {
-            LOGGER.log(Level.INFO, "This is a " + squareType);
+            LOGGER.log(java.util.logging.Level.INFO, "This is a " + squareType);
 
-            LOGGER.log(Level.INFO, "Moving " + squareType + " to " + row + ", " + column);
+            LOGGER.log(java.util.logging.Level.INFO, "Moving " + squareType + " to " + row + ", " + column);
             this.theEyeball.updateEyeball(row,column);
 
             if (this.hasGoalAt(row,column)) {
@@ -342,7 +339,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 destinationSquare.isGoal = false;
             }
         } else {
-            LOGGER.log(Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
+            LOGGER.log(java.util.logging.Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
         }
     }
 

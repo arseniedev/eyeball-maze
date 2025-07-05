@@ -1,0 +1,21 @@
+[
+  {
+    "level": 1,
+    "goals": 1,
+    "squares": [
+      { "row": 0, "col": 1, "shape": "STAR", "color": "RED", "isGoal": true },
+      { "row": 2, "col": 3, "shape": "FLOWER", "color": "GREEN", "isGoal": false }
+    ]
+  },
+  {
+    "level": 2,
+    "goals":  2,
+    "squares": [
+      { "row": 1, "col": 1, "shape": "CROSS", "color": "BLUE", "isGoal": true },
+      { "row": 1, "col": 1, "shape": "STAR", "color": "BLUE", "isGoal": false },
+      { "row": 1, "col": 1, "shape": "DIAMOND", "color": "GREEN", "isGoal": false },
+      { "row": 1, "col": 1, "shape": "DIAMOND", "color": "RED", "isGoal": true },
+      { "row": 1, "col": 1, "shape": "FLOWER", "color": "RED", "isGoal": false }
+    ]
+  }
+]

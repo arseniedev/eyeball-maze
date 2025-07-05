@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import android.graphics.Bitmap;
 import android.icu.text.SymbolTable;
+import android.net.http.UploadDataProvider;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
@@ -47,11 +49,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     ImageView[][] cellGridImages = new ImageView[7][8];
-//    HashMap<ImageView, Square> newSquareCellMap = new HashMap<>();
 
-//    private int pastCellColmnRow = -1;
-
-//    private HashMap<Integer, Bitmap> selectedCell = new HashMap<>();
 
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
@@ -65,13 +63,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void handleStartButtonClick(View view) {
+        LOGGER.log(Level.INFO, "Clear Grid");
+        clearGrid();
         LOGGER.log(Level.INFO, "Setting level:");
-                for (int row = 0; row < 8; row++) {
-                    for (int col = 0; col < 4; col++) {
-                        ImageView cell = findViewById(gridIds[row][col]);
-                        cell.setImageResource(R.drawable.shape_cross_blue); // replace with your desired image
-                    }
-                }
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 4; col++) {
+                ImageView cell = findViewById(gridIds[row][col]);
+                    cell.setImageResource(R.drawable.shape_cross_yellow); // replace with your desired image
+            }
+        }
+
+        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
+    }
+    private void clearGrid() {
+        // Clear grid first (optional)
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 7; col++) {
+                ImageView cell = findViewById(gridIds[row][col]);
+                cell.setImageResource(R.drawable.line_none);
+            }
+        }
     }
 
     public void getDrawableFromSquare(Square square) {
@@ -79,5 +90,14 @@ public class MainActivity extends AppCompatActivity {
         Color color = square.getColor();
 
 //        if(shape==Shape.CIRCLE)
+    }
+
+    public void updateTextView(int viewId, String newText) {
+        TextView textView = findViewById(viewId);
+        if (textView != null) {
+            textView.setText(newText);
+        } else {
+            LOGGER.log(Level.WARNING, "View ID not found: " + viewId);
+        }
     }
 }
