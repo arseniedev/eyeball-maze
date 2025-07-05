@@ -108,6 +108,10 @@ public void handleStartButtonClick(View view) {
         ImageView cell = findViewById(gridIds[square.row][square.col]);
         if (cell != null) {
             cell.setImageResource(drawableRes);
+            // if clicked on invalid
+//            if(GAME.hasGoalAt(square.row, square.col)){
+//                cell.setImageResource(R.drawable.invalid_empty);
+//            }
         } else {
             LOGGER.log(Level.WARNING, "Cell not found at: [" + square.row + "][" + square.col + "]");
         }
