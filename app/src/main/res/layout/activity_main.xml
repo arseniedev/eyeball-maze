@@ -1173,6 +1173,7 @@
             android:text="@string/label_button_start"
 
             android:textColor="@android:color/white"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

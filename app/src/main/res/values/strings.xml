@@ -24,6 +24,6 @@
 
     <string name="game_instructions">Instructions:
 Use the eyeball character to reach every GOAL square by clicking on valid moves. You may move any distance horizontally or vertically without crossing blanks, but can only land on squares that match the starting square\'s color or symbol — and never move backward.</string>
-    <string name="label_button_start">Start Game</string>
+    <string name="label_button_start">SELECT GAME LEVEL</string>
     <string name="grid_desc">Grid</string>
 </resources>
