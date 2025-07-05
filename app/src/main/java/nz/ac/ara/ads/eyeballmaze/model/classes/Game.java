@@ -227,7 +227,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public boolean canMoveTo(int newYDestination, int newXDestination) {
-        boolean result = false;
+//        boolean result = false;
         LOGGER.log(java.util.logging.Level.INFO, "Checking if canMoveTo at row: " + newYDestination + ", column: " + newXDestination);
 
         Square square = this.getSquareAt(newYDestination, newXDestination);
@@ -243,7 +243,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
         int eyeballRow = this.theEyeball.currentYPosition;
         int eyeballColumn = this.theEyeball.currentXPosition;
-
 
         boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
         boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);

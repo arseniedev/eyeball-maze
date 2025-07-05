@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
+import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 
@@ -45,6 +46,7 @@ public class LevelRepository {
                 16,
                 17,
                 1,
+                Direction.UP,
                 squaresForLevel1
         ));
 
@@ -87,6 +89,7 @@ public class LevelRepository {
                 16,
                 17,
                 1,
+                Direction.UP,
                 squaresForLevel2
         ));
 
@@ -161,6 +164,7 @@ public class LevelRepository {
                 16,
                 17,
                 2,
+                Direction.UP,
                 squaresForLevel3
         ));
 
@@ -228,6 +232,7 @@ public class LevelRepository {
                 16,
                 17,
                 5,
+                Direction.UP,
                 squaresForLevel4
         ));
     }

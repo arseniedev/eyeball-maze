@@ -93,9 +93,13 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
             return;
         }
+//        Direction direction = levelData.eyeBallDirection();
+//        Direction direction = GAME.getEyeballDirection();
+//        Direction direction = Direction.UP;
         LOGGER.log(Level.INFO, "Setting Level " + currentLevel);
 
         GAME.addLevel(levelData.levelHeight(), levelData.levelWidth());
+//        GAME.setLevel(currentLevel);
 
         for (PlayableSquare square : levelData.squares()) {
             handleInitialMarker(square);
@@ -117,6 +121,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
                 ", At [" + square.row + "," + square.col + "]");
 
         GAME.addSquare(square, square.row, square.col);
+//        GAME.addEyeball(square.row, square.col, direction);
     }
     private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
@@ -140,7 +145,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             } else {
                 cell.setImageResource(drawableRes);
             }
-
             // 🔘 Add Click Listener here
             cell.setOnClickListener(v -> handleCellClick(square));
         } else {
@@ -152,7 +156,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         updateTextView(R.id.goalsRemainingValue, String.valueOf(goalCount));
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
-    private void handleCellClick(PlayableSquare square) {
+    private void handleCellClick(@NonNull PlayableSquare square) {
         int row = square.row;
         int col = square.col;
 
@@ -162,7 +166,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         boolean isPlayable = GAME.getShapeAt(row, col) != null && GAME.getColorAt(row, col) != null;
 
         // Increment move count
-        GAME.moveCount++;
+//        GAME.moveCount++;
 
         // Call validator methods (replace with actual method names)
         boolean isValidMove = GAME.canMoveTo(row, col);
@@ -173,76 +177,18 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             Toast.makeText(this, "Empty square!", Toast.LENGTH_SHORT).show();
         } else if (isValidMove) {
             Toast.makeText(this, "Valid move!", Toast.LENGTH_SHORT).show();
+            GAME.moveTo(square.row, square.col);
+            GAME.moveCount++;
+            //update eyball
         } else {
             Toast.makeText(this, "Invalid move!", Toast.LENGTH_SHORT).show();
         }
-
         // Update move count display
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);
     }
-//    public void handleStartButtonClick(View view) {
-//        LOGGER.log(Level.INFO, "Clear Grid");
-//        clearGrid();
-//
-//        int currentLevel = GAME.getLevelCount();
-//        LevelData levelData = LevelRepository.LEVELS.get("level" + GAME.getLevelCount());
-//
-//        if (levelData == null) {
-//            LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
-//            return;
-//        }
-//
-//        int height = levelData.levelHeight();
-//        int width = levelData.levelWidth();
-//        int goalCount = levelData.totalGoalCount();
-//
-//        LOGGER.log(Level.INFO, "Setting Level " + currentLevel);
-//
-//        GAME.addLevel(height, width);
-//
-//        for (PlayableSquare square : levelData.squares()) {
-//            System.out.println("  Shape: " + square.getShape() +
-//                    ", Color: " + square.getColor() +
-//                    ", Goal: " + square.isGoal +
-//                    ", At [" + square.row + "," + square.col + "]");
-//
-//            GAME.addSquare(square, square.row, square.col);
-//
-//            int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
-//
-//            ImageView cell = findViewById(gridIds[square.row][square.col]);
-//            if (cell != null) {
-//                if (GAME.hasGoalAt(square.row, square.col)) {
-//                    // Overlay
-//                    Drawable[] layers = new Drawable[2];
-//                    layers[0] = ContextCompat.getDrawable(this, drawableRes); // base image
-//                    layers[1] = ContextCompat.getDrawable(this, R.drawable.empty_goal); // top overlay
-//
-//                    LayerDrawable layeredDrawable = new LayerDrawable(layers);
-//                    cell.setImageDrawable(layeredDrawable);
-//                } else if (square.isCurrent()) {
-//                    // Overlay
-//                    Drawable[] layers = new Drawable[2];
-//                    layers[0] = ContextCompat.getDrawable(this, drawableRes); // base image
-//                    layers[1] = ContextCompat.getDrawable(this, R.drawable.eyeball); // top overlay
-//
-//                    LayerDrawable layeredDrawable = new LayerDrawable(layers);
-//                    cell.setImageDrawable(layeredDrawable);
-//                } else {
-//                    cell.setImageResource(drawableRes);
-//                }
-//            } else {
-//                LOGGER.log(Level.WARNING, "Cell not found at: [" + square.row + "][" + square.col + "]");
-//            }
-//        }
-//
-//        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-//        updateTextView(R.id.goalsRemainingValue, String.valueOf(goalCount));
-//        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
-//    }
     private int getDrawableFrom(Shape shape, Color color) {
 
         String key = (shape != null && color != null)
