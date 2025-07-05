@@ -128,28 +128,45 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         ImageView cell = findCell(square.row, square.col);
 
         if (cell != null) {
-            Drawable base = ContextCompat.getDrawable(this, drawableRes);
-            Drawable overlay = null;
+            Drawable base = ContextCompat.getDrawable(this, drawableRes); // getDrawable(drawableRes);
+            Drawable overlay = getOverlay(square);
 
-            if (GAME.hasGoalAt(square.row, square.col)) {
-                overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
-                if (overlay != null) overlay.setAlpha(100);
-            } else if (square.isCurrent()) {
-                GAME.addEyeball(square.row, square.col, Direction.UP);
-                overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-            }
-
-            if (overlay != null) {
-                LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
-                cell.setImageDrawable(layeredDrawable);
-            } else {
-                cell.setImageResource(drawableRes);
-            }
-            // 🔘 Add Click Listener here
-            cell.setOnClickListener(v -> handleCellClick(square));
+            applyDrawableToCell(cell, base, overlay, drawableRes);
+            attachClickListener(cell, square);
         } else {
-            LOGGER.log(Level.WARNING, "Cell not found at: [" + square.row + "][" + square.col + "]");
+            logMissingCell(square.row, square.col);
         }
+    }
+//    private Drawable getDrawable(int resId) {
+//        return ContextCompat.getDrawable(this, resId);
+//    }
+    private Drawable getOverlay(@NonNull PlayableSquare square) {
+        Drawable overlay = null;
+
+        if (GAME.hasGoalAt(square.row, square.col)) {
+            overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
+            if (overlay != null) overlay.setAlpha(100);
+        } else if (square.isCurrent()) {
+            GAME.addEyeball(square.row, square.col, Direction.UP);
+            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
+        }
+
+        return overlay;
+    }
+    private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {
+        if (overlay != null && base != null) {
+            LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
+            cell.setImageDrawable(layeredDrawable);
+        } else {
+            cell.setImageResource(fallbackResId);
+        }
+    }
+
+    private void attachClickListener(ImageView cell, PlayableSquare square) {
+        cell.setOnClickListener(v -> handleCellClick(square));
+    }
+    private void logMissingCell(int row, int col) {
+        LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
     private void updateStatusViews(int currentLevel, int goalCount) {
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
