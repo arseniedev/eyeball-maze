@@ -7,6 +7,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import nz.ac.ara.ads.eyeballmaze.enums.Color;
+import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Square;
 import java.util.HashMap;
@@ -61,20 +63,21 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
     }
     public void handleStartButtonClick(View view) {
         LOGGER.log(Level.INFO, "Setting level:");
-//        startButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
                 for (int row = 0; row < 8; row++) {
                     for (int col = 0; col < 4; col++) {
                         ImageView cell = findViewById(gridIds[row][col]);
                         cell.setImageResource(R.drawable.shape_cross_blue); // replace with your desired image
                     }
                 }
-////            }
-//        });
+    }
+
+    public void getDrawableFromSquare(Square square) {
+        Shape shape = square.getShape();
+        Color color = square.getColor();
+
+//        if(shape==Shape.CIRCLE)
     }
 }

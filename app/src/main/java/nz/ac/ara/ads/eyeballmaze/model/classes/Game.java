@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nz.ac.ara.ads.eyeballmaze.enums.*;
-//import nz.ac.ara.ads.eyeballmaze.enums.*;
 import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
 import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 
@@ -90,14 +89,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(Level.INFO, "Goal addition process performed");
         }
     }
-
     private boolean isValidCoordinate(int row, int column) {
         int widthBoundary = this.getLevelWidth();
         int heightBoundary = this.getLevelHeight();
 
         return row <= heightBoundary && row >= 0 && column <= widthBoundary && column >= 0;
     }
-
     @Override
     public int getGoalCount() {
         return this.gameLevel.totalGoalCount;

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#160345"
+    android:background="@color/colorBackgroundMain"
     tools:context=".MainActivity">
 
     <!--Title Labels-->
@@ -1094,7 +1094,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="@string/game_instructions"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
