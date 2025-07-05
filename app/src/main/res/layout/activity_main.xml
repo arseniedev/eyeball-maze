@@ -9,52 +9,14 @@
     tools:context=".MainActivity">
 
     <!--Title Labels-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/gameInstruction"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:adjustViewBounds="true"
-        android:background="@color/colorTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
-
-            <TextView
-                android:id="@+id/instructionLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="2dp"
-                android:paddingStart="0.2dp"
-                android:paddingTop="0.2dp"
-                android:paddingEnd="0.2dp"
-                android:paddingBottom="0.2dp"
-                android:text="@string/game_instructions"
-                android:textColor="@android:color/white"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="RtlSymmetry" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--Top Labels-->
 
     <!--The Board-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/statusSection"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="410dp"
+        android:layout_height="51dp"
         android:adjustViewBounds="true"
         android:background="@color/colorHeader"
         android:paddingStart="10dp"
@@ -62,19 +24,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameInstruction"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlSymmetry">
 
         <!--Current Level-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout9"
-            android:layout_width="135dp"
-            android:layout_height="58dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout8"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="1dp">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/currentLevel"
@@ -103,13 +66,14 @@
         <!--Goals RemainingLevel-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout8"
-            android:layout_width="139dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout10"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout9"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/goalsRemaining"
@@ -138,13 +102,14 @@
         <!--Moves Made-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout10"
-            android:layout_width="136dp"
-            android:layout_height="58dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout8"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/movesMade"
@@ -1093,6 +1058,37 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gameInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:adjustViewBounds="true"
+        android:background="@color/colorTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="412dp"
+            android:layout_height="85dp"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/instructionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:padding="5dp"
+                android:text="@string/game_instructions"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                tools:ignore="RtlSymmetry" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
