@@ -1,6 +1,5 @@
 package nz.ac.ara.ads.eyeballmaze;
 
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -11,7 +10,6 @@ import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
-import nz.ac.ara.ads.eyeballmaze.model.classes.Square;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 
@@ -19,27 +17,17 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import android.graphics.Bitmap;
-import android.icu.text.SymbolTable;
-import android.net.http.UploadDataProvider;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
-    private int moveCount = 0;
-    //    private TextView cu
-    final ImageView[] imageViews = new ImageView[GAME.getLevelCount()];
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-//    Button startButton = findViewById(R.id.button_start);
 public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
 
     static {
@@ -76,9 +64,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             { R.id.cellGrid_8_1, R.id.cellGrid_8_2, R.id.cellGrid_8_3, R.id.cellGrid_8_4, R.id.cellGrid_8_5, R.id.cellGrid_8_6, R.id.cellGrid_8_7 }
     };
 
-    ImageView[][] cellGridImages = new ImageView[7][8];
-
-
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,34 +75,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             return insets;
         });
     }
-//    public void handleStartButtonClick(View view) {
-//        LOGGER.log(Level.INFO, "Clear Grid");
-//        clearGrid();
-//        LevelData levelData = LevelRepository.LEVELS.get(GAME.getLevelCount());
-//
-//        LOGGER.log(Level.INFO, "Setting level:");
-//
-//
-//        if (levelData == null) {
-//            LOGGER.log(Level.WARNING, "Level not found: " + GAME.getLevelCount());
-//            return;
-//        }
-//        GAME.addLevel(15,11);
-//        for (PlayableSquare square : levelData.squares()) {
-//            int row = square.row;
-//            int col = square.col;
-//
-////            int drawableRes = getDrawableFrom(Shape.CROSS, Color.RED);
-//            int drawableRes = getDrawableFrom(GAME.getShapeAt(row,col), GAME.getColorAt(row,col));
-//
-//            ImageView cell = findViewById(gridIds[row][col]);
-//            if (cell != null) {
-//                cell.setImageResource(drawableRes);
-//            }
-//        }
-//        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-//        updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getGoalCount()));
-//    }
 public void handleStartButtonClick(View view) {
     LOGGER.log(Level.INFO, "Clear Grid");
     clearGrid();
@@ -158,6 +115,7 @@ public void handleStartButtonClick(View view) {
 
     updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
     updateTextView(R.id.goalsRemainingValue, String.valueOf(goalCount));
+    updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
 }
     private int getDrawableFrom(Shape shape, Color color) {
 
@@ -177,7 +135,6 @@ public void handleStartButtonClick(View view) {
             }
         }
     }
-
 
     public void updateTextView(int viewId, String newText) {
         TextView textView = findViewById(viewId);

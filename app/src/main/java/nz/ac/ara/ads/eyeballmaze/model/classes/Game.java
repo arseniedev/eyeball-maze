@@ -16,7 +16,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     protected Level gameLevel;
     EyeBall theEyeball;
     protected int levelNumber;
-    int completedGoalCount;
+    public int moveCount = 0;
+//    int completedGoalCount;
 
     private final List<Level> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
@@ -356,6 +357,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(java.util.logging.Level.INFO, "This is a " + squareType);
 
             LOGGER.log(java.util.logging.Level.INFO, "Moving " + squareType + " to " + row + ", " + column);
+            this.moveCount++;
             this.theEyeball.updateEyeball(row,column);
 
             if (this.hasGoalAt(row,column)) {
