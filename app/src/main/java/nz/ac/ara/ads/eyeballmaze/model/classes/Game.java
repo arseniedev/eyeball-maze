@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import nz.ac.ara.ads.eyeballmaze.enums.*;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
 import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 
@@ -46,6 +47,16 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public void setLevel(int newLevel) {
+        LevelData levelData = LevelRepository.LEVELS.get(levelNumber);
+        if (levelData == null) {
+            System.out.println("Level not found: " + levelNumber);
+        } else {
+            System.out.println("Loaded level " + levelNumber);
+            List<PlayableSquare> squares = levelData.squares();
+            gameLevel.totalGoalCount = levelData.totalGoalCount();
+            // Access squares directly
+            // Do something with squares if needed
+        }
         try {
             LOGGER.log(java.util.logging.Level.INFO, "Setting level: " + newLevel);
 
@@ -94,7 +105,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public int getGoalCount() {
-        return this.gameLevel.totalGoalCount;
+        LevelData levelData = LevelRepository.LEVELS.get(levelNumber);
+        return levelData != null ? levelData.totalGoalCount() : 0;
+//        return this.gameLevel.totalGoalCount;
     }
 
     @Override

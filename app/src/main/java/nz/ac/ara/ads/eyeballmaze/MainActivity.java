@@ -72,9 +72,15 @@ public class MainActivity extends AppCompatActivity {
                     cell.setImageResource(R.drawable.shape_cross_yellow); // replace with your desired image
             }
         }
+//        GAME.setLevel(1);
 
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
+        updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getGoalCount()));
     }
+//    private void initialiseGame() {
+////        GAME.addLevel(8,7);
+////        GAME.addGoal(0,0);
+//    }
     private void clearGrid() {
         // Clear grid first (optional)
         for (int row = 0; row < 8; row++) {

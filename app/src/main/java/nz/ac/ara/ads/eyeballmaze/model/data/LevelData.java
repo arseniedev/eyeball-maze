@@ -10,5 +10,6 @@ public record LevelData(
         int levelNumber,
         int levelHeight,
         int levelWidth,
+        int totalGoalCount,
         List<PlayableSquare> squares
 ) {}
