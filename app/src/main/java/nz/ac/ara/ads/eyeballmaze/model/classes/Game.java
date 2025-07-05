@@ -20,7 +20,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
-        this.levelNumber = 1;
+        this.levelNumber = 0;
     }
 
     @Override
@@ -106,8 +106,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     @Override
     public int getGoalCount() {
         LevelData levelData = LevelRepository.LEVELS.get(levelNumber);
-        return levelData != null ? levelData.totalGoalCount() : 0;
-//        return this.gameLevel.totalGoalCount;
+        this.gameLevel.totalGoalCount = levelData != null ? levelData.totalGoalCount() : 0;
+//        return levelData != null ? levelData.totalGoalCount() : 0;
+        return this.gameLevel.totalGoalCount;
     }
 
     @Override

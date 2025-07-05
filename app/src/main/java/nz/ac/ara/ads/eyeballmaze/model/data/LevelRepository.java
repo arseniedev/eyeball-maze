@@ -17,7 +17,7 @@ public class LevelRepository {
                 1,
                 6, // height
                 7, // width
-                1,
+                1, // goal count
                 List.of(
                         new PlayableSquare(3, 1, Color.RED, Shape.STAR, true),
                         new PlayableSquare(2, 3, Color.GREEN, Shape.FLOWER, false)
@@ -28,7 +28,7 @@ public class LevelRepository {
                 2,
                 6, // height
                 7, // width
-                3,
+                3, // goal count
                 List.of(
                         new PlayableSquare(1, 1, Color.BLUE, Shape.CROSS, true),
                         new PlayableSquare(1, 2, Color.BLUE, Shape.STAR, false),

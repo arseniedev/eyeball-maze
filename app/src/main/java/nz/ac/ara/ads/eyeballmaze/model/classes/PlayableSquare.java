@@ -7,11 +7,6 @@ public class PlayableSquare extends Square {
     public PlayableSquare() {
         super();
     }
-//    public PlayableSquare(Color color, Shape shape) {
-//        this.color = color;
-//        this.shape = shape;
-//    }
-
     public PlayableSquare(int row, int col, Color color, Shape shape, boolean isGoal) {
         this.row = row;
         this.col = col;

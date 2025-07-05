@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     public void handleStartButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
         clearGrid();
+        GAME.addLevel(5,2);
+
         LOGGER.log(Level.INFO, "Setting level:");
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 4; col++) {

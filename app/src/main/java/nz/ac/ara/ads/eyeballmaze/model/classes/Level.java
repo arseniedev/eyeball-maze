@@ -16,33 +16,14 @@ public class Level {
     public int completedGoalCount = 0;
 
     public Level(
-//            LevelData level
-//            int totalGoalCo
             int level,
             int height,
             int width
-//            LevelData levelData
     ) {
         this.levelNumber = level;
         this.levelWidth = width;
         this.levelHeight = height;
-//        this.levelData = levelData;
     }
-
-//    public LevelData setLevel(int levelNumber) {
-//        LevelData levelData = LevelRepository.LEVELS.get(levelNumber);
-//
-//        if (levelData == null) {
-//            System.out.println("Level not found: " + levelNumber);
-//        } else {
-//            System.out.println("Loaded level " + levelNumber);
-//            List<PlayableSquare> squares = levelData.squares(); // Access squares directly
-//            totalGoalCount = levelData.totalGoalCount();
-//            // Do something with squares if needed
-//        }
-//
-//        return levelData;
-//    }
 
     public int getCompletedGoalCount() {
         return this.completedGoalCount;
@@ -51,10 +32,6 @@ public class Level {
     public void setCompletedGoalCount(int completedGoalCount) {
         this.completedGoalCount = completedGoalCount;
     }
-
-//    public void getCompletedGoalCount(int completedGoalCount) {
-//        this.completedGoalCount = completedGoalCount;
-//    }
 
     public int getLevelWidth() {
         return levelWidth;
