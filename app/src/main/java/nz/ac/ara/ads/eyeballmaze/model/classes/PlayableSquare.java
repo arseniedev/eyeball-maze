@@ -2,16 +2,19 @@ package nz.ac.ara.ads.eyeballmaze.model.classes;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 public class PlayableSquare extends Square {
+    private boolean isCurrent;
     protected Color color;
     protected Shape shape;
-    public PlayableSquare() {
+    public PlayableSquare(boolean isCurrent) {
         super();
+        this.isCurrent = isCurrent;
     }
-    public PlayableSquare(int row, int col, Color color, Shape shape, boolean isGoal) {
+    public PlayableSquare(int row, int col, Color color, Shape shape, boolean isGoal, boolean isCurrent) {
         this.row = row;
         this.col = col;
         this.color = color;
         this.shape = shape;
+        this.isCurrent = isCurrent;
         this.isGoal = isGoal;
     }
 
@@ -22,5 +25,13 @@ public class PlayableSquare extends Square {
     @Override
     public Shape getShape() {
         return this.shape;
+    }
+
+    public boolean isCurrent() {
+        return isCurrent;
+    }
+
+    public void setCurrent(boolean current) {
+        isCurrent = current;
     }
 }

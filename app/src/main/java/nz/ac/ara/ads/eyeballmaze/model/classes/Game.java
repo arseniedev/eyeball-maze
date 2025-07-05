@@ -85,7 +85,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 LOGGER.log(java.util.logging.Level.INFO, "Adding a goal at: " + row + ", " + column);
                 Square square = this.getSquareAt(row, column);
                 if (square == null) {
-                    square = new PlayableSquare();
+//                    square = new PlayableSquare();
                     this.addSquare(square, row, column);
                     LOGGER.log(java.util.logging.Level.INFO, "Empty PlayableSquare added for a goal");
                 }

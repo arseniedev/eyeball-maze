@@ -2,6 +2,7 @@ package nz.ac.ara.ads.eyeballmaze;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -17,6 +18,8 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.View;
 import java.util.*;
@@ -107,11 +110,25 @@ public void handleStartButtonClick(View view) {
 
         ImageView cell = findViewById(gridIds[square.row][square.col]);
         if (cell != null) {
-            cell.setImageResource(drawableRes);
-            // if clicked on invalid
-//            if(GAME.hasGoalAt(square.row, square.col)){
-//                cell.setImageResource(R.drawable.invalid_empty);
-//            }
+            if (GAME.hasGoalAt(square.row, square.col)) {
+                // Overlay
+                Drawable[] layers = new Drawable[2];
+                layers[0] = ContextCompat.getDrawable(this, drawableRes); // base image
+                layers[1] = ContextCompat.getDrawable(this, R.drawable.empty_goal); // top overlay
+
+                LayerDrawable layeredDrawable = new LayerDrawable(layers);
+                cell.setImageDrawable(layeredDrawable);
+            } else if(square.isCurrent()) {
+                // Overlay
+                Drawable[] layers = new Drawable[2];
+                layers[0] = ContextCompat.getDrawable(this, drawableRes); // base image
+                layers[1] = ContextCompat.getDrawable(this, R.drawable.eyeball); // top overlay
+
+                LayerDrawable layeredDrawable = new LayerDrawable(layers);
+                cell.setImageDrawable(layeredDrawable);
+            } else {
+                cell.setImageResource(drawableRes);
+            }
         } else {
             LOGGER.log(Level.WARNING, "Cell not found at: [" + square.row + "][" + square.col + "]");
         }
