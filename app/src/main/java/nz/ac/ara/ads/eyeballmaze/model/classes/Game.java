@@ -18,6 +18,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     protected GameLevel gameLevel;
     EyeBall theEyeball;
     protected int levelNumber;
+
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
+    }
+
     public int moveCount = 0;
     //    private SoundPool soundPool;
 //    private int clickSoundId;

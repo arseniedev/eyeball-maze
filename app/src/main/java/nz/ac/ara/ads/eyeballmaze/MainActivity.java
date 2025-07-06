@@ -28,7 +28,6 @@ import java.util.*;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
@@ -85,16 +84,14 @@ public class MainActivity extends AppCompatActivity {
     }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
-//        clearGrid();
         GAME.moveCount = 0;
-        GAME.setLevel(1);
+        GAME.setLevelNumber(1);
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
+        updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
-//        clearGrid();
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
