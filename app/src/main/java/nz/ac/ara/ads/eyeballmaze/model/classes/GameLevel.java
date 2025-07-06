@@ -1,6 +1,6 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
-public class Level {
+public class GameLevel {
     protected int levelNumber;
     protected int levelWidth;
     protected int levelHeight;
@@ -8,7 +8,7 @@ public class Level {
 
     public int completedGoalCount = 0;
 
-    public Level(
+    public GameLevel(
             int level,
             int height,
             int width

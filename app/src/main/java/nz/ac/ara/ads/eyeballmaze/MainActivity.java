@@ -193,33 +193,23 @@ public class MainActivity extends AppCompatActivity {
     private void handleCellClick(@NonNull PlayableSquare square) {
         int row = square.row;
         int col = square.col;
-        boolean canMoveTo = GAME.canMoveTo(row,col);
-        if (!canMoveTo) {
-            Toast.makeText(this, "Cannot move to: [" + row + "][" + col + "]", Toast.LENGTH_SHORT).show();
 
-        } else {
-            LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
-            //  Remove eyeball from the previous current square
-            PlayableSquare previous = GAME.getCurrentSquare();
-            if (previous != null) {
-                previous.setCurrent(false);
-                handleCellAt(previous);  // Refresh UI for previous
-            }
+        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
 
-            // Move the current state (handled inside Game)
-            GAME.moveTo(square.row, square.col);
-
-            square.setCurrent(true);
-            handleCellAt(square);
-
-            if (square.isGoal) {
-                LOGGER.log(Level.INFO, "Goal reached: [" + row + "][" + col + "]");
-                Toast.makeText(this, "Goal reached: [" + row + "][" + col + "]", Toast.LENGTH_SHORT).show();
-                GAME.addGoal(square.row, square.col);
-                updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
-            }
-            updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+        // 🧹 Remove eyeball from the previous current square
+        PlayableSquare previous = GAME.getCurrentSquare();
+        if (previous != null) {
+            previous.setCurrent(false);
+            handleCellAt(previous);  // Refresh UI for previous
         }
+
+        // 🎯 Set new square as current and refresh UI
+        square.setCurrent(true);
+        handleCellAt(square);
+
+        // 🎮 Optionally track move count
+        GAME.moveCount++;
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);

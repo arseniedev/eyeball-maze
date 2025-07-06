@@ -1,10 +1,9 @@
-//package nz.ac.ara.ads.eyeballmaze.model.classes;
-//
-//import nz.ac.ara.ads.eyeballmaze.enums.Color;
-//import nz.ac.ara.ads.eyeballmaze.enums.Shape;
-//
-//public abstract class BlankSquare extends Square {
-//
-//    public BlankSquare() {
-//    }
-//}
+package nz.ac.ara.ads.eyeballmaze.model.classes;
+
+public class BlankSquare extends Square {
+    public BlankSquare() {
+    }
+    public boolean isCurrent() {
+        return false;
+    }
+}

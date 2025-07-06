@@ -11,18 +11,18 @@ import nz.ac.ara.ads.eyeballmaze.enums.*;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
-import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidMoveException;
 import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
+import java.util.logging.Level;
 
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
-    protected Level gameLevel;
+    protected GameLevel gameLevel;
     EyeBall theEyeball;
     protected int levelNumber;
     public int moveCount = 0;
-//    private SoundPool soundPool;
+    //    private SoundPool soundPool;
 //    private int clickSoundId;
 //    private boolean isSoundEnabled = false;
-    private final List<Level> levelCollection =  new ArrayList<>();
+    private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -32,7 +32,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public void addLevel(int height, int width) {
-        this.gameLevel = new Level(this.levelNumber, height, width);
+        this.gameLevel = new GameLevel(this.levelNumber, height, width);
         this.levelCollection.add(this.gameLevel);
         this.levelNumber ++;
     }
@@ -113,7 +113,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public int getGoalCount() {
-        LevelData levelData = LevelRepository.LEVELS.get("level" + levelNumber);
+        LevelData levelData = LevelRepository.LEVELS.get("level" + (levelNumber -1));
         this.gameLevel.totalGoalCount = levelData != null ? levelData.totalGoalCount() : 0;
 //        return levelData != null ? levelData.totalGoalCount() : 0;
         return this.gameLevel.totalGoalCount;
@@ -155,40 +155,23 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return row + "," + column;
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    //    @RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     @Override
     public void addSquare(Square square, int row, int column) {
         try {
-            if (this.isValidCoordinate(row,column)) {
 //                Metadata
                 String coordinateKey = this.generateCoordinateKey(row,column);
 
                 this.squareCollection.put(coordinateKey,square);
 
-//                //Drawable
-//                ImageView cell = findViewById(gridIds[row][col]);
-//                cell.setImageResource(R.drawable.shape_cross_yellow); // replace with your desired image
-//
+                LOGGER.log(Level.INFO, "Square cell added." +
+                        "\nShape: " + square.getShape() +
+                        "\nColor: " + square.getColor() +
+                        "\nKey:" + coordinateKey);
 
-                StringBuilder squareAddedStatus = new StringBuilder(
-                        """
-                        Square cell added:
-                        Shape: %s
-                        Color: %s
-                        Key %s
-                        """
-                );
 
-                LOGGER.log(java.util.logging.Level.INFO, String.valueOf(squareAddedStatus));
 
-//                LOGGER.log(Level.INFO, "Square cell added." +
-//                        "\nShape: " + square.getShape() +
-//                        "\nColor: " + square.getColor() +
-//                        "\nKey:" + coordinateKey);
 
-            } else {
-                throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
-            }
         } catch (IllegalArgumentException  e) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }  catch (Exception unknown) {
@@ -210,7 +193,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 //        Shape shape = square.getShape();
 //        Color color = square.getColor();
 //
-////        if(shape==Shape.CIRCLE)
+    ////        if(shape==Shape.CIRCLE)
 //    }
     @Override
     public void addEyeball(int currentY, int currentX, Direction direction) {
