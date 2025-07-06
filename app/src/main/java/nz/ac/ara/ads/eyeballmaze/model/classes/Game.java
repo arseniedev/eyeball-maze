@@ -349,35 +349,47 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private void updateGoalSquare() {
         int row = this.getEyeballRow();
         int column = this.getEyeballColumn();
-        Square currentSquare = new PlayableSquare(); //formerly black.
+        Square currentSquare = new PlayableSquare();
         this.addSquare(currentSquare, row,column);
     }
 
     @Override
-    public void moveTo(int row, int column) {
-        this.updateGoalSquare();
-        Square destinationSquare = this.getSquareAt(row, column);
-        String squareType = destinationSquare.getClass().getSimpleName();
-
-        if(destinationSquare instanceof PlayableSquare) {
-            LOGGER.log(java.util.logging.Level.INFO, "This is a " + squareType);
-
-            LOGGER.log(java.util.logging.Level.INFO, "Moving " + squareType + " to " + row + ", " + column);
-            this.moveCount++;
-            this.theEyeball.updateEyeball(row,column);
-//            PlayableSquare previous = setCurrentSquare();
-            if (this.hasGoalAt(row,column)) {
-                this.gameLevel.completedGoalCount++;
-                this.gameLevel.totalGoalCount--;
-                destinationSquare.isGoal = false;
-            }
-        } else {
-            LOGGER.log(java.util.logging.Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
+//    public void moveTo(int row, int column) {
+//        this.updateGoalSquare();
+//
+//        Square destinationSquare = this.getSquareAt(row, column);
+//        String squareType = destinationSquare.getClass().getSimpleName();
+//
+//        if(destinationSquare instanceof PlayableSquare) {
+//            LOGGER.log(java.util.logging.Level.INFO, "This is a " + squareType);
+//
+//            LOGGER.log(java.util.logging.Level.INFO, "Moving " + squareType + " to " + row + ", " + column);
+//            this.moveCount++;
+//            this.theEyeball.updateEyeball(row,column);
+////            PlayableSquare previous = setCurrentSquare();
+//            if (this.hasGoalAt(row,column)) {
+//                this.gameLevel.completedGoalCount++;
+//                this.gameLevel.totalGoalCount--;
+//                destinationSquare.isGoal = false;
+//            }
+//        } else {
+//            LOGGER.log(java.util.logging.Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
+//        }
+//    }
+    public void moveTo(int row, int col) {
+        PlayableSquare current = getCurrentSquare();
+        if (current != null) {
+            current.setCurrent(false);
         }
+        Square target = getSquareAt(row, col);
+        if (target instanceof PlayableSquare) {
+            ((PlayableSquare) target).setCurrent(true);
+        }
+        moveCount++; // Track move count if desired
     }
-
     @Override
     public int getCompletedGoalCount() {
         return this.gameLevel.completedGoalCount;
     }
+
 }

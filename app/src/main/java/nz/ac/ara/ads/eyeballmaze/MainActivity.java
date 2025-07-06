@@ -82,6 +82,12 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             return insets;
         });
     }
+    public void handleResetButtonClick(View view) {
+        LOGGER.log(Level.INFO, "Clear Grid");
+        clearGrid();
+//        GAME.reset();
+        updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
+    }
     public void handleStartButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
         clearGrid();
@@ -176,19 +182,14 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
 
         LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
 
-        // 🧹 Remove eyeball from the previous current square
-        PlayableSquare previous = GAME.getCurrentSquare();
-        if (previous != null) {
-            previous.setCurrent(false);
-            handleCellAt(previous);  // Refresh UI for previous
-        }
+        // Move the current state (handled inside Game)
+        GAME.moveTo(row, col);
 
-        // 🎯 Set new square as current and refresh UI
-        square.setCurrent(true);
-        handleCellAt(square);
+        // Refresh UI for all squares (or just affected ones if performance matters)
+//        PlayableSquare previous = GAME.getPreviousSquare();
+//        handleCellAt(previous);
+//        handleCellAt(square);
 
-        // 🎮 Optionally track move count
-        GAME.moveCount++;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private ImageView findCell(int row, int col) {

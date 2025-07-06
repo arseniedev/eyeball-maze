@@ -71,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/constraintLayout10"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout9"
             app:layout_constraintTop_toTopOf="parent"
@@ -109,11 +109,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout8"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="271dp">
 
             <TextView
                 android:id="@+id/movesMade"
@@ -1174,11 +1172,29 @@
 
             android:textColor="@android:color/white"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="OnClick" />
+            tools:ignore="OnClick"
+            tools:layout_editor_absoluteX="53dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="63dp"
+            android:layout_height="43dp"
+            android:onClick="handleResetButtonClick"
+            android:text="@string/label_button_reset"
+            app:rippleColor="#40FFFFFF"
+            tools:layout_editor_absoluteY="19dp" />
+
+        <Button
+            android:id="@+id/undoButton"
+            android:layout_width="63dp"
+            android:layout_height="43dp"
+            android:onClick="handleResetButtonClick"
+            android:text="@string/label_button_undo"
+            app:rippleColor="#40FFFFFF"
+            tools:layout_editor_absoluteX="233dp"
+            tools:layout_editor_absoluteY="19dp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1208,6 +1224,8 @@
         android:paddingEnd="10dp"
         android:text="@string/game_instructions"
         android:textColor="@android:color/black"
+        android:textColorLink="#F0D7D7"
+        android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
