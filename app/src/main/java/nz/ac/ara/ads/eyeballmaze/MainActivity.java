@@ -85,8 +85,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
         clearGrid();
-//        GAME.reset();
-        updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
+        updateStatusViews(1, 0);
     }
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
@@ -112,13 +111,14 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             handleInitialMarker(square);
             handleCellAt(square);
         }
-        if (currentLevel > maxLevel) {
-            GAME.setLevel(1);
+        if (currentLevel >= maxLevel) {
 //            GAME.getCompletedGoalCount();
-            updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
-        } else {
-            updateStatusViews(currentLevel, levelData.totalGoalCount());
+            GAME.setLevel(1);
+//            updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
         }
+//        else {
+            updateStatusViews(currentLevel, levelData.totalGoalCount());
+//        }
     }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
         System.out.println("  Shape: " + square.getShape() +
@@ -170,7 +170,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             cell.setImageResource(fallbackResId);
         }
     }
-
     private void attachClickListener(@NonNull ImageView cell, PlayableSquare square) {
         cell.setOnClickListener(v -> handleCellClick(square));
     }
@@ -218,6 +217,9 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
                 cell.setImageResource(R.drawable.line_none);
             }
         }
+
+        GAME.moveCount = 0;
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
 
     public void updateTextView(int viewId, String newText) {
