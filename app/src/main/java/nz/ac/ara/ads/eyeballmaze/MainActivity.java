@@ -179,41 +179,85 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     private void logMissingCell(int row, int col) {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
+/*
+*   private void handleCellClick(@NonNull PlayableSquare square) {
+        int row = square.row;
+        int col = square.col;
 
-    private void handleCellClick(@NonNull PlayableSquare square) {
-        int targetRow  = square.row;
-        int targetColumn = square.col;
+        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
 
-        int currentRow = GAME.getEyeballRow();
-        int currentCol = GAME.getEyeballColumn();
-
-        Direction currentDirection = GAME.getEyeballDirection();
-        LOGGER.log(Level.INFO, "Current Direction: " + currentDirection);
-        LOGGER.log(Level.INFO, "Clicked on: [" + square.row + "][" + square.col + "]");
-
-        Direction newDirection = currentDirection;
-        float newRotation = EyeBall.currentEyeballRotation;
-
-        if (targetColumn > currentCol) {
-            newDirection = EyeBall.rotateDirection(currentDirection, true);
-            newRotation += 90f;
-        } else if (targetColumn < currentCol) {
-            newDirection = EyeBall.rotateDirection(currentDirection,false);
-            newRotation -= 90f;
+        // 🧹 Remove eyeball from the previous current square
+        PlayableSquare previous = GAME.getCurrentSquare();
+        if (previous != null) {
+            previous.setCurrent(false);
+            handleCellAt(previous);  // Refresh UI for previous
         }
+
+        // 🎯 Set new square as current and refresh UI
+        square.setCurrent(true);
+        handleCellAt(square);
+
+        // 🎮 Optionally track move count
+        GAME.moveCount++;
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+    }
+* */
+    private void handleCellClick(@NonNull PlayableSquare square) {
+        int row = square.row;
+        int col = square.col;
+
+        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
+
+        // 🧹 Remove eyeball from the previous current square
+        PlayableSquare previous = GAME.getCurrentSquare();
+        if (previous != null) {
+            previous.setCurrent(false);
+            handleCellAt(previous);  // Refresh UI for previous
+        }
+
+        // 🎯 Set new square as current and refresh UI
+        square.setCurrent(true);
+        handleCellAt(square);
+
+        // 🎮 Optionally track move count
+        GAME.moveCount++;
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+
+
+
+//        int targetRow  = square.row;
+//        int targetColumn = square.col;
+//
+//        int currentRow = GAME.getEyeballRow();
+//        int currentCol = GAME.getEyeballColumn();
+
+//        Direction currentDirection = GAME.getEyeballDirection();
+//        LOGGER.log(Level.INFO, "Current Direction: " + currentDirection);
+//        LOGGER.log(Level.INFO, "Clicked on: [" + square.row + "][" + square.col + "]");
+
+//        Direction newDirection = currentDirection;
+//        float newRotation = EyeBall.currentEyeballRotation;
+
+//        if (targetColumn > currentCol) {
+//            newDirection = EyeBall.rotateDirection(currentDirection, true);
+//            newRotation += 90f;
+//        } else if (targetColumn < currentCol) {
+//            newDirection = EyeBall.rotateDirection(currentDirection,false);
+//            newRotation -= 90f;
+//        }
 
         // Store updated rotation
-        EyeBall.currentEyeballRotation = newRotation;
+//        EyeBall.currentEyeballRotation = newRotation;
 
-        // Move eyeball logically
-        GAME.addEyeball(targetRow, targetColumn, newDirection);
-        GAME.moveTo(targetRow, targetColumn);
+//        // Move eyeball logically
+//        GAME.addEyeball(targetRow, targetColumn, newDirection);
+//        GAME.moveTo(targetRow, targetColumn);
 
-        // Find the eyeball view and apply rotation
-        ImageView eyeballView = findCell(targetRow, targetColumn);
-        if (eyeballView != null) {
-            rotateEyeball(eyeballView, 0f, EyeBall.currentEyeballRotation);
-        }
+//        // Find the eyeball view and apply rotation
+//        ImageView eyeballView = findCell(targetRow, targetColumn);
+//        if (eyeballView != null) {
+//            rotateEyeball(eyeballView, 0f, EyeBall.currentEyeballRotation);
+//        }
 
         // Update move count
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
