@@ -88,6 +88,12 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
 //        GAME.reset();
         updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
     }
+    public void handleUndoButtonClick(View view) {
+        LOGGER.log(Level.INFO, "Clear Grid");
+        clearGrid();
+//        GAME.reset();
+        updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
+    }
     public void handleStartButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
         clearGrid();

@@ -8,11 +8,7 @@
     android:background="@color/colorBackgroundMain"
     tools:context=".MainActivity">
 
-    <!--Title Labels-->
 
-    <!--Top Labels-->
-
-    <!--The Board-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/statusSection"
         android:layout_width="0dp"
@@ -71,7 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout10"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout9"
             app:layout_constraintTop_toTopOf="parent"
@@ -109,9 +105,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout8"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            tools:layout_editor_absoluteX="271dp">
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/movesMade"
@@ -1163,7 +1161,7 @@
 
         <Button
             android:id="@+id/button_start"
-            android:layout_width="180dp"
+            android:layout_width="186dp"
             android:layout_height="50dp"
 
             android:background="@color/colorStartButton"
@@ -1172,27 +1170,43 @@
 
             android:textColor="@android:color/white"
             android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/undoButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/resetButton"
             tools:ignore="OnClick"
-            tools:layout_editor_absoluteX="53dp"
             tools:layout_editor_absoluteY="16dp" />
 
         <Button
             android:id="@+id/resetButton"
-            android:layout_width="63dp"
-            android:layout_height="43dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#1F221F72"
             android:onClick="handleResetButtonClick"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="0dp"
             android:text="@string/label_button_reset"
-            app:rippleColor="#40FFFFFF"
+            android:textSize="25sp"
+            app:iconPadding="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/button_start"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="19dp" />
 
         <Button
             android:id="@+id/undoButton"
-            android:layout_width="63dp"
-            android:layout_height="43dp"
-            android:onClick="handleResetButtonClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#721F1F1F"
+            android:onClick="handleUndoButtonClick"
             android:text="@string/label_button_undo"
-            app:rippleColor="#40FFFFFF"
-            tools:layout_editor_absoluteX="233dp"
+            android:textSize="20sp"
+            app:iconPadding="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_start"
             tools:layout_editor_absoluteY="19dp" />
 
 
@@ -1218,7 +1232,7 @@
         android:id="@+id/instructions"
         android:layout_width="410dp"
         android:layout_height="120dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:padding="5dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -1230,6 +1244,21 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statusSection" />
+
+    <TextClock
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="222dp" />
+
+    <Switch
+        android:id="@+id/soundSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sound"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="731dp" />
 
 
     <!--    <Button-->
