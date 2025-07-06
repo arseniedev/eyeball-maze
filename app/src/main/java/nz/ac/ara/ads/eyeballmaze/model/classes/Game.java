@@ -19,9 +19,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     EyeBall theEyeball;
     protected int levelNumber;
     public int moveCount = 0;
-    private SoundPool soundPool;
-    private int clickSoundId;
-    private boolean isSoundEnabled = false;
+//    private SoundPool soundPool;
+//    private int clickSoundId;
+//    private boolean isSoundEnabled = false;
     private final List<Level> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
@@ -353,12 +353,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             return Message.DIFFERENT_SHAPE_OR_COLOR;
         }
     }
-//    private void updateGoalSquare() {
-//        int row = this.getEyeballRow();
-//        int column = this.getEyeballColumn();
-//        Square currentSquare = new PlayableSquare();
-//        this.addSquare(currentSquare, row,column);
-//    }
     public void moveTo(int row, int col) {
         PlayableSquare current = getCurrentSquare();
         if (current != null) {

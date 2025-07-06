@@ -11,7 +11,6 @@ import androidx.core.view.WindowInsetsCompat;
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
-import nz.ac.ara.ads.eyeballmaze.model.classes.EyeBall;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
@@ -34,6 +33,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
     static final int maxLevel = 4;
+    private float eyeballRotationDegrees = 0f;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
@@ -83,14 +83,13 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             return insets;
         });
     }
-    public void handleSoundSwitchClick(View view) {
-        LOGGER.log(Level.INFO, "Sound On/off");
-    }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
 //        clearGrid();
-        updateTextView(R.id.currentLevelValue, String.valueOf(1));
-        updateTextView(R.id.goalsRemainingValue, String.valueOf(0));
+        GAME.moveCount = 0;
+        GAME.setLevel(1);
+        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.moveCount));
+        updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     public void handleUndoButtonClick(View view) {
@@ -100,7 +99,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         updateTextView(R.id.goalsRemainingValue, String.valueOf( GAME.getGoalCount()));
     }
     public void handleStartButtonClick(View view) {
-        LOGGER.log(Level.INFO, "Clear Grid");
+//        LOGGER.log(Level.INFO, "Clear Grid");
 //        clearGrid();
 
         int currentLevel = GAME.getLevelCount();
@@ -121,7 +120,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             GAME.setLevel(1);
         }
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-//        updateTextView(R.id.goalsRemainingValue, String.valueOf(levelData.totalGoalCount()));
+        updateTextView(R.id.goalsRemainingValue, String.valueOf(levelData.totalGoalCount()));
 //        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
@@ -135,9 +134,17 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     }
     private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
-        ImageView cell = findCell(square.row, square.col);
+        ImageView eyeballView = findCell(square.row, square.col);
 
-        if (cell != null) {
+        if (eyeballView != null) {
+            float previousRotation = eyeballRotationDegrees;
+            eyeballRotationDegrees += 90f;
+            if (eyeballRotationDegrees >= 360f) {
+                eyeballRotationDegrees = 0f;
+            }
+            rotateEyeball(eyeballView, previousRotation, eyeballRotationDegrees);
+
+
             Drawable base = ContextCompat.getDrawable(this, drawableRes);
             Drawable overlay = getOverlay(square); // move this outside if-block
 
@@ -146,8 +153,8 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
                 overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
             }
 
-            applyDrawableToCell(cell, base, overlay, drawableRes);
-            cell.setOnClickListener(v -> handleCellClick(square));
+            applyDrawableToCell(eyeballView, base, overlay, drawableRes);
+            eyeballView.setOnClickListener(v -> handleCellClick(square));
         } else {
             logMissingCell(square.row, square.col);
         }
@@ -192,13 +199,20 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
                 previous.setCurrent(false);
                 handleCellAt(previous);  // Refresh UI for previous
             }
+
+            // Move the current state (handled inside Game)
+            GAME.moveTo(square.row, square.col);
+
             // set new square as current and refresh UI
             square.setCurrent(true);
             handleCellAt(square);
-            // track move count
-//            GAME.moveCount++;
-            // Move the current state (handled inside Game)
-            GAME.moveTo(square.row, square.col);
+
+            if (square.isGoal) {
+                LOGGER.log(Level.INFO, "Goal reached: [" + row + "][" + col + "]");
+                Toast.makeText(this, "Goal reached: [" + row + "][" + col + "]", Toast.LENGTH_SHORT).show();
+                GAME.addGoal(square.row, square.col);
+                updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getGoalCount()));
+            }
             updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
         }
     }
@@ -234,14 +248,14 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         }
     }
     private void clearGrid() {
-        // Clear grid first (optional)
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 7; col++) {
-                ImageView cell = findViewById(gridIds[row][col]);
-                cell.setImageResource(R.drawable.line_none);
-            }
-        }
-        GAME.moveCount = 0;
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+//        // Clear grid first (optional)
+//        for (int row = 0; row < 8; row++) {
+//            for (int col = 0; col < 7; col++) {
+//                ImageView cell = findViewById(gridIds[row][col]);
+//                cell.setImageResource(R.drawable.line_none);
+//            }
+//        }
+//        GAME.moveCount = 0;
+//        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
 }
