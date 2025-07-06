@@ -29,10 +29,10 @@ import java.util.*;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
-    static EyeBall EyeBall;
     static final int maxLevel = 4;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -88,20 +88,20 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
-        clearGrid();
+//        clearGrid();
         updateTextView(R.id.currentLevelValue, String.valueOf(1));
         updateTextView(R.id.goalsRemainingValue, String.valueOf(0));
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
-        clearGrid();
+//        clearGrid();
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.goalsRemainingValue, String.valueOf( GAME.getGoalCount()));
     }
     public void handleStartButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
-        clearGrid();
+//        clearGrid();
 
         int currentLevel = GAME.getLevelCount();
         LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
@@ -121,8 +121,8 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             GAME.setLevel(1);
         }
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-        updateTextView(R.id.goalsRemainingValue, String.valueOf(levelData.totalGoalCount()));
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+//        updateTextView(R.id.goalsRemainingValue, String.valueOf(levelData.totalGoalCount()));
+//        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
         System.out.println("  Shape: " + square.getShape() +
@@ -131,6 +131,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
                 ", At [" + square.row + "," + square.col + "]");
 
         GAME.addSquare(square, square.row, square.col);
+        GAME.addEyeball(square.row, square.col, Direction.UP);
     }
     private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
@@ -179,31 +180,27 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     private void handleCellClick(@NonNull PlayableSquare square) {
         int row = square.row;
         int col = square.col;
+        boolean canMoveTo = GAME.canMoveTo(row,col);
+        if (!canMoveTo) {
+            Toast.makeText(this, "Cannot move to: [" + row + "][" + col + "]", Toast.LENGTH_SHORT).show();
 
-        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
-
-        //  Remove eyeball from the previous current square
-        PlayableSquare previous = GAME.getCurrentSquare();
-        if (previous != null) {
-            previous.setCurrent(false);
-            handleCellAt(previous);  // Refresh UI for previous
+        } else {
+            LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
+            //  Remove eyeball from the previous current square
+            PlayableSquare previous = GAME.getCurrentSquare();
+            if (previous != null) {
+                previous.setCurrent(false);
+                handleCellAt(previous);  // Refresh UI for previous
+            }
+            // set new square as current and refresh UI
+            square.setCurrent(true);
+            handleCellAt(square);
+            // track move count
+//            GAME.moveCount++;
+            // Move the current state (handled inside Game)
+            GAME.moveTo(square.row, square.col);
+            updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
         }
-
-        // set new square as current and refresh UI
-        square.setCurrent(true);
-        handleCellAt(square);
-
-        // track move count
-        GAME.moveCount++;
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
-
-        // Update move count
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
-
-        // Move the current state (handled inside Game)
-        GAME.moveTo(square.row, square.col);
-
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);

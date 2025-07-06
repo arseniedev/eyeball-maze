@@ -2,6 +2,8 @@ package nz.ac.ara.ads.eyeballmaze.model.classes;
 
 import android.media.SoundPool;
 
+import androidx.annotation.NonNull;
+
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -9,6 +11,7 @@ import nz.ac.ara.ads.eyeballmaze.enums.*;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
+import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidMoveException;
 import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
@@ -240,7 +243,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public boolean canMoveTo(int newYDestination, int newXDestination) {
-//        boolean result = false;
+        boolean result = false;
         LOGGER.log(java.util.logging.Level.INFO, "Checking if canMoveTo at row: " + newYDestination + ", column: " + newXDestination);
 
         Square square = this.getSquareAt(newYDestination, newXDestination);
@@ -249,17 +252,19 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 && this.isDirectionOK(newYDestination, newXDestination)
                 &&  isMatchingShapeOrColor(square);
     }
-
-    private boolean isMatchingShapeOrColor(Square targetSquare) {
+    private boolean isMatchingShapeOrColor(@NonNull Square targetSquare) {
         Color targetColor = targetSquare.getColor();
         Shape targetShape = targetSquare.getShape();
+        Color currentColor = this.getColorAt(this.getEyeballRow(),this.getEyeballColumn());
+        Shape currentShape = this.getShapeAt(this.getEyeballRow(),this.getEyeballColumn());
+        if (currentColor == Color.BLANK && currentShape == Shape.BLANK) {
+            return true;
+        }
+//        int eyeballRow = this.theEyeball.currenPosition.row;
+//        int eyeballColumn = this.theEyeball.currenPosition.column;
 
-        int eyeballRow = this.theEyeball.currenPosition.column;
-        int eyeballColumn = this.theEyeball.currenPosition.row;
-
-        boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
-        boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
-
+        boolean isSameColor = currentColor.equals(targetColor);
+        boolean isSameShape = currentShape.equals(targetShape);
         return isSameColor || isSameShape;
     }
 
@@ -273,7 +278,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         LOGGER.log(java.util.logging.Level.INFO, "Checking for direction: " + direction);
 
         boolean isNotBlank = true;
-        boolean isMovingHorizontal =  direction == Direction.RIGHT|| direction == Direction.LEFT;
+        boolean isMovingHorizontal =  direction == Direction.RIGHT || direction == Direction.LEFT;
         boolean isMovingVertical = direction == Direction.UP || direction == Direction.DOWN;
         if (isMovingHorizontal || isMovingVertical) {
             Iterator<Map.Entry<String,Square>> iterator = this.squareCollection.entrySet().iterator();

@@ -40,19 +40,20 @@ public class EyeBall {
         int currentY= this.getYPosition();
         int currentX = this.getXPosition();
 
-        boolean isMovingVertical= targetX == currentX;
-        boolean isMovingHorizontal = targetY == currentY;
-
-        if (isMovingHorizontal) {
-            direction = targetX > currentX ? Direction.RIGHT : Direction.LEFT;
-
-        } else if (isMovingVertical) {
-            direction = targetY < currentY ? Direction.UP : Direction.DOWN;
-        } else {
+        boolean isMovingVertical= targetY != currentY;
+        boolean isMovingHorizontal = targetX != currentX;
+        if (isMovingVertical && isMovingHorizontal) {
             direction = Direction.DIAGONAL;
+        } else {
+            if (isMovingHorizontal) {
+                direction = targetX > currentX ? Direction.RIGHT : Direction.LEFT;
+
+            } else { //if (isMovingVertical)
+                direction = targetY < currentY ? Direction.UP : Direction.DOWN;
+            }
         }
 
-        this.currentDirection = Direction.UP;
+//        this.currentDirection = Direction.UP;
 
         return direction;
     }
