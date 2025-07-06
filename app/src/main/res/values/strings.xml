@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">EyeBall Maze</string>
-<!--    <string name="button_label_toast">Toast</string>-->
-<!--    <string name="button_label_count">Count</string>-->
-<!--    <string name="count_initial_value">0</string>-->
-<!--    <string name="snackbar_message">Hello Snackbar!</string>-->
-<!--    <string name="undo_string">UNDO</string>-->
-<!--    <string name="channel_name">My Notification Channel</string>-->
-<!--    <string name="channel_description">My notification channel description</string>-->
-<!--    <string name="notification_permission_needed_title">Notification Permission Needed</string>-->
-<!--    <string name="notification_permission_needed_message">This app needs notification permission to send you important updates.</string>-->
-<!--    <string name="ok">OK</string>-->
-<!--    <string name="cancel">Cancel</string>-->
-<!--    <string name="snackbar_restored_message">Snackbar message is restored!</string>-->
+    <!--    <string name="button_label_toast">Toast</string>-->
+    <!--    <string name="button_label_count">Count</string>-->
+    <!--    <string name="count_initial_value">0</string>-->
+    <!--    <string name="snackbar_message">Hello Snackbar!</string>-->
+    <!--    <string name="undo_string">UNDO</string>-->
+    <!--    <string name="channel_name">My Notification Channel</string>-->
+    <!--    <string name="channel_description">My notification channel description</string>-->
+    <!--    <string name="notification_permission_needed_title">Notification Permission Needed</string>-->
+    <!--    <string name="notification_permission_needed_message">This app needs notification permission to send you important updates.</string>-->
+    <!--    <string name="ok">OK</string>-->
+    <!--    <string name="cancel">Cancel</string>-->
+    <!--    <string name="snackbar_restored_message">Snackbar message is restored!</string>-->
 
     <string name="label_current_level">Current Level</string>
     <string name="label_goals_remaining">Goals Remaining</string>
@@ -28,4 +28,5 @@ Use the eyeball character to reach every GOAL square by clicking on valid moves.
     <string name="label_button_reset">✕</string>
     <string name="label_button_undo">↩</string>
     <string name="grid_desc">Grid</string>
+    <string name="label_sound">Sound</string>
 </resources>
