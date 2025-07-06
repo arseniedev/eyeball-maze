@@ -1173,7 +1173,7 @@
         android:paddingEnd="10dp"
         android:text="@string/game_instructions"
         android:textColor="@android:color/black"
-        android:textColorLink="#F0D7D7"
+        android:textColorLink="#FFFFFF"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/timer"
         app:layout_constraintEnd_toEndOf="parent"
