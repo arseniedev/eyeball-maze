@@ -93,6 +93,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 assert square != null;
                 square.isGoal = true;
                 this.gameLevel.totalGoalCount++;
+//                this.getCompletedGoalCount()
+
             } else {
                 throw new InvalidCoordinateException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
             }
@@ -111,7 +113,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public int getGoalCount() {
-        LevelData levelData = LevelRepository.LEVELS.get(levelNumber);
+        LevelData levelData = LevelRepository.LEVELS.get("level" + levelNumber);
         this.gameLevel.totalGoalCount = levelData != null ? levelData.totalGoalCount() : 0;
 //        return levelData != null ? levelData.totalGoalCount() : 0;
         return this.gameLevel.totalGoalCount;

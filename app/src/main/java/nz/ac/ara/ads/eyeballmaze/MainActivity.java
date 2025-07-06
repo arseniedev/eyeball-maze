@@ -89,14 +89,14 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         GAME.moveCount = 0;
         GAME.setLevel(1);
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.moveCount));
-        updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getLevelCount()));
+        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
 //        clearGrid();
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-        updateTextView(R.id.goalsRemainingValue, String.valueOf( GAME.getGoalCount()));
+        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
     public void handleStartButtonClick(View view) {
 //        LOGGER.log(Level.INFO, "Clear Grid");
@@ -120,14 +120,16 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             GAME.setLevel(1);
         }
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-        updateTextView(R.id.goalsRemainingValue, String.valueOf(levelData.totalGoalCount()));
-//        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+//        int targetGoalCount = GAME.getGoalCount();
+//        int completedGoalCount = GAME.getCompletedGoalCount();
+
+        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
-        System.out.println("  Shape: " + square.getShape() +
-                ", Color: " + square.getColor() +
-                ", Goal: " + square.isGoal +
-                ", At [" + square.row + "," + square.col + "]");
+//        System.out.println("  Shape: " + square.getShape() +
+//                ", Color: " + square.getColor() +
+//                ", Goal: " + square.isGoal +
+//                ", At [" + square.row + "," + square.col + "]");
 
         GAME.addSquare(square, square.row, square.col);
         GAME.addEyeball(square.row, square.col, Direction.UP);
@@ -136,25 +138,29 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
         ImageView eyeballView = findCell(square.row, square.col);
 
+
         if (eyeballView != null) {
             float previousRotation = eyeballRotationDegrees;
             eyeballRotationDegrees += 90f;
             if (eyeballRotationDegrees >= 360f) {
                 eyeballRotationDegrees = 0f;
             }
-            rotateEyeball(eyeballView, previousRotation, eyeballRotationDegrees);
 
 
+//            rotateEyeball(eyeballView, previousRotation, eyeballRotationDegrees);
+
+//            rotateEyeball(R.drawable.eyeball, previousRotation, eyeballRotationDegrees);
             Drawable base = ContextCompat.getDrawable(this, drawableRes);
             Drawable overlay = getOverlay(square); // move this outside if-block
 
-            if (square.isCurrent()) {
-                LOGGER.log(Level.INFO, "Currently at: row=" + square.row + ", col=" + square.col);
-                overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-            }
+//            if (square.isCurrent()) {
+//                LOGGER.log(Level.INFO, "Currently at: row=" + square.row + ", col=" + square.col);
+//                overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
+//            }
 
             applyDrawableToCell(eyeballView, base, overlay, drawableRes);
             eyeballView.setOnClickListener(v -> handleCellClick(square));
+
         } else {
             logMissingCell(square.row, square.col);
         }
@@ -203,7 +209,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             // Move the current state (handled inside Game)
             GAME.moveTo(square.row, square.col);
 
-            // set new square as current and refresh UI
             square.setCurrent(true);
             handleCellAt(square);
 
@@ -211,7 +216,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
                 LOGGER.log(Level.INFO, "Goal reached: [" + row + "][" + col + "]");
                 Toast.makeText(this, "Goal reached: [" + row + "][" + col + "]", Toast.LENGTH_SHORT).show();
                 GAME.addGoal(square.row, square.col);
-                updateTextView(R.id.goalsRemainingValue, String.valueOf(GAME.getGoalCount()));
+                updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
             }
             updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
         }

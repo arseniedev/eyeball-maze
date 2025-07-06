@@ -18,7 +18,7 @@ public class Level {
         this.levelHeight = height;
     }
 
-    public void setCompletedGoalCount(int completedGoalCount) {
+    public void setCompletedGoalCount() {
         this.completedGoalCount = completedGoalCount;
     }
 
