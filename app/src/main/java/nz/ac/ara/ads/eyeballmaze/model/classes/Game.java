@@ -1,13 +1,10 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
 import android.media.SoundPool;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.*;
 import java.util.logging.Logger;
 
-import nz.ac.ara.ads.eyeballmaze.R;
 import nz.ac.ara.ads.eyeballmaze.enums.*;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
@@ -30,14 +27,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public Game() {
         this.levelNumber = 1;
     }
-
     @Override
     public void addLevel(int height, int width) {
         this.gameLevel = new Level(this.levelNumber, height, width);
         this.levelCollection.add(this.gameLevel);
         this.levelNumber ++;
     }
-
     @Override
     public int getLevelWidth() {
         return this.gameLevel.getLevelWidth();
@@ -50,7 +45,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public int getLevelCount() {
         return this.levelNumber;
     }
-
     @Override
     public void setLevel(int newLevel) {
 //        List<PlayableSquare> squaresForLevel = LevelRepository.SQUARES_MAP.get(currentLevel);
@@ -119,23 +113,19 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 //        return levelData != null ? levelData.totalGoalCount() : 0;
         return this.gameLevel.totalGoalCount;
     }
-
     @Override
     public boolean hasGoalAt(int row, int column) {
         Square square = this.getSquareAt(row, column);
         return square.isGoal;
     }
-
     @Override
     public Color getColorAt(int row, int column) {
         return this.getSquareAt(row, column).getColor();
     }
-
     @Override
     public Shape getShapeAt(int row, int column) {
         return this.getSquareAt(row, column).getShape();
     }
-
     @Override
     public int getCompletedGoalCount() {
         return 0;
@@ -156,7 +146,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
         return square;
     }
-
     private String generateCoordinateKey(int row, int column){
         return row + "," + column;
     }
@@ -276,8 +265,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public boolean hasBlankFreePathTo(int newYDestination, int newXDestination) {
-//        int currentX = theEyeball.currentXPosition;
-//        int currentY = theEyeball.currentYPosition;
         int currentX = theEyeball.currenPosition.column;
         int currentY = theEyeball.currenPosition.row;
         LOGGER.log(java.util.logging.Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
@@ -312,7 +299,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         }
         return isNotBlank;
     }
-
     @Override
     public boolean isDirectionOK(int newYDestination, int newXDestination) {
         boolean result;
@@ -338,7 +324,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         }
         return result;
     }
-
     @Override
     public Message checkDirectionMessage(int newYDestination, int newXDestination) {
         Direction newDirection = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
@@ -349,7 +334,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             return !this.isDirectionOK(newYDestination,newXDestination) ? Message.OK : Message.BACKWARDS_MOVE;
         }
     }
-
     @Override
     public Message checkMessageForBlankOnPathTo(int newYDestination, int newXDestination) {
         boolean isBlankFree = this.hasBlankFreePathTo(newYDestination, newXDestination);
@@ -364,36 +348,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             return Message.DIFFERENT_SHAPE_OR_COLOR;
         }
     }
-
-    private void updateGoalSquare() {
-        int row = this.getEyeballRow();
-        int column = this.getEyeballColumn();
-        Square currentSquare = new PlayableSquare();
-        this.addSquare(currentSquare, row,column);
-    }
-
-//    @Override
-//    public void moveTo(int row, int column) {
-//        this.updateGoalSquare();
-//
-//        Square destinationSquare = this.getSquareAt(row, column);
-//        String squareType = destinationSquare.getClass().getSimpleName();
-//
-//        if(destinationSquare instanceof PlayableSquare) {
-//            LOGGER.log(java.util.logging.Level.INFO, "This is a " + squareType);
-//
-//            LOGGER.log(java.util.logging.Level.INFO, "Moving " + squareType + " to " + row + ", " + column);
-//            this.moveCount++;
-//            this.theEyeball.updateEyeball(row,column);
-////            PlayableSquare previous = setCurrentSquare();
-//            if (this.hasGoalAt(row,column)) {
-//                this.gameLevel.completedGoalCount++;
-//                this.gameLevel.totalGoalCount--;
-//                destinationSquare.isGoal = false;
-//            }
-//        } else {
-//            LOGGER.log(java.util.logging.Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
-//        }
+//    private void updateGoalSquare() {
+//        int row = this.getEyeballRow();
+//        int column = this.getEyeballColumn();
+//        Square currentSquare = new PlayableSquare();
+//        this.addSquare(currentSquare, row,column);
 //    }
     public void moveTo(int row, int col) {
         PlayableSquare current = getCurrentSquare();
@@ -404,26 +363,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         if (target instanceof PlayableSquare) {
             ((PlayableSquare) target).setCurrent(true);
         }
-        moveCount++; // Track move count if desired
+        moveCount++;
     }
-//    @Override
-//    public int getCompletedGoalCount() {
-//        return this.gameLevel.completedGoalCount;
-//    }
-
-//    public void toggleSound() {
-//        soundPool = new SoundPool.Builder()
-//                .setMaxStreams(1)
-//                .build();
-//        clickSoundId = soundPool.load(this, R.raw.click_sound, 1);
-//        isSoundEnabled = !isSoundEnabled;
-//    }
-
-//    public boolean isSoundEnabled() {
-//        return isSoundEnabled;
-//    }
-
-//    public void setSoundEnabled(boolean soundEnabled) {
-//        isSoundEnabled = soundEnabled;
-//    }
 }

@@ -85,7 +85,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     }
     public void handleSoundSwitchClick(View view) {
         LOGGER.log(Level.INFO, "Sound On/off");
-//        GAME.toggleSound();
     }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
@@ -97,7 +96,8 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
         clearGrid();
-        updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
+        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
+        updateTextView(R.id.goalsRemainingValue, String.valueOf( GAME.getGoalCount()));
     }
     public void handleStartButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
@@ -131,7 +131,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
                 ", At [" + square.row + "," + square.col + "]");
 
         GAME.addSquare(square, square.row, square.col);
-//        GAME.addEyeball(square.row, square.col, direction);
     }
     private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
@@ -147,7 +146,7 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             }
 
             applyDrawableToCell(cell, base, overlay, drawableRes);
-            attachClickListener(cell, square);
+            cell.setOnClickListener(v -> handleCellClick(square));
         } else {
             logMissingCell(square.row, square.col);
         }
@@ -173,91 +172,30 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             cell.setImageResource(fallbackResId);
         }
     }
-    private void attachClickListener(@NonNull ImageView cell, PlayableSquare square) {
-        cell.setOnClickListener(v -> handleCellClick(square));
-    }
+
     private void logMissingCell(int row, int col) {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
-/*
-*   private void handleCellClick(@NonNull PlayableSquare square) {
-        int row = square.row;
-        int col = square.col;
-
-        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
-
-        // 🧹 Remove eyeball from the previous current square
-        PlayableSquare previous = GAME.getCurrentSquare();
-        if (previous != null) {
-            previous.setCurrent(false);
-            handleCellAt(previous);  // Refresh UI for previous
-        }
-
-        // 🎯 Set new square as current and refresh UI
-        square.setCurrent(true);
-        handleCellAt(square);
-
-        // 🎮 Optionally track move count
-        GAME.moveCount++;
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
-    }
-* */
     private void handleCellClick(@NonNull PlayableSquare square) {
         int row = square.row;
         int col = square.col;
 
         LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
 
-        // 🧹 Remove eyeball from the previous current square
+        //  Remove eyeball from the previous current square
         PlayableSquare previous = GAME.getCurrentSquare();
         if (previous != null) {
             previous.setCurrent(false);
             handleCellAt(previous);  // Refresh UI for previous
         }
 
-        // 🎯 Set new square as current and refresh UI
+        // set new square as current and refresh UI
         square.setCurrent(true);
         handleCellAt(square);
 
-        // 🎮 Optionally track move count
+        // track move count
         GAME.moveCount++;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
-
-
-
-//        int targetRow  = square.row;
-//        int targetColumn = square.col;
-//
-//        int currentRow = GAME.getEyeballRow();
-//        int currentCol = GAME.getEyeballColumn();
-
-//        Direction currentDirection = GAME.getEyeballDirection();
-//        LOGGER.log(Level.INFO, "Current Direction: " + currentDirection);
-//        LOGGER.log(Level.INFO, "Clicked on: [" + square.row + "][" + square.col + "]");
-
-//        Direction newDirection = currentDirection;
-//        float newRotation = EyeBall.currentEyeballRotation;
-
-//        if (targetColumn > currentCol) {
-//            newDirection = EyeBall.rotateDirection(currentDirection, true);
-//            newRotation += 90f;
-//        } else if (targetColumn < currentCol) {
-//            newDirection = EyeBall.rotateDirection(currentDirection,false);
-//            newRotation -= 90f;
-//        }
-
-        // Store updated rotation
-//        EyeBall.currentEyeballRotation = newRotation;
-
-//        // Move eyeball logically
-//        GAME.addEyeball(targetRow, targetColumn, newDirection);
-//        GAME.moveTo(targetRow, targetColumn);
-
-//        // Find the eyeball view and apply rotation
-//        ImageView eyeballView = findCell(targetRow, targetColumn);
-//        if (eyeballView != null) {
-//            rotateEyeball(eyeballView, 0f, EyeBall.currentEyeballRotation);
-//        }
 
         // Update move count
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
@@ -290,6 +228,14 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         rotate.setFillAfter(true); // maintain end position
         eyeballView.startAnimation(rotate);
     }
+    public void updateTextView(int viewId, String newText) {
+        TextView textView = findViewById(viewId);
+        if (textView != null) {
+            textView.setText(newText);
+        } else {
+            LOGGER.log(Level.WARNING, "View ID not found: " + viewId);
+        }
+    }
     private void clearGrid() {
         // Clear grid first (optional)
         for (int row = 0; row < 8; row++) {
@@ -300,15 +246,5 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
         }
         GAME.moveCount = 0;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
-    }
-    private void updateStatusViews(int currentLevel, int goalCount) {
-    }
-    public void updateTextView(int viewId, String newText) {
-        TextView textView = findViewById(viewId);
-        if (textView != null) {
-            textView.setText(newText);
-        } else {
-            LOGGER.log(Level.WARNING, "View ID not found: " + viewId);
-        }
     }
 }

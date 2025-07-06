@@ -1,14 +1,9 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 public class EyeBall {
-    /*
-     * Uses singleton design pattern
-     * */
     protected Position currenPosition;
-//    protected Direction currentDirection;
-//    protected Direction previousDirection;
-public float currentEyeballRotation = 0f;
-public Direction currentDirection;
+    public float currentEyeballRotation = 0f;
+    public Direction currentDirection;
     protected Direction previousDirection;
     public EyeBall(int newYPosition,int newXPosition, Direction eyeballDirection) {
         this.currenPosition = new Position(newYPosition,newXPosition);
@@ -61,5 +56,4 @@ public Direction currentDirection;
 
         return direction;
     }
-
 }
