@@ -45,7 +45,7 @@ public class LevelRepository {
                 1,
                 16,
                 17,
-                1,
+                5,
                 Direction.UP,
                 squaresForLevel1
         ));
@@ -231,7 +231,7 @@ public class LevelRepository {
                 4,
                 16,
                 17,
-                5,
+                1,
                 Direction.UP,
                 squaresForLevel4
         ));

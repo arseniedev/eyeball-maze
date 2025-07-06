@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 //        clearGrid();
         GAME.moveCount = 0;
         GAME.setLevel(1);
-        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.moveCount));
+        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }

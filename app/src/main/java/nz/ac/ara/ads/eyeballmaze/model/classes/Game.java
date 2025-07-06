@@ -113,10 +113,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public int getGoalCount() {
-        LevelData levelData = LevelRepository.LEVELS.get("level" + (levelNumber -1));
-        this.gameLevel.totalGoalCount = levelData != null ? levelData.totalGoalCount() : 0;
+        LevelData levelData = LevelRepository.LEVELS.get("level" + (levelNumber));
+        int goalCount = levelData != null ? levelData.totalGoalCount() : 0;
+        LOGGER.log(Level.INFO, "Setting goal count: " + goalCount);
+        this.gameLevel.totalGoalCount = goalCount;
 //        return levelData != null ? levelData.totalGoalCount() : 0;
-        return this.gameLevel.totalGoalCount;
+        return goalCount;
     }
     @Override
     public boolean hasGoalAt(int row, int column) {
