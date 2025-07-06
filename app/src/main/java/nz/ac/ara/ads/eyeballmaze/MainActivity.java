@@ -99,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
     public void handleStartButtonClick(View view) {
-//        LOGGER.log(Level.INFO, "Clear Grid");
-//        clearGrid();
-
         int currentLevel = GAME.getLevelCount();
         LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
 
@@ -126,10 +123,6 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
-//        System.out.println("  Shape: " + square.getShape() +
-//                ", Color: " + square.getColor() +
-//                ", Goal: " + square.isGoal +
-//                ", At [" + square.row + "," + square.col + "]");
 
         GAME.addSquare(square, square.row, square.col);
         GAME.addEyeball(square.row, square.col, Direction.UP);
@@ -145,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             if (eyeballRotationDegrees >= 360f) {
                 eyeballRotationDegrees = 0f;
             }
-
 
 //            rotateEyeball(eyeballView, previousRotation, eyeballRotationDegrees);
 
@@ -186,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
             cell.setImageResource(fallbackResId);
         }
     }
-
     private void logMissingCell(int row, int col) {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
@@ -202,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
             previous.setCurrent(false);
             handleCellAt(previous);  // Refresh UI for previous
         }
-
         // 🎯 Set new square as current and refresh UI
         square.setCurrent(true);
         handleCellAt(square);
@@ -241,16 +231,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             LOGGER.log(Level.WARNING, "View ID not found: " + viewId);
         }
-    }
-    private void clearGrid() {
-//        // Clear grid first (optional)
-//        for (int row = 0; row < 8; row++) {
-//            for (int col = 0; col < 7; col++) {
-//                ImageView cell = findViewById(gridIds[row][col]);
-//                cell.setImageResource(R.drawable.line_none);
-//            }
-//        }
-//        GAME.moveCount = 0;
-//        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
 }

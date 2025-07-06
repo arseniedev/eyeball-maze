@@ -18,9 +18,9 @@ public class GameLevel {
         this.levelHeight = height;
     }
 
-    public void setCompletedGoalCount() {
-        this.completedGoalCount = completedGoalCount;
-    }
+//    public void setCompletedGoalCount() {
+//        this.completedGoalCount = completedGoalCount;
+//    }
 
     public int getLevelWidth() {
         return levelWidth;
