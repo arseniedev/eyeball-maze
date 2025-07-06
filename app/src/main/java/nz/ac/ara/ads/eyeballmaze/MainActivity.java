@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private float eyeballRotationDegrees = 0f;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
+    public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
 
     static {
         shapeColorDrawableMap.put("STAR_RED", R.drawable.shape_star_red);
