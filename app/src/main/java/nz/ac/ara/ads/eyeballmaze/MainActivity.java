@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
+import nz.ac.ara.ads.eyeballmaze.model.classes.EyeBall;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
@@ -28,10 +29,10 @@ import java.util.*;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
+    static EyeBall EyeBall;
     static final int maxLevel = 4;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -82,15 +83,20 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             return insets;
         });
     }
+    public void handleSoundSwitchClick(View view) {
+        LOGGER.log(Level.INFO, "Sound On/off");
+//        GAME.toggleSound();
+    }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
         clearGrid();
-        updateStatusViews(1, 0);
+        updateTextView(R.id.currentLevelValue, String.valueOf(1));
+        updateTextView(R.id.goalsRemainingValue, String.valueOf(0));
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
         clearGrid();
-//        GAME.reset();
         updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
     }
     public void handleStartButtonClick(View view) {
@@ -112,13 +118,11 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             handleCellAt(square);
         }
         if (currentLevel >= maxLevel) {
-//            GAME.getCompletedGoalCount();
             GAME.setLevel(1);
-//            updateStatusViews(GAME.getLevelCount(), GAME.getGoalCount());
         }
-//        else {
-            updateStatusViews(currentLevel, levelData.totalGoalCount());
-//        }
+        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
+        updateTextView(R.id.goalsRemainingValue, String.valueOf(levelData.totalGoalCount()));
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
         System.out.println("  Shape: " + square.getShape() +
@@ -140,7 +144,6 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
             if (square.isCurrent()) {
                 LOGGER.log(Level.INFO, "Currently at: row=" + square.row + ", col=" + square.col);
                 overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-//                GAME.addEyeball(square.row, square.col, direction);
             }
 
             applyDrawableToCell(cell, base, overlay, drawableRes);
@@ -176,24 +179,47 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
     private void logMissingCell(int row, int col) {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
-    private void updateStatusViews(int currentLevel, int goalCount) {
-        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-        updateTextView(R.id.goalsRemainingValue, String.valueOf(goalCount));
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
-    }
-    private void handleCellClick(@NonNull PlayableSquare square) {
-        int row = square.row;
-        int col = square.col;
 
-        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
+    private void handleCellClick(@NonNull PlayableSquare square) {
+        int targetRow  = square.row;
+        int targetColumn = square.col;
+
+        int currentRow = GAME.getEyeballRow();
+        int currentCol = GAME.getEyeballColumn();
+
+        Direction currentDirection = GAME.getEyeballDirection();
+        LOGGER.log(Level.INFO, "Current Direction: " + currentDirection);
+        LOGGER.log(Level.INFO, "Clicked on: [" + square.row + "][" + square.col + "]");
+
+        Direction newDirection = currentDirection;
+        float newRotation = EyeBall.currentEyeballRotation;
+
+        if (targetColumn > currentCol) {
+            newDirection = EyeBall.rotateDirection(currentDirection, true);
+            newRotation += 90f;
+        } else if (targetColumn < currentCol) {
+            newDirection = EyeBall.rotateDirection(currentDirection,false);
+            newRotation -= 90f;
+        }
+
+        // Store updated rotation
+        EyeBall.currentEyeballRotation = newRotation;
+
+        // Move eyeball logically
+        GAME.addEyeball(targetRow, targetColumn, newDirection);
+        GAME.moveTo(targetRow, targetColumn);
+
+        // Find the eyeball view and apply rotation
+        ImageView eyeballView = findCell(targetRow, targetColumn);
+        if (eyeballView != null) {
+            rotateEyeball(eyeballView, 0f, EyeBall.currentEyeballRotation);
+        }
+
+        // Update move count
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
 
         // Move the current state (handled inside Game)
-        GAME.moveTo(row, col);
-
-        // Refresh UI for all squares (or just affected ones if performance matters)
-//        PlayableSquare previous = GAME.getPreviousSquare();
-//        handleCellAt(previous);
-//        handleCellAt(square);
+        GAME.moveTo(square.row, square.col);
 
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
@@ -209,6 +235,17 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
 
         return shapeColorDrawableMap.getOrDefault(key, R.drawable.line_none);
     }
+    private void rotateEyeball(ImageView eyeballView, float prevDegrees, float currentDegrees) {
+        android.view.animation.RotateAnimation rotate = new android.view.animation.RotateAnimation(
+                prevDegrees,
+                currentDegrees,
+                android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
+                android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        rotate.setDuration(300); // duration in ms
+        rotate.setFillAfter(true); // maintain end position
+        eyeballView.startAnimation(rotate);
+    }
     private void clearGrid() {
         // Clear grid first (optional)
         for (int row = 0; row < 8; row++) {
@@ -217,11 +254,11 @@ public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>()
                 cell.setImageResource(R.drawable.line_none);
             }
         }
-
         GAME.moveCount = 0;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
-
+    private void updateStatusViews(int currentLevel, int goalCount) {
+    }
     public void updateTextView(int viewId, String newText) {
         TextView textView = findViewById(viewId);
         if (textView != null) {

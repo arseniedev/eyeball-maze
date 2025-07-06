@@ -1,6 +1,8 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
+import android.media.SoundPool;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -17,12 +19,14 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     EyeBall theEyeball;
     protected int levelNumber;
     public int moveCount = 0;
-//    int completedGoalCount;
-
+    private SoundPool soundPool;
+    private int clickSoundId;
+    private boolean isSoundEnabled = false;
     private final List<Level> levelCollection =  new ArrayList<>();
     Map <String, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     public Game() {
         this.levelNumber = 1;
     }
@@ -42,7 +46,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public int getLevelHeight() {
         return this.gameLevel.getLevelHeight();
     }
-
     @Override
     public int getLevelCount() {
         return this.levelNumber;
@@ -79,6 +82,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public void addGoal(int row, int column) {
+        //Records every goal reached, deducts goal completed
+        // Celebrates in the end.
         try {
             if (this.isValidCoordinate(row,column)) {
                 LOGGER.log(java.util.logging.Level.INFO, "Adding a goal at: " + row + ", " + column);
@@ -88,6 +93,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                     this.addSquare(null, row, column);
                     LOGGER.log(java.util.logging.Level.INFO, "Empty PlayableSquare added for a goal");
                 }
+                assert square != null;
                 square.isGoal = true;
                 this.gameLevel.totalGoalCount++;
             } else {
@@ -128,6 +134,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     @Override
     public Shape getShapeAt(int row, int column) {
         return this.getSquareAt(row, column).getShape();
+    }
+
+    @Override
+    public int getCompletedGoalCount() {
+        return 0;
     }
     public PlayableSquare getCurrentSquare() {
         for (var square : this.squareCollection.values()) {
@@ -192,7 +203,15 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(java.util.logging.Level.INFO, "Square addition process performed");
         }
     }
-
+    public Direction rotateDirection(Direction currentDirection, boolean clockwise) {
+        switch (currentDirection) {
+            case UP: return clockwise ? Direction.RIGHT : Direction.LEFT;
+            case RIGHT: return clockwise ? Direction.DOWN : Direction.UP;
+            case DOWN: return clockwise ? Direction.LEFT : Direction.RIGHT;
+            case LEFT: return clockwise ? Direction.UP : Direction.DOWN;
+            default: return Direction.UP;
+        }
+    }
 //    private void getDrawableFromSquare(Square square) {
 //        Shape shape = square.getShape();
 //        Color color = square.getColor();
@@ -230,7 +249,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 //         Returns what is the direction it is facing
         return this.theEyeball.getDirection();
     }
-
     @Override
     public boolean canMoveTo(int newYDestination, int newXDestination) {
 //        boolean result = false;
@@ -247,8 +265,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         Color targetColor = targetSquare.getColor();
         Shape targetShape = targetSquare.getShape();
 
-        int eyeballRow = this.theEyeball.currentYPosition;
-        int eyeballColumn = this.theEyeball.currentXPosition;
+        int eyeballRow = this.theEyeball.currenPosition.column;
+        int eyeballColumn = this.theEyeball.currenPosition.row;
 
         boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
         boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
@@ -258,9 +276,10 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public boolean hasBlankFreePathTo(int newYDestination, int newXDestination) {
-        int currentX = theEyeball.currentXPosition;
-        int currentY = theEyeball.currentYPosition;
-
+//        int currentX = theEyeball.currentXPosition;
+//        int currentY = theEyeball.currentYPosition;
+        int currentX = theEyeball.currenPosition.column;
+        int currentY = theEyeball.currenPosition.row;
         LOGGER.log(java.util.logging.Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
         Direction direction = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
 
@@ -353,7 +372,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         this.addSquare(currentSquare, row,column);
     }
 
-    @Override
+//    @Override
 //    public void moveTo(int row, int column) {
 //        this.updateGoalSquare();
 //
@@ -387,9 +406,24 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         }
         moveCount++; // Track move count if desired
     }
-    @Override
-    public int getCompletedGoalCount() {
-        return this.gameLevel.completedGoalCount;
-    }
+//    @Override
+//    public int getCompletedGoalCount() {
+//        return this.gameLevel.completedGoalCount;
+//    }
 
+//    public void toggleSound() {
+//        soundPool = new SoundPool.Builder()
+//                .setMaxStreams(1)
+//                .build();
+//        clickSoundId = soundPool.load(this, R.raw.click_sound, 1);
+//        isSoundEnabled = !isSoundEnabled;
+//    }
+
+//    public boolean isSoundEnabled() {
+//        return isSoundEnabled;
+//    }
+
+//    public void setSoundEnabled(boolean soundEnabled) {
+//        isSoundEnabled = soundEnabled;
+//    }
 }

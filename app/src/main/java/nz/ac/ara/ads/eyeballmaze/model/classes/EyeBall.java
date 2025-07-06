@@ -5,13 +5,12 @@ public class EyeBall {
      * Uses singleton design pattern
      * */
     protected Position currenPosition;
-    protected Direction currentDirection;
+//    protected Direction currentDirection;
+//    protected Direction previousDirection;
+public float currentEyeballRotation = 0f;
+public Direction currentDirection;
     protected Direction previousDirection;
-    protected int currentYPosition;
-    protected int currentXPosition;
     public EyeBall(int newYPosition,int newXPosition, Direction eyeballDirection) {
-        this.currentYPosition = newYPosition;
-        this.currentXPosition = newXPosition;
         this.currenPosition = new Position(newYPosition,newXPosition);
         this.currentDirection = eyeballDirection;
     }
@@ -24,12 +23,22 @@ public class EyeBall {
     public Direction getDirection() {
         return currentDirection;
     }
+    public Direction rotateDirection(Direction currentDirection, boolean clockwise) {
+        switch (currentDirection) {
+            case UP: return clockwise ? Direction.RIGHT : Direction.LEFT;
+            case RIGHT: return clockwise ? Direction.DOWN : Direction.UP;
+            case DOWN: return clockwise ? Direction.LEFT : Direction.RIGHT;
+            case LEFT: return clockwise ? Direction.UP : Direction.DOWN;
+            default: return Direction.UP;
+        }
+    }
 
     public void updateEyeball(int row, int column) {
         this.previousDirection = this.currentDirection;
         this.getNewEyeballFacingDirection(row, column);
         this.currenPosition = new Position(row, column);
     }
+
     public Direction getNewEyeballFacingDirection(int targetY, int targetX) {
         Direction direction;
 
@@ -47,7 +56,8 @@ public class EyeBall {
         } else {
             direction = Direction.DIAGONAL;
         }
-        this.currentDirection = direction;
+
+        this.currentDirection = Direction.UP;
 
         return direction;
     }
