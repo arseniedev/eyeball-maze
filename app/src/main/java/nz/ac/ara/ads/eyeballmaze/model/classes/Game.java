@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nz.ac.ara.ads.eyeballmaze.enums.*;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
+import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
 import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
 import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 
@@ -58,22 +60,20 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         > changing the shapes & colors of the grids (some will no longer be playable
         > removing current goals + adding new one
         > changing the eyeball (direction and/or position)
-
         * */
         try {
             LOGGER.log(Level.INFO, "Setting level: " + newLevel);
             GameLevel level = this.levelCollection.get(newLevel);
             this.currentLevel = newLevel;
-
-            if (level == null) {
-                throw new IndexOutOfBoundsException();
-            } else {
-                // TODO: apply all the needed changes when changing the level
-//                addGoal();
-//                addEyeball();
-
-                LOGGER.log(Level.INFO, Message.OK.name());
+            // TODO: apply all the needed changes when changing the level
+//          addGoal();
+//          addEyeball();
+            List<SquareData> squareDataList = LevelRepository.RAW_LEVEL_DATA.get("level" + currentLevel);
+            if (squareDataList == null) {
+                LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
+                return;
             }
+            LOGGER.log(Level.INFO, Message.OK.name());
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         } catch(Exception unknown) {

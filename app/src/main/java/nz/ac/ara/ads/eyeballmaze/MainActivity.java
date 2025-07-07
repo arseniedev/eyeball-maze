@@ -146,19 +146,23 @@ public class MainActivity extends AppCompatActivity {
                     data.color(), data.shape());
             // Add square to game
             GAME.addSquare(square, data.row(), data.column());
-
             // Fetch the square just added (optional: if needed for UI logic)
 //            Square square = GAME.getSquareAt(data.row(), data.column());
             // Optional: handle markers and rendering
-            // handleInitialMarker(square);
+//             handleInitialMarker();
+            LOGGER.log(Level.INFO, "Setting up initial marker");
+            updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
+            StringBuilder sb = new StringBuilder();
+            sb.append("Goals: ").append(GAME.getCompletedGoalCount()).append("/").append(GAME.getGoalCount());
+
              handleCellAt(square);
         }
     }
-    private void handleInitialMarker(@NonNull PlayableSquare square) {
+//    private void handleInitialMarker() {
 
 //        GAME.addSquare(square, square.getRow(), square.getCol());
 //        GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
-    }
+//    }
     private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
         ImageView eyeballView = findCell(square.getRow(), square.getCol());
