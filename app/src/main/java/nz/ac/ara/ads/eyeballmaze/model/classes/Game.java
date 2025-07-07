@@ -15,6 +15,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     EyeBall theEyeball;
     public int currentLevel = 1;
+    public int moveCount = 2;
     public GameLevel gameLevel;
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <Position, Square> squareCollection = new HashMap<>();

@@ -11,7 +11,7 @@ public class GameLevel {
 //    public int currentLevel = 1;
     public int totalGoalCount = 1;
     private int completedGoalCount = 0;
-    public int moveCount = 0;
+//    public int moveCount = 2;
     private final Set<Position> completedGoals = new HashSet<>();
     private static final int MAX_COLS = 20;
     private static final int MAX_ROWS = 20;

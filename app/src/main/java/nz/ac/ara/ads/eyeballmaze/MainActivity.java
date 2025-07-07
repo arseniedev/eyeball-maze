@@ -115,11 +115,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
-        gameLevel.moveCount = 0;
+//        moveCount = 0;
         GAME.setLevel(1);
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
-        updateTextView(R.id.movesMadeValue, String.valueOf(gameLevel.moveCount));
+//        updateTextView(R.id.movesMadeValue, String.valueOf(moveCount));
     }
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void handleStartButtonClick(View view) {
         int currentLevel = GAME.currentLevel;
+        int currentMoveCount = GAME.moveCount;
 
         // Safely fetch level data from repository
         LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
@@ -154,18 +155,20 @@ public class MainActivity extends AppCompatActivity {
 //            Square square = GAME.getSquareAt(data.row(), data.column());
             // Optional: handle markers and rendering
 //             handleInitialMarker();
-            LOGGER.log(Level.INFO, "Setting up initial marker");
-            updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-
-            StringBuilder sb = new StringBuilder();
-            sb.append(GAME.getCompletedGoalCount()).append("/").append(GAME.getGoalCount());
-//            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(GAME.gameLevel.getTotalGoalCount());
-//            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(4);
-            updateTextView(R.id.goalsRemainingValue, String.valueOf(sb));
-            updateTextView(R.id.movesMadeValue, String.valueOf(GAME.gameLevel.moveCount));
 
              handleCellAt(square);
         }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(GAME.getCompletedGoalCount()).append("/").append(GAME.getGoalCount());
+//            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(GAME.gameLevel.getTotalGoalCount());
+//            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(4);
+        updateTextView(R.id.goalsRemainingValue, String.valueOf(sb));
+        LOGGER.log(Level.INFO, "Setting up initial marker");
+        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
+
+        updateTextView(R.id.movesMadeValue, String.valueOf(currentMoveCount)); //GAME.gameLevel.moveCount
+
     }
 //    private void handleInitialMarker() {
 
