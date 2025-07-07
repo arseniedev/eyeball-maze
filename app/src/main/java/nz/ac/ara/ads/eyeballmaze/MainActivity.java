@@ -15,6 +15,8 @@ import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.GameLevel;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
+//import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -120,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
     public void handleStartButtonClick(View view) {
-        int currentLevel = GAME.getLevelCount();
-//        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+        int currentLevel = GAME.currentLevel;
+        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
 // TODO fix this leveldata src file
 //        if (levelData == null) {
 //            LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
@@ -129,11 +131,12 @@ public class MainActivity extends AppCompatActivity {
 //        }
         LOGGER.log(Level.INFO, "Setting Level " + currentLevel);
 
-//        GAME.addLevel(levelData.levelHeight(), levelData.levelWidth());
-//        for (PlayableSquare square : levelData.squares()) {
-//            handleInitialMarker(square);
-//            handleCellAt(square);
-//        }
+        GAME.addLevel(15, 15);
+        assert levelData != null;
+        for (PlayableSquare square : levelData.squares()) {
+            handleInitialMarker(square);
+            handleCellAt(square);
+        }
 //        if (currentLevel >= maxLevel) {
 //            GAME.setLevel(1);
 //        }

@@ -11,14 +11,14 @@ import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
 
     EyeBall theEyeball;
-    protected int currentLevel;
+    public int currentLevel;
     private GameLevel gameLevel;
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <Position, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
-        this.currentLevel = 0;
+        this.currentLevel = 1;
     }
 
     @Override

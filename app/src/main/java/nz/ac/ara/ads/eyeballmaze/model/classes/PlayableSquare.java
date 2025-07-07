@@ -26,7 +26,7 @@ public class PlayableSquare extends Square {
         isCurrent = current;
     }
 
-    public void markAsGoal(this) {
+    public void markAsGoal() {
         this.isGoal = true;
     }
 
