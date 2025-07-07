@@ -139,6 +139,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        int startRow = levelData.eyeballPosition().row();
+        int startCol = levelData.eyeballPosition().col();
+
+        LOGGER.log(Level.INFO, "eeyeeeball" + startRow + ", " + startCol);
+
         LOGGER.log(Level.INFO, "Setting up Level " + currentLevel);
 
         // TODO: Replace with actual per-level dimensions if available
@@ -151,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
                     Position.at(data.row(), data.column()),
                     data.color(), data.shape());
 
-//            renderAllCells();
+            renderAllCells();
 //            renderCell(data.row(),data.column());
-
+//TODO somthing here
             GAME.addSquare(square, data.row(), data.column());
 //            placeEyeball(square);
         }
@@ -196,25 +201,39 @@ public class MainActivity extends AppCompatActivity {
             logMissingCell(square.getRow(), square.getCol());
         }
     }
-
     private Drawable getOverlay(@NonNull PlayableSquare square) {
-        LOGGER.log(Level.INFO, "Getting overlay for: row=" + square.getRow() + ", col=" + square.getCol());
         Drawable overlay = null;
 
         if (GAME.hasGoalAt(square.getRow(), square.getCol())) {
             overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
-            if (overlay != null) overlay.setAlpha(100); // Make it transparent
-        }
-        /*
-        * (PlayableSquare) square).isCurrent()*/
-
-        // Eyeball overlay (only one)
-        if (GAME.isEyeballAt(square.getRow(), square.getCol())) {
+            if (overlay != null) overlay.setAlpha(100);
+//        } else if (square.isCurrent()) {
+        } else if ((square.getCol()==0) && (square.getRow()==0)) {
+            GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
             overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
         }
 
         return overlay;
     }
+
+//    private Drawable getOverlay(@NonNull PlayableSquare square) {
+//        LOGGER.log(Level.INFO, "Getting overlay for: row=" + square.getRow() + ", col=" + square.getCol());
+//        Drawable overlay = null;
+//
+//        if (GAME.hasGoalAt(square.getRow(), square.getCol())) {
+//            overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
+//            if (overlay != null) overlay.setAlpha(100); // Make it transparent
+//        }
+//        /*
+//        * (PlayableSquare) square).isCurrent()*/
+//
+//        // Eyeball overlay (only one)
+//        if (GAME.isEyeballAt(square.getRow(), square.getCol())) {
+//            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
+//        }
+//
+//        return overlay;
+//    }
     private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {
         if (overlay != null || base != null) {
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
@@ -243,17 +262,17 @@ public class MainActivity extends AppCompatActivity {
 //        GAME.moveCount++;
 //        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
-//    private void renderAllCells() {
-//        for (int row = 0; row < 8; row++) {
-//            for (int col = 0; col < 7; col++) {
-//                Square square = GAME.getSquareAt(row, col);
-//                if (square instanceof PlayableSquare) {
-//                    LOGGER.log(Level.INFO, "Rendering: row=" + row + ", col=" + col);
-//                    placeEyeball((PlayableSquare) square); // render base + overlay
-//                }
-//            }
-//        }
-//    }
+    private void renderAllCells() {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 7; col++) {
+                Square square = GAME.getSquareAt(row, col);
+                if (square instanceof PlayableSquare) {
+                    LOGGER.log(Level.INFO, "Rendering: row=" + row + ", col=" + col);
+                    placeEyeball((PlayableSquare) square); // render base + overlay
+                }
+            }
+        }
+    }
 
     private void renderCell(int row, int col) {
         Square square = GAME.getSquareAt(row, col);
@@ -294,13 +313,6 @@ public class MainActivity extends AppCompatActivity {
             return R.drawable.line_none;
 //            "EMPTY";
         }
-//        String key = (shape != null && color != null)
-//                ? shape.name() + "_" + color.name()
-//                : "EMPTY";
-//        LOGGER.log(Level.WARNING, "DrawableKey: " + key);
-//
-//        assert shape != null;
-//        return shape.getDrawable(color); //shapeColorDrawableMap.getOrDefault(key, R.drawable.line_none);
     }
     private void rotateEyeball(ImageView eyeballView, float prevDegrees, float currentDegrees) {
         android.view.animation.RotateAnimation rotate = new android.view.animation.RotateAnimation(
