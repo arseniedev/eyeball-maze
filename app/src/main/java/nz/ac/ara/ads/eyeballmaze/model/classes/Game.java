@@ -262,8 +262,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public boolean hasBlankFreePathTo(int newYDestination, int newXDestination) {
-        int currentX = theEyeball.currenPosition.column;
-        int currentY = theEyeball.currenPosition.row;
+        int currentX = theEyeball.currentPosition.column;
+        int currentY = theEyeball.currentPosition.row;
         LOGGER.log(java.util.logging.Level.INFO, "Checking for current: row: " + currentX + ", column: " + currentY);
         Direction direction = this.theEyeball.getNewEyeballFacingDirection(newYDestination,newXDestination);
 
@@ -356,4 +356,5 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         }
         moveCount++;
     }
+
 }

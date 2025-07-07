@@ -8,6 +8,7 @@ import java.util.HashMap;
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
+import nz.ac.ara.ads.eyeballmaze.model.classes.BlankSquare;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 
 public class LevelRepository {
