@@ -1,7 +1,5 @@
 package nz.ac.ara.ads.eyeballmaze;
 
-import static nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository.GOAL_COORDINATES;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,23 +8,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import nz.ac.ara.ads.eyeballmaze.enums.Color;
-import nz.ac.ara.ads.eyeballmaze.enums.Direction;
-import nz.ac.ara.ads.eyeballmaze.enums.Shape;
-import nz.ac.ara.ads.eyeballmaze.model.classes.BlankSquare;
-import nz.ac.ara.ads.eyeballmaze.model.classes.EyeBall;
-import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
-import nz.ac.ara.ads.eyeballmaze.model.classes.GameLevel;
-import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
-import nz.ac.ara.ads.eyeballmaze.model.classes.Position;
-import nz.ac.ara.ads.eyeballmaze.model.classes.Square;
-import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
-import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
-import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
-import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
-//import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
+import nz.ac.ara.ads.eyeballmaze.enums.*;
+import nz.ac.ara.ads.eyeballmaze.model.classes.*;
+import nz.ac.ara.ads.eyeballmaze.model.data.*;
 
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         { R.id.cellGrid_8_1, R.id.cellGrid_8_2, R.id.cellGrid_8_3, R.id.cellGrid_8_4, R.id.cellGrid_8_5, R.id.cellGrid_8_6, R.id.cellGrid_8_7 }
     };
 
-
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,19 +54,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void handleResetButtonClick(View view) {
-        LOGGER.log(Level.INFO, "Clear Grid");
+//    public void handleResetButtonClick(View view) {
+//        LOGGER.log(Level.INFO, "Clear Grid");
 //        moveCount = 0;
-        GAME.setLevel(1);
-        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-        updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
-
-    }
-    public void handleUndoButtonClick(View view) {
-        LOGGER.log(Level.INFO, "Clear Grid");
-        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
-    }
+//        GAME.setLevel(1);
+//        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
+//        updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
+//
+//    }
+//    public void handleUndoButtonClick(View view) {
+//        LOGGER.log(Level.INFO, "Clear Grid");
+//        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
+//        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
+//    }
     public void handleStartButtonClick(View view) {
         int currentLevel = GAME.currentLevel;
         int currentMoveCount = GAME.moveCount;
@@ -93,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
             return;
         }
-
         LOGGER.log(Level.INFO, "Setting up Level " + currentLevel);
         GAME.addLevel(8, 8);
         GAME.setLevel(currentLevel);
@@ -103,10 +86,9 @@ public class MainActivity extends AppCompatActivity {
             PlayableSquare square = new PlayableSquare(
                     Position.at(data.row(), data.column()),
                     data.color(), data.shape());
-
-            renderAllCells();
             GAME.addSquare(square, data.row(), data.column());
         }
+        renderAllCells();
         Position startPos = levelData.eyeballPosition();
 
         GAME.addEyeball(startPos.row(), startPos.col(), Direction.UP);
@@ -185,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
     private void logMissingCell(int row, int col) {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
-
     public void handleCellClick(@NonNull Square clickedSquare) {
         int clickedRow = clickedSquare.getRow();
         int clickedCol = clickedSquare.getCol();
@@ -194,14 +175,11 @@ public class MainActivity extends AppCompatActivity {
         LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
 //        PlayableSquare previous = GAME.getCurrentSquare();
 
-
         GAME.moveCount ++;
-
         // Update UI
         updateTextView(R.id.movesMadeValue, String.valueOf(++GAME.moveCount));
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
-
     private void renderAllCells() {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 7; col++) {
@@ -213,32 +191,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    private void renderCell(int row, int col) {
-        Square square = GAME.getSquareAt(row, col);
-        if (!(square instanceof PlayableSquare)) return;
-
-        PlayableSquare pSquare = (PlayableSquare) square;
-        ImageView cell = findCell(row, col);
-        if (cell == null) {
-            logMissingCell(row, col);
-            return;
-        }
-
-        int baseDrawableId = getDrawableFrom(pSquare.getShape(), pSquare.getColor());
-        Drawable base = ContextCompat.getDrawable(this, baseDrawableId);
-
-        Drawable overlay = null;
-        if (GAME.hasGoalAt(row, col)) {
-            overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
-            if (overlay != null) overlay.setAlpha(100);
-        }
-        if (GAME.isEyeballAt(row, col)) {
-            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-        }
-
-        applyDrawableToCell(cell, base, overlay, baseDrawableId);
-    }
+//    private void renderCell(int row, int col) {
+//        Square square = GAME.getSquareAt(row, col);
+//        if (!(square instanceof PlayableSquare)) return;
+//
+//        PlayableSquare pSquare = (PlayableSquare) square;
+//        ImageView cell = findCell(row, col);
+//        if (cell == null) {
+//            logMissingCell(row, col);
+//            return;
+//        }
+//        int baseDrawableId = getDrawableFrom(pSquare.getShape(), pSquare.getColor());
+//        Drawable base = ContextCompat.getDrawable(this, baseDrawableId);
+//
+//        Drawable overlay = null;
+//        if (GAME.hasGoalAt(row, col)) {
+//            overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
+//            if (overlay != null) overlay.setAlpha(100);
+//        }
+//        if (GAME.isEyeballAt(row, col)) {
+//            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
+//        }
+//        applyDrawableToCell(cell, base, overlay, baseDrawableId);
+//    }
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);
     }
@@ -253,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
             return R.drawable.line_none;
         }
     }
-    private void rotateEyeball(ImageView eyeballView, float prevDegrees, float currentDegrees) {
+    private void rotateEyeball(@NonNull ImageView eyeballView, float prevDegrees, float currentDegrees) {
         android.view.animation.RotateAnimation rotate = new android.view.animation.RotateAnimation(
                 prevDegrees,
                 currentDegrees,
