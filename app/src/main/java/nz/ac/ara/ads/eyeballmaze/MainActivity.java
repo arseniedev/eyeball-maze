@@ -14,8 +14,9 @@ import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.GameLevel;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
-import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
+import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
+import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
 //import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 
 import java.util.HashMap;
@@ -125,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
         int currentLevel = GAME.currentLevel;
 
         // Safely fetch level data from repository
-        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+        SquareData squareData = LevelRepository.LEVELS.get("level" + currentLevel);
 
-        if (levelData == null) {
+        if (squareData == null) {
             LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
             return;
         }
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Add and display squares
-        for (PlayableSquare square : levelData.squares()) {
+//        for (PlayableSquare square : squareData.squares()) {
 //            handleInitialMarker(square);  // maybe for eyeball/goal
 //            handleCellAt(square);         // for UI rendering
         }
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 //        int completedGoalCount = GAME.getCompletedGoalCount();
 
 //        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
-    }
+//    }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
 
         GAME.addSquare(square, square.getRow(), square.getCol());
