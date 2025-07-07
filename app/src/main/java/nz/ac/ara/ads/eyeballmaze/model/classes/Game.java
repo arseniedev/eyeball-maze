@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import nz.ac.ara.ads.eyeballmaze.enums.*;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
-import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
 import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
 import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 
@@ -23,7 +22,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
-//        this.currentLevel = 1;
     }
 
     @Override
@@ -69,9 +67,17 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             this.currentLevel = newLevel;
 
             // TODO: apply all the needed changes when changing the level
+            LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
 //          addGoal();
 //          addEyeball();
-            LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+            assert levelData != null;
+            int row = levelData.eyeballPosition().row();
+            int column = levelData.eyeballPosition().col();
+//            Square square = getSquareAt(row, column);
+////            if (square instanceof PlayableSquare) {
+//                addEyeball(row, column, Direction.UP);
+////                ((PlayableSquare) square).markAsGoal();
+////            }
 
             assert gameLevelData != null;
 //            int totalGoalCount = levelData.targetGoalCount();
@@ -368,5 +374,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         GameLevel gameLevel = this.levelCollection.get(this.currentLevel-1);
         LOGGER.log(Level.INFO, "Completed goals:" + String.valueOf(gameLevel));
         return gameLevel.getCompletedGoals();
+    }
+
+    public boolean isEyeballAt(int row, int col) {
+        return true;
     }
 }

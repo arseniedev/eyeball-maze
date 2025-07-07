@@ -72,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
 
 //    int[][] gridIds = generateGrid();
     int[][] gridIds = {
-            { R.id.cellGrid_1_1, R.id.cellGrid_1_2, R.id.cellGrid_1_3, R.id.cellGrid_1_4, R.id.cellGrid_1_5, R.id.cellGrid_1_6, R.id.cellGrid_1_7 },
-            { R.id.cellGrid_2_1, R.id.cellGrid_2_2, R.id.cellGrid_2_3, R.id.cellGrid_2_4, R.id.cellGrid_2_5, R.id.cellGrid_2_6, R.id.cellGrid_2_7 },
-            { R.id.cellGrid_3_1, R.id.cellGrid_3_2, R.id.cellGrid_3_3, R.id.cellGrid_3_4, R.id.cellGrid_3_5, R.id.cellGrid_3_6, R.id.cellGrid_3_7 },
-            { R.id.cellGrid_4_1, R.id.cellGrid_4_2, R.id.cellGrid_4_3, R.id.cellGrid_4_4, R.id.cellGrid_4_5, R.id.cellGrid_4_6, R.id.cellGrid_4_7 },
-            { R.id.cellGrid_5_1, R.id.cellGrid_5_2, R.id.cellGrid_5_3, R.id.cellGrid_5_4, R.id.cellGrid_5_5, R.id.cellGrid_5_6, R.id.cellGrid_5_7 },
-            { R.id.cellGrid_6_1, R.id.cellGrid_6_2, R.id.cellGrid_6_3, R.id.cellGrid_6_4, R.id.cellGrid_6_5, R.id.cellGrid_6_6, R.id.cellGrid_6_7 },
-            { R.id.cellGrid_7_1, R.id.cellGrid_7_2, R.id.cellGrid_7_3, R.id.cellGrid_7_4, R.id.cellGrid_7_5, R.id.cellGrid_7_6, R.id.cellGrid_7_7 },
-            { R.id.cellGrid_8_1, R.id.cellGrid_8_2, R.id.cellGrid_8_3, R.id.cellGrid_8_4, R.id.cellGrid_8_5, R.id.cellGrid_8_6, R.id.cellGrid_8_7 }
+        { R.id.cellGrid_1_1, R.id.cellGrid_1_2, R.id.cellGrid_1_3, R.id.cellGrid_1_4, R.id.cellGrid_1_5, R.id.cellGrid_1_6, R.id.cellGrid_1_7 },
+        { R.id.cellGrid_2_1, R.id.cellGrid_2_2, R.id.cellGrid_2_3, R.id.cellGrid_2_4, R.id.cellGrid_2_5, R.id.cellGrid_2_6, R.id.cellGrid_2_7 },
+        { R.id.cellGrid_3_1, R.id.cellGrid_3_2, R.id.cellGrid_3_3, R.id.cellGrid_3_4, R.id.cellGrid_3_5, R.id.cellGrid_3_6, R.id.cellGrid_3_7 },
+        { R.id.cellGrid_4_1, R.id.cellGrid_4_2, R.id.cellGrid_4_3, R.id.cellGrid_4_4, R.id.cellGrid_4_5, R.id.cellGrid_4_6, R.id.cellGrid_4_7 },
+        { R.id.cellGrid_5_1, R.id.cellGrid_5_2, R.id.cellGrid_5_3, R.id.cellGrid_5_4, R.id.cellGrid_5_5, R.id.cellGrid_5_6, R.id.cellGrid_5_7 },
+        { R.id.cellGrid_6_1, R.id.cellGrid_6_2, R.id.cellGrid_6_3, R.id.cellGrid_6_4, R.id.cellGrid_6_5, R.id.cellGrid_6_6, R.id.cellGrid_6_7 },
+        { R.id.cellGrid_7_1, R.id.cellGrid_7_2, R.id.cellGrid_7_3, R.id.cellGrid_7_4, R.id.cellGrid_7_5, R.id.cellGrid_7_6, R.id.cellGrid_7_7 },
+        { R.id.cellGrid_8_1, R.id.cellGrid_8_2, R.id.cellGrid_8_3, R.id.cellGrid_8_4, R.id.cellGrid_8_5, R.id.cellGrid_8_6, R.id.cellGrid_8_7 }
     };
 
 //    protected int[][] generateGrid() {
@@ -145,20 +145,31 @@ public class MainActivity extends AppCompatActivity {
         GAME.addLevel(8, 8);
         GAME.setLevel(currentLevel);
 
+// First add all squares to the game grid
         for (SquareData data : levelData.squares()) {
             PlayableSquare square = new PlayableSquare(
                     Position.at(data.row(), data.column()),
                     data.color(), data.shape());
-            // Add square to game
-            GAME.addSquare(square, data.row(), data.column());
-            // Fetch the square just added (optional: if needed for UI logic)
-//            Square square = GAME.getSquareAt(data.row(), data.column());
-            // Optional: handle markers and rendering
-//             handleInitialMarker();
 
-             handleCellAt(square);
+//            renderAllCells();
+            renderCell(data.row(),data.column());
+
+            GAME.addSquare(square, data.row(), data.column());
+//            placeEyeball(square);
         }
 
+
+//        renderAllCells(); //eyesight check
+
+
+// Then add the eyeball at the actual start position
+        Position startPos = levelData.eyeballPosition();
+        GAME.addEyeball(startPos.row(), startPos.col(), Direction.UP);
+        PlayableSquare startSquare = (PlayableSquare) GAME.getSquareAt(startPos.row(), startPos.col());
+
+// Now place the eyeball visually
+        placeEyeball(startSquare);
+//        }
         StringBuilder sb = new StringBuilder();
         sb.append(GAME.getCompletedGoalCount()).append("/").append(GAME.getGoalCount());
 //            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(GAME.gameLevel.getTotalGoalCount());
@@ -166,52 +177,39 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, String.valueOf(sb));
         LOGGER.log(Level.INFO, "Setting up initial marker");
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-
         updateTextView(R.id.movesMadeValue, String.valueOf(currentMoveCount)); //GAME.gameLevel.moveCount
-
     }
-//    private void handleInitialMarker() {
 
-//        GAME.addSquare(square, square.getRow(), square.getCol());
-//        GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
-//    }
-    private void handleCellAt(@NonNull PlayableSquare square) {
+    private void placeEyeball(@NonNull PlayableSquare square) {
+        LOGGER.log(Level.INFO, "Placing visuals at: row=" + square.getRow() + ", col=" + square.getCol());
+
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
-        ImageView eyeballView = findCell(square.getRow(), square.getCol());
+        Drawable base = ContextCompat.getDrawable(this, drawableRes);
+        Drawable overlay = getOverlay(square);
 
-
-        if (eyeballView != null) {
-            float previousRotation = eyeballRotationDegrees;
-            eyeballRotationDegrees += 90f;
-            if (eyeballRotationDegrees >= 360f) {
-                eyeballRotationDegrees = 0f;
-            }
-//            rotateEyeball(eyeballView, previousRotation, eyeballRotationDegrees);
-
-//            rotateEyeball(R.drawable.eyeball, previousRotation, eyeballRotationDegrees);
-            Drawable base = ContextCompat.getDrawable(this, drawableRes);
-            Drawable overlay = getOverlay(square); // move this outside if-block
-
-//            if (square.isCurrent()) {
-//                LOGGER.log(Level.INFO, "Currently at: row=" + square.row + ", col=" + square.col);
-//                overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-//            }
-
-            applyDrawableToCell(eyeballView, base, overlay, drawableRes);
-            eyeballView.setOnClickListener(v -> handleCellClick(square));
-
+        ImageView cell = findCell(square.getRow(), square.getCol());
+        if (cell != null) {
+            LOGGER.log(Level.INFO, "Found cell at: row=" + square.getRow() + ", col=" + square.getCol());
+            applyDrawableToCell(cell, base, overlay, drawableRes);
+            cell.setOnClickListener(v -> handleCellClick(square));
         } else {
             logMissingCell(square.getRow(), square.getCol());
         }
     }
+
     private Drawable getOverlay(@NonNull PlayableSquare square) {
+        LOGGER.log(Level.INFO, "Getting overlay for: row=" + square.getRow() + ", col=" + square.getCol());
         Drawable overlay = null;
 
         if (GAME.hasGoalAt(square.getRow(), square.getCol())) {
             overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
-            if (overlay != null) overlay.setAlpha(100);
-        } else if (square.isCurrent()) {
-            GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
+            if (overlay != null) overlay.setAlpha(100); // Make it transparent
+        }
+        /*
+        * (PlayableSquare) square).isCurrent()*/
+
+        // Eyeball overlay (only one)
+        if (GAME.isEyeballAt(square.getRow(), square.getCol())) {
             overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
         }
 
@@ -244,6 +242,43 @@ public class MainActivity extends AppCompatActivity {
 //
 //        GAME.moveCount++;
 //        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+    }
+//    private void renderAllCells() {
+//        for (int row = 0; row < 8; row++) {
+//            for (int col = 0; col < 7; col++) {
+//                Square square = GAME.getSquareAt(row, col);
+//                if (square instanceof PlayableSquare) {
+//                    LOGGER.log(Level.INFO, "Rendering: row=" + row + ", col=" + col);
+//                    placeEyeball((PlayableSquare) square); // render base + overlay
+//                }
+//            }
+//        }
+//    }
+
+    private void renderCell(int row, int col) {
+        Square square = GAME.getSquareAt(row, col);
+        if (!(square instanceof PlayableSquare)) return;
+
+        PlayableSquare pSquare = (PlayableSquare) square;
+        ImageView cell = findCell(row, col);
+        if (cell == null) {
+            logMissingCell(row, col);
+            return;
+        }
+
+        int baseDrawableId = getDrawableFrom(pSquare.getShape(), pSquare.getColor());
+        Drawable base = ContextCompat.getDrawable(this, baseDrawableId);
+
+        Drawable overlay = null;
+        if (GAME.hasGoalAt(row, col)) {
+            overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
+            if (overlay != null) overlay.setAlpha(100);
+        }
+        if (GAME.isEyeballAt(row, col)) {
+            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
+        }
+
+        applyDrawableToCell(cell, base, overlay, baseDrawableId);
     }
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);
