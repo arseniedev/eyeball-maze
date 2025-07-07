@@ -144,21 +144,18 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return square;
     }
 
-    @Override
-    public void addSquare(Square square, int row, int column) {
+    public void addSquare(int row, int column, Color color, Shape shape) {
         try {
-            if (this.isValidCoordinate(row,column)) {
-                Position position = Position.at(row, column);
-                this.squareCollection.put(position,square);
+            Position position = Position.at(row, column);
+            Square square = this.createSquare(position, color, shape, new HashSet<>());
+            LOGGER.log(Level.INFO, "Adding a square at: " + position);
 
-                LOGGER.log(Level.INFO, "Square cell added." +
-                        "\nShape: " + square.getShape() +
-                        "\nColor: " + square.getColor() +
-                        "\nKey:" + position);
+            this.squareCollection.put(position,square);
+            LOGGER.log(Level.INFO, "Square cell added." +
+                    "\nShape: " + square.getShape() +
+                    "\nColor: " + square.getColor() +
+                    "\nKey:" + position);
 
-            } else {
-                throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
-            }
         } catch (IllegalArgumentException  e) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }  catch (Exception unknown) {
@@ -166,6 +163,13 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } finally {
             LOGGER.log(Level.INFO, "Square addition process performed");
         }
+    }
+
+    public Square createSquare(Position pos, Color color, Shape shape, Set<Position> blanks) {
+        if (blanks.contains(pos)) {
+            return new BlankSquare(pos);
+        }
+        return new PlayableSquare(pos, color, shape);
     }
 
     @Override

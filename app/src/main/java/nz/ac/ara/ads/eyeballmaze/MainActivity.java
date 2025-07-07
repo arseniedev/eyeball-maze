@@ -33,7 +33,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
-    private GameLevel gameLevel = new GameLevel(20, 20);
+    private GameLevel gameLevel = new GameLevel(8, 8);
 
     static final int maxLevel = 4;
     private float eyeballRotationDegrees = 0f;
@@ -123,19 +123,25 @@ public class MainActivity extends AppCompatActivity {
     }
     public void handleStartButtonClick(View view) {
         int currentLevel = GAME.currentLevel;
-        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
-// TODO fix this leveldata src file
-//        if (levelData == null) {
-//            LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
-//            return;
-//        }
-        LOGGER.log(Level.INFO, "Setting Level " + currentLevel);
 
-        GAME.addLevel(15, 15);
-        assert levelData != null;
+        // Safely fetch level data from repository
+        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+
+        if (levelData == null) {
+            LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
+            return;
+        }
+
+        LOGGER.log(Level.INFO, "Setting up Level " + currentLevel);
+
+        // Initialize level in game with dimensions from LevelData
+        GAME.addLevel(8, 8);
+
+
+        // Add and display squares
         for (PlayableSquare square : levelData.squares()) {
-            handleInitialMarker(square);
-            handleCellAt(square);
+//            handleInitialMarker(square);  // maybe for eyeball/goal
+//            handleCellAt(square);         // for UI rendering
         }
 //        if (currentLevel >= maxLevel) {
 //            GAME.setLevel(1);

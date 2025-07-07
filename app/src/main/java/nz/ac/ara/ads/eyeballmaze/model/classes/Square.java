@@ -7,8 +7,11 @@ public abstract class Square {
 
     protected  Color color;
     protected Shape shape;
+
     protected final Position position;
+
     public boolean isGoal;
+
     public Square(Position position, Color color, Shape shape) {
         this.position= position;
         this.color = color;

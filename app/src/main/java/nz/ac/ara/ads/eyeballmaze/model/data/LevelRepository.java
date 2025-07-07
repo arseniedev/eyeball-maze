@@ -24,10 +24,6 @@ public class LevelRepository {
         squaresForLevel1.add(new PlayableSquare(new Position(1, 1), Color.YELLOW, Shape.FLOWER));
         squaresForLevel1.add(new PlayableSquare(new Position(1, 2), Color.YELLOW, Shape.DIAMOND));
         squaresForLevel1.add(new PlayableSquare(new Position(1, 3), Color.GREEN, Shape.FLOWER));
-        squaresForLevel1.add(new PlayableSquare(new Position(1, 4), Color.BLANK, Shape.BLANK));
-        squaresForLevel1.add(new PlayableSquare(new Position(1, 5), Color.BLANK, Shape.BLANK));
-        squaresForLevel1.add(new PlayableSquare(new Position(1, 6), Color.BLANK, Shape.BLANK));
-        squaresForLevel1.add(new PlayableSquare(new Position(1, 7), Color.RED, Shape.CROSS));
 
         squaresForLevel1.add(new PlayableSquare(new Position(2, 0), Color.GREEN, Shape.FLOWER));
         squaresForLevel1.add(new PlayableSquare(new Position(2, 1), Color.RED, Shape.STAR));
@@ -49,8 +45,7 @@ public class LevelRepository {
         LEVELS.put("level1", new LevelData(
                 1,
                 16,
-                17,
-                5,
+                Position.at(0,0),
                 Direction.UP,
                 squaresForLevel1
         ));
@@ -92,8 +87,7 @@ public class LevelRepository {
         LEVELS.put("level2", new LevelData(
                 2,
                 16,
-                17,
-                1,
+                Position.at(0,0),
                 Direction.UP,
                 squaresForLevel2
         ));
@@ -167,8 +161,7 @@ public class LevelRepository {
         LEVELS.put("level3", new LevelData(
                 3,
                 16,
-                17,
-                1,
+                Position.at(0,0),
                 Direction.UP,
                 squaresForLevel3
         ));
@@ -235,8 +228,7 @@ public class LevelRepository {
         LEVELS.put("level4", new LevelData(
                 4,
                 16,
-                17,
-                1,
+                Position.at(0,0),
                 Direction.UP,
                 squaresForLevel4
         ));
