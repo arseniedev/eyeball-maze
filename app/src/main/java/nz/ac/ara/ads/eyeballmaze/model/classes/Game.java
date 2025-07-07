@@ -89,22 +89,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                     System.out.println("Goal position missing: " + pos);
                 }
             }
-//            Square square = getSquareAt(row, column);
-////            if (square instanceof PlayableSquare) {
-//                addEyeball(row, column, Direction.UP);
-////                ((PlayableSquare) square).markAsGoal();
-////            }
 
             assert gameLevelData != null;
-//            int totalGoalCount = levelData.targetGoalCount();
-//            LOGGER.log(Level.INFO, String.valueOf(totalGoalCount));
-
-//            gameLevelData.moveCount = levelData.moveCount();
-//            List<SquareData> squareDataList = LevelRepository.LEVELS.get("level" + currentLevel);
-            if (gameLevelData == null) {
-                LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
-                return;
-            }
             LOGGER.log(Level.INFO, Message.OK.name());
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
@@ -119,13 +105,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 //        LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
         List<Position> goalPositions = GOAL_COORDINATES.get("level" + currentLevel);
         try {
-//            Position position = Position.at(row, column);
-//            if(goalPositions.contains(position)) {
-//
-//                square.isGoal = true;
-//            }
-
-//            if (this.isValidCoordinate(row,column)) {
                 LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
                 Square grid = this.getSquareAt(row, column);
 
@@ -174,6 +153,20 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public Color getColorAt(int row, int column) {
         return this.getSquareAt(row, column).getColor();
     }
+
+//    public PlayableSquare getCurrentSquare() {
+//        Position eyeballPosition = theEyeball.position;
+//
+//        for (var square : this.squareCollection.values()) {
+//            Position squarePosition = square.position;
+//            if (squarePosition.row() == eyeballPosition.row() &&
+//                    squarePosition.col() == eyeballPosition.col()) {
+//                return (PlayableSquare) square;
+//            }
+//        }
+//
+//        return null; // No matching square found
+//    }
 
     @Override
     public Shape getShapeAt(int row, int column) {

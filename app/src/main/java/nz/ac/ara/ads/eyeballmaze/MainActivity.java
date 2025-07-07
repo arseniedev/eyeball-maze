@@ -41,7 +41,6 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
-    private int moveiT = 0;
     EyeBall eyeBall = GAME.theEyeball;
 
     private final static Logger LOGGER =
@@ -190,40 +189,13 @@ public class MainActivity extends AppCompatActivity {
     public void handleCellClick(@NonNull Square clickedSquare) {
         int clickedRow = clickedSquare.getRow();
         int clickedCol = clickedSquare.getCol();
-        GAME.moveCount ++;
 
         eyeBall.selectNextGrid(clickedRow,clickedCol);
-//        LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
+        LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
+//        PlayableSquare previous = GAME.getCurrentSquare();
 
-//        Position currentEyeballPos = eyeBall.position;
-//        //GAME.getEyeballPosition();
-//        if (currentEyeballPos == null) {
-//            LOGGER.log(Level.WARNING, "Eyeball position not initialized!");
-//            return;
-//        }
-//
-//        // If clicked same position, no move
-//        if (clickedRow == currentEyeballPos.row() && clickedCol == currentEyeballPos.col()) {
-//            LOGGER.log(Level.INFO, "Clicked on eyeball's current position. No move.");
-//            return;
-//        }
-//
-//        Direction newDirection = calculateDirection(currentEyeballPos, Position.at(clickedRow, clickedCol));
-//
-//        if (newDirection == null) {
-//            LOGGER.log(Level.WARNING, "Invalid move direction from " + currentEyeballPos + " to " + clickedRow + "," + clickedCol);
-//            return;
-//        }
 
-        // Update eyeball position and direction in the game model
-//        eyeBall.position = Position.at(clickedRow, clickedCol);
-////        eyeBall.currentFacing = newDirection;
-//        LOGGER.log(Level.INFO, "Eyeball moved to: [" + clickedRow + "][" + clickedCol + "]");
-//
-//        eyeBall.moveTo(clickedRow, clickedCol);
-//
-////        renderCell(currentEyeballPos.row(), currentEyeballPos.col());
-
+        GAME.moveCount ++;
 
         // Update UI
         updateTextView(R.id.movesMadeValue, String.valueOf(++GAME.moveCount));
