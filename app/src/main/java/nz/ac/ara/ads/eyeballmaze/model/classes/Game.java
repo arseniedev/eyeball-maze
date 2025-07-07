@@ -1,5 +1,7 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
+import static nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository.GOAL_COORDINATES;
+
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,6 +75,19 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             assert levelData != null;
             int row = levelData.eyeballPosition().row();
             int column = levelData.eyeballPosition().col();
+            LOGGER.log(Level.INFO, "Eyeball position: " + row + ", " + column);
+
+            List<Position> goalPositions = GOAL_COORDINATES.get("level1");
+
+            assert goalPositions != null;
+            for (Position pos : goalPositions) {
+                if (squareCollection.containsKey(pos)) {
+                    System.out.println("Goal exists at: " + pos);
+                    addGoal(pos.row(), pos.col());
+                } else {
+                    System.out.println("Goal position missing: " + pos);
+                }
+            }
 //            Square square = getSquareAt(row, column);
 ////            if (square instanceof PlayableSquare) {
 //                addEyeball(row, column, Direction.UP);
@@ -100,8 +115,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public void addGoal(int row, int column) {
+        LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
         try {
-            if (this.isValidCoordinate(row,column)) {
+//            if (this.isValidCoordinate(row,column)) {
                 LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
                 Square grid = this.getSquareAt(row, column);
 
@@ -114,10 +130,10 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 }
                 LOGGER.log(Level.INFO, "Non-PlayableSquare NOT added for a goal");
 
-            } else {
-                throw new InvalidCoordinateException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
-            }
-        } catch (InvalidCoordinateException exception) {
+//            } else {
+//                throw new InvalidCoordinateException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
+//            }
+        } catch (Exception exception) {
             LOGGER.log(Level.SEVERE, "Failed to add goal:" + exception);
             throw new IllegalArgumentException(exception.getMessage());
         } finally {

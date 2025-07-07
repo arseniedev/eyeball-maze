@@ -12,7 +12,22 @@ import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Position;
 
 public class LevelRepository {
+    public static final Map<String, List<Position>> GOAL_COORDINATES = new HashMap<>();
 
+    static {
+        GOAL_COORDINATES.put("level1", List.of(
+                Position.at(1, 2),
+                Position.at(1, 4),
+                Position.at(3, 3),
+                Position.at(5, 2),
+                Position.at(5, 5)
+        ));
+
+        GOAL_COORDINATES.put("level2", List.of(
+                Position.at(0, 0),
+                Position.at(0, 1)
+        ));
+    }
     public static final Map<String, LevelData> LEVELS = new HashMap<>();
 
     static {

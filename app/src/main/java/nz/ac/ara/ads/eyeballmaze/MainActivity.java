@@ -1,5 +1,7 @@
 package nz.ac.ara.ads.eyeballmaze;
 
+import static nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository.GOAL_COORDINATES;
+
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +41,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
     private GameLevel gameLevel = new GameLevel(8, 8);
-
+    private int moveiT = 0;
     static final int maxLevel = 4;
     private float eyeballRotationDegrees = 0f;
     private final static Logger LOGGER =
@@ -127,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
     public void handleStartButtonClick(View view) {
+        moveiT ++;
         int currentLevel = GAME.currentLevel;
         int currentMoveCount = GAME.moveCount;
 
@@ -139,10 +142,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        int startRow = levelData.eyeballPosition().row();
-        int startCol = levelData.eyeballPosition().col();
+//        int startRow = levelData.eyeballPosition().row();
+//        int startCol = levelData.eyeballPosition().col();
 
-        LOGGER.log(Level.INFO, "eeyeeeball" + startRow + ", " + startCol);
+//        LOGGER.log(Level.INFO, "eeyeeeball" + startRow + ", " + startCol);
 
         LOGGER.log(Level.INFO, "Setting up Level " + currentLevel);
 
@@ -169,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
 // Then add the eyeball at the actual start position
         Position startPos = levelData.eyeballPosition();
+
         GAME.addEyeball(startPos.row(), startPos.col(), Direction.UP);
         PlayableSquare startSquare = (PlayableSquare) GAME.getSquareAt(startPos.row(), startPos.col());
 
@@ -182,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, String.valueOf(sb));
         LOGGER.log(Level.INFO, "Setting up initial marker");
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-        updateTextView(R.id.movesMadeValue, String.valueOf(currentMoveCount)); //GAME.gameLevel.moveCount
+        updateTextView(R.id.movesMadeValue, String.valueOf(moveiT)); //GAME.gameLevel.moveCount
     }
 
     private void placeEyeball(@NonNull PlayableSquare square) {
@@ -216,24 +220,6 @@ public class MainActivity extends AppCompatActivity {
         return overlay;
     }
 
-//    private Drawable getOverlay(@NonNull PlayableSquare square) {
-//        LOGGER.log(Level.INFO, "Getting overlay for: row=" + square.getRow() + ", col=" + square.getCol());
-//        Drawable overlay = null;
-//
-//        if (GAME.hasGoalAt(square.getRow(), square.getCol())) {
-//            overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
-//            if (overlay != null) overlay.setAlpha(100); // Make it transparent
-//        }
-//        /*
-//        * (PlayableSquare) square).isCurrent()*/
-//
-//        // Eyeball overlay (only one)
-//        if (GAME.isEyeballAt(square.getRow(), square.getCol())) {
-//            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-//        }
-//
-//        return overlay;
-//    }
     private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {
         if (overlay != null || base != null) {
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
