@@ -7,8 +7,8 @@ public class GameLevel {
     private final int totalGoals;
     private int completedGoals;
 //    protected int levelNumber;
-    protected int levelWidth;
-    protected int levelHeight;
+    public int levelWidth;
+    public int levelHeight;
     public int totalGoalCount;
     public int completedGoalCount = 0;
     Map<String, Square> squareCollection = new HashMap<>();
@@ -28,8 +28,15 @@ public class GameLevel {
     public void goalCompleted() {
         this.completedGoalCount++;
     }
-    public void addGoal() {
+//    public void addGoal() {
+//        this.totalGoalCount++;
+//    }
+    public void incrementGoalCount() {
         this.totalGoalCount++;
+    }
+
+    public int getTotalGoalCount() {
+        return this.totalGoalCount;
     }
 
 //    public int getLevelWidth() {
@@ -52,12 +59,4 @@ public class GameLevel {
     public boolean isLevelComplete() {
         return completedGoals >= totalGoals;
     }
-
-    public int getLevelWidth() {
-        return levelWidth;
-    }
-    public int getLevelHeight() {
-        return levelHeight;
-    }
-
 }

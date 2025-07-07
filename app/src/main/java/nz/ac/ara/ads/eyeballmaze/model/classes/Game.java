@@ -9,56 +9,76 @@ import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
 import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
-    protected GameLevel gameLevel;
-    EyeBall theEyeball;
-    protected int levelCount;
 
+    EyeBall theEyeball;
+    protected int currentLevel;
+    private GameLevel gameLevel;
     private final List<GameLevel> levelCollection =  new ArrayList<>();
-    Map <String, Square> squareCollection = new HashMap<>();
+    Map <Position, Square> squareCollection = new HashMap<>();
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
-        this.levelCount = 0;
+        this.currentLevel = 0;
     }
 
     @Override
     public void addLevel(int height, int width) {
-        this.gameLevel = new GameLevel(this.levelCount, height, width);
-        this.levelCollection.add(this.gameLevel);
-        this.levelCount ++;
+        gameLevel = new GameLevel(this.currentLevel, height, width);
+        this.levelCollection.add(gameLevel);
     }
-
     @Override
     public int getLevelWidth() {
-        return this.gameLevel.getLevelWidth();
+//        GameLevel current = this.levelCollection.get(this.currentLevel);
+//        return current.levelWidth;
+        return this.gameLevel.levelWidth;
     }
-
     @Override
     public int getLevelHeight() {
-        return this.gameLevel.getLevelHeight();
+//        GameLevel current = this.levelCollection.get(this.currentLevel);
+//        return current.levelWidth;
+        return this.gameLevel.levelHeight;
     }
 
     @Override
     public int getLevelCount() {
-        return this.levelCount;
+        return this.levelCollection.size();
+//        return this.currentLevel;
     }
-
     @Override
     public void setLevel(int newLevel) {
+        /*
+        - new level also means:
+        > resetting move count to 0
+        > changing level name to 1
+        > changing target goals
+        > resetting goals completed to 0
+
+        >resetting the eyeball position to start
+        > changing the shapes & colors of the grids (some will no longer be playable
+        > removing current goals + adding new one
+        > changing the eyeball (direction and/or position)
+
+        * */
         try {
             LOGGER.log(Level.INFO, "Setting level: " + newLevel);
+            GameLevel level = this.levelCollection.get(newLevel);
+            this.currentLevel = newLevel;
 
-            this.levelCount = newLevel;
-            this.gameLevel = this.levelCollection.get(newLevel);
+            if (level == null) {
+                throw new IndexOutOfBoundsException();
+            } else {
+                // TODO: apply all the needed changes when changing the level
+//                addGoal();
+//                addEyeball();
 
-            LOGGER.log(Level.INFO, Message.OK.name());
-
+                LOGGER.log(Level.INFO, Message.OK.name());
+            }
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         } catch(Exception unknown) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.UNKNOWN_EXCEPTION));
         } finally {
-            LOGGER.log(Level.INFO, "Setting level count: " + this.levelCount);
+            LOGGER.log(Level.INFO, "Setting level count: " + this.currentLevel);
         }
     }
 
@@ -68,13 +88,16 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             if (this.isValidCoordinate(row,column)) {
                 LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
                 Square grid = this.getSquareAt(row, column);
-                if (grid == null) {
-                    grid = new PlayableSquare(new Position(row,column), Color.BLANK, Shape.BLANK);
-                    this.addSquare(grid, row, column);
-                    LOGGER.log(Level.INFO, "Empty PlayableSquare added for a goal");
+
+                if (grid instanceof PlayableSquare) {
+                    ((PlayableSquare) grid).markAsGoal();
+                    LOGGER.log(Level.INFO, "PlayableSquare added for a goal");
+                    // Updating the level count
+                    GameLevel gameLevel = this.levelCollection.get(this.currentLevel);
+                    gameLevel.totalGoalCount++;
                 }
-                grid.isGoal = true;
-                this.gameLevel.totalGoalCount++;
+                LOGGER.log(Level.INFO, "Non-PlayableSquare NOT added for a goal");
+
             } else {
                 throw new InvalidCoordinateException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
             }
@@ -85,17 +108,16 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(Level.INFO, "Goal addition process performed");
         }
     }
-
     private boolean isValidCoordinate(int row, int column) {
         int widthBoundary = this.getLevelWidth();
         int heightBoundary = this.getLevelHeight();
 
         return row <= heightBoundary && row >= 0 && column <= widthBoundary && column >= 0;
     }
-
     @Override
     public int getGoalCount() {
-        return this.gameLevel.totalGoalCount;
+        GameLevel gameLevel = this.levelCollection.get(this.currentLevel);
+        return gameLevel.getTotalGoals();
     }
 
     @Override
@@ -116,28 +138,24 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     private Square getSquareAt(int row, int column) {
         Square square;
-        String coordinateKey = this.generateCoordinateKey(row,column);
-        LOGGER.log(Level.INFO, "Getting square at: " + coordinateKey);
-        square = this.squareCollection.get(coordinateKey);
+        Position position = Position.at(row, column);
+        LOGGER.log(Level.INFO, "Getting square at: " + position);
+        square = this.squareCollection.get(position);
 
         return square;
-    }
-
-    private String generateCoordinateKey(int row, int column){
-        return row + "," + column;
     }
 
     @Override
     public void addSquare(Square square, int row, int column) {
         try {
             if (this.isValidCoordinate(row,column)) {
-                String coordinateKey = this.generateCoordinateKey(row,column);
-                this.squareCollection.put(coordinateKey,square);
+                Position position = Position.at(row, column);
+                this.squareCollection.put(position,square);
 
                 LOGGER.log(Level.INFO, "Square cell added." +
                         "\nShape: " + square.getShape() +
                         "\nColor: " + square.getColor() +
-                        "\nKey:" + coordinateKey);
+                        "\nKey:" + position);
 
             } else {
                 throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
@@ -177,13 +195,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public int getEyeballColumn() {
         return this.theEyeball.getCol();
     }
-
     @Override
     public Direction getEyeballDirection() {
 //         Returns what is the direction it is facing
         return this.theEyeball.getDirection();
     }
-
     @Override
     public boolean canMoveTo(int newYDestination, int newXDestination) {
         boolean result = false;
@@ -195,7 +211,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                 && this.isDirectionOK(newYDestination, newXDestination)
                 &&  isMatchingShapeOrColor(square);
     }
-
     private boolean isMatchingShapeOrColor(Square targetSquare) {
         Color targetColor = targetSquare.getColor();
         Shape targetShape = targetSquare.getShape();
@@ -203,13 +218,11 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         int eyeballRow = this.theEyeball.getRow();
         int eyeballColumn = this.theEyeball.getCol();
 
-
         boolean isSameColor = this.getColorAt(eyeballRow,eyeballColumn).equals(targetColor);
         boolean isSameShape = this.getShapeAt(eyeballRow,eyeballColumn).equals(targetShape);
 
         return isSameColor || isSameShape;
     }
-
     @Override
     public boolean hasBlankFreePathTo(int newYDestination, int newXDestination) {
         int column = theEyeball.getCol();
@@ -224,17 +237,15 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         boolean isMovingHorizontal =  direction == Direction.RIGHT|| direction == Direction.LEFT;
         boolean isMovingVertical = direction == Direction.UP || direction == Direction.DOWN;
         if (isMovingHorizontal || isMovingVertical) {
-            Iterator<Map.Entry<String,Square>> iterator = this.squareCollection.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String,Square> entry = iterator.next();
-                String[] coordinates = entry.getKey().split(",");
-                int targetY = Integer.parseInt(coordinates[0]);
-                int targetX = Integer.parseInt(coordinates[1]);
+            for (Map.Entry<Position, Square> entry : this.squareCollection.entrySet()) {
+                Position position = entry.getKey();
+                int targetX = position.col();
+                int targetY = position.row();
 
                 Square square = entry.getValue();
                 boolean isABlankSquare = square instanceof BlankSquare;
                 boolean isInBetweenOldAndNewPosition = isMovingHorizontal ?
-                        (targetX <= newXDestination && targetX >= column) || targetX >= newXDestination && targetX <= column:
+                        (targetX <= newXDestination && targetX >= column) || targetX >= newXDestination && targetX <= column :
                         (targetY <= newYDestination && targetY >= row) || (targetY >= newYDestination && targetY <= row);
                 if (isABlankSquare && isInBetweenOldAndNewPosition) {
                     isNotBlank = false;
@@ -329,6 +340,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public int getCompletedGoalCount() {
-        return this.gameLevel.completedGoalCount;
+        GameLevel gameLevel = this.levelCollection.get(this.currentLevel);
+        return gameLevel.completedGoalCount;
     }
 }

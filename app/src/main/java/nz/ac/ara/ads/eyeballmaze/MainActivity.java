@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     private Drawable getOverlay(@NonNull PlayableSquare square) {
         Drawable overlay = null;
 
-        if (GAME.hasGoalAt(square.row, square.col)) {
+        if (GAME.hasGoalAt(square.getRow(), square.getCol())) {
             overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
             if (overlay != null) overlay.setAlpha(100);
         } else if (square.isCurrent()) {
