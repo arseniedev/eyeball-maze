@@ -32,7 +32,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
     static final int maxLevel = 4;
-    private float eyeballRotationDegrees = 0f;
+//    private float eyeballRotation = 0f;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
@@ -129,12 +129,12 @@ public class MainActivity extends AppCompatActivity {
         ImageView eyeballView = findCell(square.row, square.col);
 
 
-        if (eyeballView != null) {
-            float previousRotation = eyeballRotationDegrees;
-            eyeballRotationDegrees += 90f;
-            if (eyeballRotationDegrees >= 360f) {
-                eyeballRotationDegrees = 0f;
-            }
+//        if (eyeballView != null) {
+//            float previousRotation = eyeballRotationDegrees;
+//            eyeballRotationDegrees += 90f;
+//            if (eyeballRotationDegrees >= 360f) {
+//                eyeballRotationDegrees = 0f;
+//            }
 
 //            rotateEyeball(eyeballView, previousRotation, eyeballRotationDegrees);
 
@@ -150,9 +150,9 @@ public class MainActivity extends AppCompatActivity {
             applyDrawableToCell(eyeballView, base, overlay, drawableRes);
             eyeballView.setOnClickListener(v -> handleCellClick(square));
 
-        } else {
-            logMissingCell(square.row, square.col);
-        }
+//        } else {
+//            logMissingCell(square.row, square.col);
+//        }
     }
     private Drawable getOverlay(@NonNull PlayableSquare square) {
         Drawable overlay = null;
@@ -175,9 +175,9 @@ public class MainActivity extends AppCompatActivity {
             cell.setImageResource(fallbackResId);
         }
     }
-    private void logMissingCell(int row, int col) {
-        LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
-    }
+//    private void logMissingCell(int row, int col) {
+//        LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
+//    }
     private void handleCellClick(@NonNull PlayableSquare square) {
         int row = square.row;
         int col = square.col;

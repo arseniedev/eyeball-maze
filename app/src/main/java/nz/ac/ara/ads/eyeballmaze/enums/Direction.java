@@ -5,5 +5,8 @@ public enum Direction {
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT;
+
+//    public Direction rotate();
+//    public boolean isOpposite(Direction other);
 }
