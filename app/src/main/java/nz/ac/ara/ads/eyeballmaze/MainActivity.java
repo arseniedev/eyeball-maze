@@ -187,11 +187,13 @@ public class MainActivity extends AppCompatActivity {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
 
-    public void handleCellClick(@NonNull PlayableSquare clickedSquare) {
+    public void handleCellClick(@NonNull Square clickedSquare) {
         int clickedRow = clickedSquare.getRow();
         int clickedCol = clickedSquare.getCol();
         GAME.moveCount ++;
-        LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
+
+        eyeBall.selectNextGrid(clickedRow,clickedCol);
+//        LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
 
 //        Position currentEyeballPos = eyeBall.position;
 //        //GAME.getEyeballPosition();
@@ -214,13 +216,13 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         // Update eyeball position and direction in the game model
-        eyeBall.position = Position.at(clickedRow, clickedCol);
-//        eyeBall.currentFacing = newDirection;
-        LOGGER.log(Level.INFO, "Eyeball moved to: [" + clickedRow + "][" + clickedCol + "]");
-
-        eyeBall.moveTo(clickedRow, clickedCol);
-
-//        renderCell(currentEyeballPos.row(), currentEyeballPos.col());
+//        eyeBall.position = Position.at(clickedRow, clickedCol);
+////        eyeBall.currentFacing = newDirection;
+//        LOGGER.log(Level.INFO, "Eyeball moved to: [" + clickedRow + "][" + clickedCol + "]");
+//
+//        eyeBall.moveTo(clickedRow, clickedCol);
+//
+////        renderCell(currentEyeballPos.row(), currentEyeballPos.col());
 
 
         // Update UI
@@ -228,20 +230,6 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
 
-    // Helper: Calculate Direction from posA to posB (assumes one-step adjacent move)
-    private Direction calculateDirection(Position from, Position to) {
-        int dRow = to.row() - from.row();
-        int dCol = to.col() - from.col();
-
-        // You can customize this logic depending on allowed moves
-        if (dRow == -1 && dCol == 0) return Direction.UP;
-        if (dRow == 1 && dCol == 0) return Direction.DOWN;
-        if (dRow == 0 && dCol == -1) return Direction.LEFT;
-        if (dRow == 0 && dCol == 1) return Direction.RIGHT;
-
-        // Return null if move is invalid (non-adjacent)
-        return null;
-    }
     private void renderAllCells() {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 7; col++) {

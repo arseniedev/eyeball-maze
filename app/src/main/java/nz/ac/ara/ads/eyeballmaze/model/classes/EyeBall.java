@@ -1,10 +1,16 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
+
 import androidx.annotation.NonNull;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 public class EyeBall {
     public Position position;
     public Position targetPosition;
+    private final static Logger LOGGER =
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     public Direction currentFacing;
     public EyeBall(Position startPosition, Direction currentFacing) {
         this.position = startPosition;
@@ -15,6 +21,31 @@ public class EyeBall {
 
     public boolean matches(Position targetPosition, Direction targetFacing) {
         return this.position.equals(targetPosition) && this.currentFacing.equals(targetFacing);
+    }
+    public void selectNextGrid(int clickedRow, int clickedCol) {
+        Position targetPosition = Position.at(clickedRow, clickedCol);
+        Position currentEyeballPos = this.position;
+        currentFacing = calculateDirection(currentEyeballPos, targetPosition);
+
+        LOGGER.log(Level.INFO, "Eyeball moved to: [" + clickedRow + "][" + clickedCol + "]");
+
+        moveTo(clickedRow, clickedCol);
+    }
+
+
+    // Helper: Calculate Direction from posA to posB (assumes one-step adjacent move)
+    private Direction calculateDirection(Position from, Position to) {
+        int dRow = to.row() - from.row();
+        int dCol = to.col() - from.col();
+
+        // You can customize this logic depending on allowed moves
+        if (dRow == -1 && dCol == 0) return Direction.UP;
+        if (dRow == 1 && dCol == 0) return Direction.DOWN;
+        if (dRow == 0 && dCol == -1) return Direction.LEFT;
+        if (dRow == 0 && dCol == 1) return Direction.RIGHT;
+
+        // Return null if move is invalid (non-adjacent)
+        return null;
     }
     public void moveTo(int destinationRow, int destinationColumn) {
         this.targetPosition = Position.at(destinationRow, destinationColumn);;
