@@ -215,19 +215,42 @@ public class MainActivity extends AppCompatActivity {
             logMissingCell(square.getRow(), square.getCol());
         }
     }
+
     private Drawable getOverlay(@NonNull PlayableSquare square) {
         Drawable overlay = null;
+        var row = square.getRow();
+        var col = square.getCol();
 
-        if (GAME.hasGoalAt(square.getRow(), square.getCol())) {
+        if (GAME.hasGoalAt(row, col)) {
             overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
             if (overlay != null) overlay.setAlpha(100);
-//        } else if (square.isCurrent()) {
-        } else if ((square.getCol()==0) && (square.getRow()==0)) {
-            GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
-            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-        }
+        } else {
+            // Pattern matching switch on Direction (Java 17+)
+            // For example, eyeball only at (0,0), direction UP here for demo
+            if (col == 0 && row == 0) {
+                var startDir = moveiT%2 == 0 ? Direction.UP : Direction.DOWN;
+                GAME.addEyeball(row, col, startDir);
 
+                overlay = switch (startDir) {
+                    case UP, DOWN, LEFT, RIGHT -> getEyeballDrawable(startDir);
+                    // default case can throw or return null if unexpected
+                    default -> throw new IllegalStateException("Unexpected direction: " + startDir);
+                };
+            }
+        }
         return overlay;
+    }
+    private static final Map<Direction, Integer> DIRECTION_TO_DRAWABLE = Map.of(
+            Direction.UP, R.drawable.eyeball_north,
+            Direction.DOWN, R.drawable.eyeball_south,
+            Direction.LEFT, R.drawable.eyeball_west,
+            Direction.RIGHT, R.drawable.eyeball_east
+    );
+
+    private Drawable getEyeballDrawable(Direction direction) {
+        // Use var for local variable
+        var resId = DIRECTION_TO_DRAWABLE.get(direction);
+        return ContextCompat.getDrawable(this, resId);
     }
 
     private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {

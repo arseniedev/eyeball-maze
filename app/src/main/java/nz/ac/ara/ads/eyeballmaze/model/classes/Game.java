@@ -75,6 +75,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             assert levelData != null;
             int row = levelData.eyeballPosition().row();
             int column = levelData.eyeballPosition().col();
+
             LOGGER.log(Level.INFO, "Eyeball position: " + row + ", " + column);
 
             List<Position> goalPositions = GOAL_COORDINATES.get("level1");
