@@ -14,6 +14,7 @@ import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.model.classes.BlankSquare;
+import nz.ac.ara.ads.eyeballmaze.model.classes.EyeBall;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.GameLevel;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
@@ -43,7 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private GameLevel gameLevel = new GameLevel(8, 8);
     private int moveiT = 0;
     static final int maxLevel = 4;
-    private float eyeballRotationDegrees = 0f;
+//    private float eyeballRotationDegrees = 0f;
+//    EyeBall eyeball = GAME.theEyeball;
+    LevelData levelData = LevelRepository.LEVELS.get("level" + GAME.currentLevel);
+
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
@@ -132,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
 //        updateTextView(R.id.movesMadeValue, String.valueOf(moveCount));
+
     }
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
@@ -152,10 +157,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-//        int startRow = levelData.eyeballPosition().row();
-//        int startCol = levelData.eyeballPosition().col();
-
-//        LOGGER.log(Level.INFO, "eeyeeeball" + startRow + ", " + startCol);
 
         LOGGER.log(Level.INFO, "Setting up Level " + currentLevel);
 
@@ -163,22 +164,26 @@ public class MainActivity extends AppCompatActivity {
         GAME.addLevel(8, 8);
         GAME.setLevel(currentLevel);
 
-// First add all squares to the game grid
+        // First add all squares to the game grid
         for (SquareData data : levelData.squares()) {
             PlayableSquare square = new PlayableSquare(
                     Position.at(data.row(), data.column()),
                     data.color(), data.shape());
 
             renderAllCells();
-//            renderCell(data.row(),data.column());
-//TODO somthing here
             GAME.addSquare(square, data.row(), data.column());
-//            placeEyeball(square);
         }
-
-
 //        renderAllCells(); //eyesight check
 
+        // EYEBALL
+//        EyeBall eyeball = GAME.theEyeball;
+
+//        int startRow = levelData.eyeballPosition().row();
+//        int startCol = levelData.eyeballPosition().col();
+//        Direction startDir = Direction.UP;
+////        eyeball.position = new Position(startRow,startCol);
+
+//        levelData.eyeballPosition().
 
 // Then add the eyeball at the actual start position
         Position startPos = levelData.eyeballPosition();
@@ -218,13 +223,16 @@ public class MainActivity extends AppCompatActivity {
 
     private Drawable getOverlay(@NonNull PlayableSquare square) {
         Drawable overlay = null;
+//        LevelData levelData = LevelRepository.LEVELS.get("level" + GAME.currentLevel);
+//        levelData.eyeballPosition();
+
         var row = square.getRow();
         var col = square.getCol();
 
         if (GAME.hasGoalAt(row, col)) {
             overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
             if (overlay != null) overlay.setAlpha(100);
-        } else {
+        }
             // Pattern matching switch on Direction (Java 17+)
             // For example, eyeball only at (0,0), direction UP here for demo
             if (col == 0 && row == 0) {
@@ -237,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
                     default -> throw new IllegalStateException("Unexpected direction: " + startDir);
                 };
             }
-        }
         return overlay;
     }
     private static final Map<Direction, Integer> DIRECTION_TO_DRAWABLE = Map.of(

@@ -1,8 +1,8 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 public class EyeBall {
-    protected Position position;
-    protected Position targetPosition;
+    public Position position;
+    public Position targetPosition;
     public float currentEyeballRotation = 0f;
     protected Direction currentFacing;
 //    public Direction targetFacing;

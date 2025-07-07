@@ -14,7 +14,7 @@ import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
 
-    EyeBall theEyeball;
+    public EyeBall theEyeball;
     public int currentLevel = 1;
     public int moveCount = 2;
     public GameLevel gameLevel;
