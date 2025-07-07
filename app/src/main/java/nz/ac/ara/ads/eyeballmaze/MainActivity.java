@@ -11,9 +11,12 @@ import androidx.core.view.WindowInsetsCompat;
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
+import nz.ac.ara.ads.eyeballmaze.model.classes.BlankSquare;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
 import nz.ac.ara.ads.eyeballmaze.model.classes.GameLevel;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
+import nz.ac.ara.ads.eyeballmaze.model.classes.Position;
+import nz.ac.ara.ads.eyeballmaze.model.classes.Square;
 import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
@@ -126,36 +129,35 @@ public class MainActivity extends AppCompatActivity {
         int currentLevel = GAME.currentLevel;
 
         // Safely fetch level data from repository
-        List<SquareData> squareData = LevelRepository.RAW_LEVEL_DATA.get("level" + currentLevel);
+        List<SquareData> squareDataList = LevelRepository.RAW_LEVEL_DATA.get("level" + currentLevel);
 
-        if (squareData == null) {
+        if (squareDataList == null) {
             LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
             return;
         }
+
         LOGGER.log(Level.INFO, "Setting up Level " + currentLevel);
 
-        // Initialize level in game with dimensions from LevelData
+        // TODO: Replace with actual per-level dimensions if available
         GAME.addLevel(8, 8);
+        for (SquareData data : squareDataList) {
+            PlayableSquare square = new PlayableSquare(
+                    Position.at(data.row(), data.column()),
+                    data.color(), data.shape());
+            // Add square to game
+            GAME.addSquare(square, data.row(), data.column());
 
-
-        // Add and display squares
-//        for (PlayableSquare square : squareData.squares()) {
-//            handleInitialMarker(square);  // maybe for eyeball/goal
-//            handleCellAt(square);         // for UI rendering
+            // Fetch the square just added (optional: if needed for UI logic)
+//            Square square = GAME.getSquareAt(data.row(), data.column());
+            // Optional: handle markers and rendering
+            // handleInitialMarker(square);
+             handleCellAt(square);
         }
-//        if (currentLevel >= maxLevel) {
-//            GAME.setLevel(1);
-//        }
-//        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-//        int targetGoalCount = GAME.getGoalCount();
-//        int completedGoalCount = GAME.getCompletedGoalCount();
-
-//        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
-//    }
+    }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
 
-        GAME.addSquare(square, square.getRow(), square.getCol());
-        GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
+//        GAME.addSquare(square, square.getRow(), square.getCol());
+//        GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
     }
     private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());

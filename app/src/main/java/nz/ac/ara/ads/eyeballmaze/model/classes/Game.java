@@ -136,7 +136,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return this.getSquareAt(row, column).getShape();
     }
 
-    private Square getSquareAt(int row, int column) {
+    public Square getSquareAt(int row, int column) {
         Square square;
         Position position = Position.at(row, column);
         LOGGER.log(Level.INFO, "Getting square at: " + position);
@@ -145,19 +145,19 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         return square;
     }
 
-    public void addSquare(int row, int column, Color color, Shape shape) {
+    public void addSquare(Square square, int row, int column) {
         try {
-            Position position = Position.at(row, column);
+//            Position position = Position.at(row, column);
 
-            Square square = this.createSquare(position, color, shape, new HashSet<>());
+//            Square square = this.createSquare(position, color, shape, new HashSet<>());
 
-            LOGGER.log(Level.INFO, "Adding a square at: " + position);
+            LOGGER.log(Level.INFO, "Adding a square at: row-" + row + ", col-" + column);
 
-            this.squareCollection.put(position,square);
+            this.squareCollection.put(square.position,square);
             LOGGER.log(Level.INFO, "Square cell added." +
                     "\nShape: " + square.getShape() +
                     "\nColor: " + square.getColor() +
-                    "\nKey:" + position);
+                    "\nKey:" + square.position);
 
         } catch (IllegalArgumentException  e) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
