@@ -115,6 +115,16 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+//    private void initialiseGoal() {
+//        List<Position> goalPositions = GOAL_COORDINATES.get("level1");
+//
+//        for (Position pos : squareCollection.keySet()) {
+//            if (goalPositions.contains(pos)) {
+//                GAME.addGoal(pos.row(), pos.col());
+//            }
+//        }
+//    }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
 //        moveCount = 0;

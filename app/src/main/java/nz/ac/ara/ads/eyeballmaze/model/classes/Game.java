@@ -115,8 +115,15 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public void addGoal(int row, int column) {
-        LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
+//        LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
+        List<Position> goalPositions = GOAL_COORDINATES.get("level" + currentLevel);
         try {
+//            Position position = Position.at(row, column);
+//            if(goalPositions.contains(position)) {
+//
+//                square.isGoal = true;
+//            }
+
 //            if (this.isValidCoordinate(row,column)) {
                 LOGGER.log(Level.INFO, "Adding a goal at: " + row + ", " + column);
                 Square grid = this.getSquareAt(row, column);
@@ -182,6 +189,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
 
     public void addSquare(Square square, int row, int column) {
+        List<Position> goalPositions = GOAL_COORDINATES.get("level" + currentLevel);
         try {
 //            Position position = Position.at(row, column);
 
@@ -194,6 +202,16 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                     "\nShape: " + square.getShape() +
                     "\nColor: " + square.getColor() +
                     "\nKey:" + square.position);
+
+
+            assert goalPositions != null;
+            if(goalPositions.contains(square.position)) {
+                square.isGoal = true;
+            }
+
+            if (square instanceof PlayableSquare) {
+                ((PlayableSquare) square).markAsGoal();
+            }
 
         } catch (IllegalArgumentException  e) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
