@@ -41,42 +41,12 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
-    private GameLevel gameLevel = new GameLevel(8, 8);
     private int moveiT = 0;
-    static final int maxLevel = 4;
-//    private float eyeballRotationDegrees = 0f;
-//    EyeBall eyeball = GAME.theEyeball;
-    LevelData levelData = LevelRepository.LEVELS.get("level" + GAME.currentLevel);
+    EyeBall eyeBall = GAME.theEyeball;
 
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
 
-//    static {
-//        shapeColorDrawableMap.put("STAR_RED", R.drawable.shape_star_red);
-//        shapeColorDrawableMap.put("STAR_BLUE", R.drawable.shape_star_blue);
-//        shapeColorDrawableMap.put("STAR_YELLOW", R.drawable.shape_star_yellow);
-//        shapeColorDrawableMap.put("STAR_GREEN", R.drawable.shape_star_green);
-//
-//        shapeColorDrawableMap.put("CROSS_RED", R.drawable.shape_cross_red);
-//        shapeColorDrawableMap.put("CROSS_BLUE", R.drawable.shape_cross_blue);
-//        shapeColorDrawableMap.put("CROSS_YELLOW", R.drawable.shape_cross_yellow);
-//        shapeColorDrawableMap.put("CROSS_GREEN", R.drawable.shape_cross_green);
-//
-//        shapeColorDrawableMap.put("DIAMOND_RED", R.drawable.shape_diamond_red);
-//        shapeColorDrawableMap.put("DIAMOND_BLUE", R.drawable.shape_diamond_blue);
-//        shapeColorDrawableMap.put("DIAMOND_YELLOW", R.drawable.shape_diamond_yellow);
-//        shapeColorDrawableMap.put("DIAMOND_GREEN", R.drawable.shape_diamond_green);
-//
-//        shapeColorDrawableMap.put("FLOWER_RED", R.drawable.shape_flower_red);
-//        shapeColorDrawableMap.put("FLOWER_BLUE", R.drawable.shape_flower_blue);
-//        shapeColorDrawableMap.put("FLOWER_YELLOW", R.drawable.shape_flower_yellow);
-//        shapeColorDrawableMap.put("FLOWER_GREEN", R.drawable.shape_flower_green);
-//
-//        shapeColorDrawableMap.put("EMPTY", R.drawable.line_none);
-//    }
-
-//    int[][] gridIds = generateGrid();
     int[][] gridIds = {
         { R.id.cellGrid_1_1, R.id.cellGrid_1_2, R.id.cellGrid_1_3, R.id.cellGrid_1_4, R.id.cellGrid_1_5, R.id.cellGrid_1_6, R.id.cellGrid_1_7 },
         { R.id.cellGrid_2_1, R.id.cellGrid_2_2, R.id.cellGrid_2_3, R.id.cellGrid_2_4, R.id.cellGrid_2_5, R.id.cellGrid_2_6, R.id.cellGrid_2_7 },
@@ -88,26 +58,7 @@ public class MainActivity extends AppCompatActivity {
         { R.id.cellGrid_8_1, R.id.cellGrid_8_2, R.id.cellGrid_8_3, R.id.cellGrid_8_4, R.id.cellGrid_8_5, R.id.cellGrid_8_6, R.id.cellGrid_8_7 }
     };
 
-//    protected int[][] generateGrid() {
-//        int rows = 8;
-//        int cols = 7;
-//        int[][] gridIds = new int[rows][cols];
-//
-//        for (int row = 0; row < rows; row++) {
-//            for (int col = 0; col < cols; col++) {
-//                String cellId = "cellGrid_" + (row + 1) + "_" + (col + 1);
-//                int resId;
-//                resId = getResources().getIdentifier(cellId, "id", getPackageName());
-//
-//                if (resId == 0) {
-//                    throw new RuntimeException("Missing view for: " + cellId);
-//                }
-//
-//                gridIds[row][col] = resId;
-//            }
-//        }
-//        return gridIds;
-//    }
+
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,22 +71,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private void initialiseGoal() {
-//        List<Position> goalPositions = GOAL_COORDINATES.get("level1");
-//
-//        for (Position pos : squareCollection.keySet()) {
-//            if (goalPositions.contains(pos)) {
-//                GAME.addGoal(pos.row(), pos.col());
-//            }
-//        }
-//    }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
 //        moveCount = 0;
         GAME.setLevel(1);
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
-//        updateTextView(R.id.movesMadeValue, String.valueOf(moveCount));
 
     }
     public void handleUndoButtonClick(View view) {
@@ -144,23 +85,17 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
     public void handleStartButtonClick(View view) {
-        moveiT ++;
         int currentLevel = GAME.currentLevel;
         int currentMoveCount = GAME.moveCount;
 
-        // Safely fetch level data from repository
         LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
-//        List<SquareData> squareDataList = LevelRepository.LEVELS.get("level" + currentLevel);
 
         if (levelData == null) {
             LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
             return;
         }
 
-
         LOGGER.log(Level.INFO, "Setting up Level " + currentLevel);
-
-        // TODO: Replace with actual per-level dimensions if available
         GAME.addLevel(8, 8);
         GAME.setLevel(currentLevel);
 
@@ -173,37 +108,23 @@ public class MainActivity extends AppCompatActivity {
             renderAllCells();
             GAME.addSquare(square, data.row(), data.column());
         }
-//        renderAllCells(); //eyesight check
-
-        // EYEBALL
-//        EyeBall eyeball = GAME.theEyeball;
-
-//        int startRow = levelData.eyeballPosition().row();
-//        int startCol = levelData.eyeballPosition().col();
-//        Direction startDir = Direction.UP;
-////        eyeball.position = new Position(startRow,startCol);
-
-//        levelData.eyeballPosition().
-
-// Then add the eyeball at the actual start position
         Position startPos = levelData.eyeballPosition();
 
         GAME.addEyeball(startPos.row(), startPos.col(), Direction.UP);
         PlayableSquare startSquare = (PlayableSquare) GAME.getSquareAt(startPos.row(), startPos.col());
 
-// Now place the eyeball visually
+    //  place the eyeball
         placeEyeball(startSquare);
-//        }
+
         StringBuilder sb = new StringBuilder();
         sb.append(GAME.getCompletedGoalCount()).append("/").append(GAME.getGoalCount());
-//            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(GAME.gameLevel.getTotalGoalCount());
-//            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(4);
+
         updateTextView(R.id.goalsRemainingValue, String.valueOf(sb));
+
         LOGGER.log(Level.INFO, "Setting up initial marker");
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-        updateTextView(R.id.movesMadeValue, String.valueOf(moveiT)); //GAME.gameLevel.moveCount
+        updateTextView(R.id.movesMadeValue, String.valueOf(currentMoveCount));
     }
-
     private void placeEyeball(@NonNull PlayableSquare square) {
         LOGGER.log(Level.INFO, "Placing visuals at: row=" + square.getRow() + ", col=" + square.getCol());
 
@@ -220,11 +141,12 @@ public class MainActivity extends AppCompatActivity {
             logMissingCell(square.getRow(), square.getCol());
         }
     }
-
     private Drawable getOverlay(@NonNull PlayableSquare square) {
         Drawable overlay = null;
-//        LevelData levelData = LevelRepository.LEVELS.get("level" + GAME.currentLevel);
-//        levelData.eyeballPosition();
+        LevelData levelData = LevelRepository.LEVELS.get("level" + GAME.currentLevel);
+        assert levelData != null;
+        int startRow = levelData.eyeballPosition().row();
+        int startCol = levelData.eyeballPosition().col();
 
         var row = square.getRow();
         var col = square.getCol();
@@ -233,15 +155,12 @@ public class MainActivity extends AppCompatActivity {
             overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
             if (overlay != null) overlay.setAlpha(100);
         }
-            // Pattern matching switch on Direction (Java 17+)
-            // For example, eyeball only at (0,0), direction UP here for demo
-            if (col == 0 && row == 0) {
-                var startDir = moveiT%2 == 0 ? Direction.UP : Direction.DOWN;
+            if (col == startCol && row == startRow) {
+                var startDir = Direction.UP;
                 GAME.addEyeball(row, col, startDir);
 
                 overlay = switch (startDir) {
                     case UP, DOWN, LEFT, RIGHT -> getEyeballDrawable(startDir);
-                    // default case can throw or return null if unexpected
                     default -> throw new IllegalStateException("Unexpected direction: " + startDir);
                 };
             }
@@ -253,40 +172,75 @@ public class MainActivity extends AppCompatActivity {
             Direction.LEFT, R.drawable.eyeball_west,
             Direction.RIGHT, R.drawable.eyeball_east
     );
-
     private Drawable getEyeballDrawable(Direction direction) {
-        // Use var for local variable
         var resId = DIRECTION_TO_DRAWABLE.get(direction);
         return ContextCompat.getDrawable(this, resId);
     }
-
     private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {
         if (overlay != null || base != null) {
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
             cell.setImageDrawable(layeredDrawable);
         } else {
-//            cell.setImageResource(fallbackResId);
         }
     }
     private void logMissingCell(int row, int col) {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
-    private void handleCellClick(@NonNull PlayableSquare square) {
-        int row = square.getRow();
-        int col = square.getCol();
 
-        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
+    public void handleCellClick(@NonNull PlayableSquare clickedSquare) {
+        int clickedRow = clickedSquare.getRow();
+        int clickedCol = clickedSquare.getCol();
+        GAME.moveCount ++;
+        LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
 
-//        PlayableSquare previous = GAME.getCurrentSquare();
-//        if (previous != null) {
-//            previous.setCurrent(false);
-//            handleCellAt(previous);  // Refresh UI for previous
+//        Position currentEyeballPos = eyeBall.position;
+//        //GAME.getEyeballPosition();
+//        if (currentEyeballPos == null) {
+//            LOGGER.log(Level.WARNING, "Eyeball position not initialized!");
+//            return;
 //        }
-//        square.setCurrent(true);
-//        handleCellAt(square);
 //
-//        GAME.moveCount++;
-//        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+//        // If clicked same position, no move
+//        if (clickedRow == currentEyeballPos.row() && clickedCol == currentEyeballPos.col()) {
+//            LOGGER.log(Level.INFO, "Clicked on eyeball's current position. No move.");
+//            return;
+//        }
+//
+//        Direction newDirection = calculateDirection(currentEyeballPos, Position.at(clickedRow, clickedCol));
+//
+//        if (newDirection == null) {
+//            LOGGER.log(Level.WARNING, "Invalid move direction from " + currentEyeballPos + " to " + clickedRow + "," + clickedCol);
+//            return;
+//        }
+
+        // Update eyeball position and direction in the game model
+        eyeBall.position = Position.at(clickedRow, clickedCol);
+//        eyeBall.currentFacing = newDirection;
+        LOGGER.log(Level.INFO, "Eyeball moved to: [" + clickedRow + "][" + clickedCol + "]");
+
+        eyeBall.moveTo(clickedRow, clickedCol);
+
+//        renderCell(currentEyeballPos.row(), currentEyeballPos.col());
+
+
+        // Update UI
+        updateTextView(R.id.movesMadeValue, String.valueOf(++GAME.moveCount));
+        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
+    }
+
+    // Helper: Calculate Direction from posA to posB (assumes one-step adjacent move)
+    private Direction calculateDirection(Position from, Position to) {
+        int dRow = to.row() - from.row();
+        int dCol = to.col() - from.col();
+
+        // You can customize this logic depending on allowed moves
+        if (dRow == -1 && dCol == 0) return Direction.UP;
+        if (dRow == 1 && dCol == 0) return Direction.DOWN;
+        if (dRow == 0 && dCol == -1) return Direction.LEFT;
+        if (dRow == 0 && dCol == 1) return Direction.RIGHT;
+
+        // Return null if move is invalid (non-adjacent)
+        return null;
     }
     private void renderAllCells() {
         for (int row = 0; row < 8; row++) {
@@ -337,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
             return shape.getDrawable(color);
         } else {
             return R.drawable.line_none;
-//            "EMPTY";
         }
     }
     private void rotateEyeball(ImageView eyeballView, float prevDegrees, float currentDegrees) {

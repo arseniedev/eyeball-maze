@@ -6,9 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
-import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
-import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Position;
 
 public class LevelRepository {
@@ -21,11 +19,6 @@ public class LevelRepository {
                 Position.at(3, 3),
                 Position.at(5, 2),
                 Position.at(5, 5)
-        ));
-
-        GOAL_COORDINATES.put("level2", List.of(
-                Position.at(0, 0),
-                Position.at(0, 1)
         ));
     }
     public static final Map<String, LevelData> LEVELS = new HashMap<>();
@@ -94,14 +87,5 @@ public class LevelRepository {
                 5                  // Goal count
         ));
 
-
-        LEVELS.put("level2", new LevelData(
-                List.of(
-                        new SquareData(0, 0, Color.BLUE, Shape.STAR),
-                        new SquareData(0, 1, Color.GREEN, Shape.CROSS)
-                ),
-                Position.at(0, 1),
-                2
-        ));
     }
 }

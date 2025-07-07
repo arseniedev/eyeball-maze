@@ -1,45 +1,53 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
+import androidx.annotation.NonNull;
+
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 public class EyeBall {
     public Position position;
     public Position targetPosition;
-    public float currentEyeballRotation = 0f;
-    protected Direction currentFacing;
-//    public Direction targetFacing;
+    public Direction currentFacing;
     public EyeBall(Position startPosition, Direction currentFacing) {
         this.position = startPosition;
         this.currentFacing = currentFacing;
     }
-
     public int getCol() { return position.col(); }
     public int getRow() { return position.row(); }
 
     public boolean matches(Position targetPosition, Direction targetFacing) {
         return this.position.equals(targetPosition) && this.currentFacing.equals(targetFacing);
     }
-
     public void moveTo(int destinationRow, int destinationColumn) {
-//        Position newTarget = Position.at(destinationRow, destinationColumn);
         this.targetPosition = Position.at(destinationRow, destinationColumn);;
     }
-
     public void confirmMove() {
         this.position = targetPosition;
     }
-
     public void undoMove() {
         this.targetPosition = position;
     }
-
     public void rotate(Direction direction) {
         this.currentFacing = direction;
     }
-
     public Direction getDirection() {
         return currentFacing;
     }
 
-    public boolean isFacingBackward(Direction targetFacing) {
+    public Direction targetDirection(Position targetPosition) {
+        Position currentPosition = this.position;
+        // to -< from
+        int rowDiff = targetPosition.row() - currentPosition.row();
+        int colDiff = targetPosition.col() - currentPosition.col();
+
+        // You can customize this logic depending on allowed moves
+        if (rowDiff < 0 && colDiff == 0) return Direction.UP;
+        if (rowDiff > 0 && colDiff == 0) return Direction.DOWN;
+        if (rowDiff == 0 && colDiff < 0) return Direction.LEFT;
+        if (rowDiff == 0 && colDiff > 1) return Direction.RIGHT;
+
+        // Return null if move is invalid (non-adjacent)
+        return null;
+    }
+    public boolean isFacingBackward(@NonNull Direction targetFacing) {
         return targetFacing.equals(this.currentFacing.opposite());
     }
 }

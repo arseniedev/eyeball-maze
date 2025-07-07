@@ -16,7 +16,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     public EyeBall theEyeball;
     public int currentLevel = 1;
-    public int moveCount = 2;
+    public int moveCount = 0;
     public GameLevel gameLevel;
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <Position, Square> squareCollection = new HashMap<>();
@@ -213,6 +213,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             if (square instanceof PlayableSquare) {
                 ((PlayableSquare) square).markAsGoal();
             }
+
 
         } catch (IllegalArgumentException  e) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
