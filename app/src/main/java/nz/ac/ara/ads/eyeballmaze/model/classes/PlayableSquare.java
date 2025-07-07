@@ -22,12 +22,6 @@ public class PlayableSquare extends Square {
     public boolean isCurrent() {
         return isCurrent;
     }
-
-    @Override
-    public boolean isPlayable() {
-        return true;
-    }
-
     public void setCurrent(boolean current) {
         isCurrent = current;
     }

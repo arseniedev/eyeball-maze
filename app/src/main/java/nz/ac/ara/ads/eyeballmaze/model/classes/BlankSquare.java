@@ -4,8 +4,4 @@ public class BlankSquare extends Square {
     public BlankSquare(Position position) {
         super(position, null,null);
     }
-    @Override
-    public boolean isPlayable() {
-        return false;
-    }
 }
