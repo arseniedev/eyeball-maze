@@ -6,14 +6,16 @@ import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 
 public abstract class Square {
-    public boolean isGoal;
+
     protected  Color color;
     protected Shape shape;
-    public int row;
-    public int col;
-    public Square() {
-        this.color = Color.BLANK;
-        this.shape = Shape.BLANK;
+//    protected final int[][] position;
+    protected final Position position;
+    public boolean isGoal;
+    public Square(Position position, Color color, Shape shape) {
+        this.position= position;
+        this.color = color;
+        this.shape = shape;
     }
 
     public Color getColor() {
@@ -23,10 +25,12 @@ public abstract class Square {
     public Shape getShape() {
         return this.shape;
     }
+    public int getRow() { return position.row; }
+    public int getCol() { return position.col; }
 
-    public int[] getCoordinates() {
-        return new int[] { this.row, this.col };
-    }
+//    public int[] getCoordinates() {
+//        return new int[] { this.row, this.col };
+//    }
 
-    public abstract boolean isCurrent();
+    public abstract boolean isPlayable();
 }

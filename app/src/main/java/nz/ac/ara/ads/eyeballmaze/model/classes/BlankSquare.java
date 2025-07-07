@@ -1,9 +1,11 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
 public class BlankSquare extends Square {
-    public BlankSquare() {
+    public BlankSquare(Position position) {
+        super(position, null,null);
     }
-    public boolean isCurrent() {
+    @Override
+    public boolean isPlayable() {
         return false;
     }
 }

@@ -1,20 +1,20 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 public class EyeBall {
-    protected Position currenPosition;
+//    protected Position currenPosition;
     public float currentEyeballRotation = 0f;
     public Direction currentDirection;
     protected Direction previousDirection;
     public EyeBall(int newYPosition,int newXPosition, Direction eyeballDirection) {
-        this.currenPosition = new Position(newYPosition,newXPosition);
+//        this.currenPosition = new Position(newYPosition,newXPosition);
         this.currentDirection = eyeballDirection;
     }
-    public int getXPosition() {
-        return currenPosition.getColumn();
-    }
-    public int getYPosition() {
-        return currenPosition.getRow();
-    }
+//    public int getXPosition() {
+//        return currenPosition.getColumn();
+//    }
+//    public int getYPosition() {
+//        return currenPosition.getRow();
+//    }
     public Direction getDirection() {
         return currentDirection;
     }
@@ -31,14 +31,14 @@ public class EyeBall {
     public void updateEyeball(int row, int column) {
         this.previousDirection = this.currentDirection;
         this.getNewEyeballFacingDirection(row, column);
-        this.currenPosition = new Position(row, column);
+//        this.currenPosition = new Position(row, column);
     }
 
     public Direction getNewEyeballFacingDirection(int targetY, int targetX) {
         Direction direction;
 
-        int currentY= this.getYPosition();
-        int currentX = this.getXPosition();
+//        int currentY= this.getYPosition();
+//        int currentX = this.getXPosition();
 
         boolean isMovingVertical= targetY != currentY;
         boolean isMovingHorizontal = targetX != currentX;

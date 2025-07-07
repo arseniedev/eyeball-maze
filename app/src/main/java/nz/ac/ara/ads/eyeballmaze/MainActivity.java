@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         shapeColorDrawableMap.put("EMPTY", R.drawable.line_none);
     }
+
+//    int[][] gridIds = generateGrid();
     int[][] gridIds = {
             { R.id.cellGrid_1_1, R.id.cellGrid_1_2, R.id.cellGrid_1_3, R.id.cellGrid_1_4, R.id.cellGrid_1_5, R.id.cellGrid_1_6, R.id.cellGrid_1_7 },
             { R.id.cellGrid_2_1, R.id.cellGrid_2_2, R.id.cellGrid_2_3, R.id.cellGrid_2_4, R.id.cellGrid_2_5, R.id.cellGrid_2_6, R.id.cellGrid_2_7 },
@@ -71,6 +73,26 @@ public class MainActivity extends AppCompatActivity {
             { R.id.cellGrid_8_1, R.id.cellGrid_8_2, R.id.cellGrid_8_3, R.id.cellGrid_8_4, R.id.cellGrid_8_5, R.id.cellGrid_8_6, R.id.cellGrid_8_7 }
     };
 
+//    protected int[][] generateGrid() {
+//        int rows = 8;
+//        int cols = 7;
+//        int[][] gridIds = new int[rows][cols];
+//
+//        for (int row = 0; row < rows; row++) {
+//            for (int col = 0; col < cols; col++) {
+//                String cellId = "cellGrid_" + (row + 1) + "_" + (col + 1);
+//                int resId;
+//                resId = getResources().getIdentifier(cellId, "id", getPackageName());
+//
+//                if (resId == 0) {
+//                    throw new RuntimeException("Missing view for: " + cellId);
+//                }
+//
+//                gridIds[row][col] = resId;
+//            }
+//        }
+//        return gridIds;
+//    }
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

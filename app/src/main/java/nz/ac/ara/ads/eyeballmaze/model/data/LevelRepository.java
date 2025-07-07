@@ -23,6 +23,10 @@ public class LevelRepository {
         squaresForLevel1.add(new PlayableSquare(1, 1, Color.YELLOW, Shape.FLOWER, false, false));
         squaresForLevel1.add(new PlayableSquare(1, 2, Color.YELLOW, Shape.DIAMOND, false, false));
         squaresForLevel1.add(new PlayableSquare(1, 3, Color.GREEN, Shape.FLOWER, false, false));
+        squaresForLevel1.add(new PlayableSquare(1, 4, Color.BLANK, Shape.BLANK, false, false));
+        squaresForLevel1.add(new PlayableSquare(1, 5, Color.BLANK, Shape.BLANK, false, false));
+        squaresForLevel1.add(new PlayableSquare(1, 6, Color.BLANK, Shape.BLANK, false, false));
+        squaresForLevel1.add(new PlayableSquare(1, 7, Color.RED, Shape.CROSS, false, false));
 
         squaresForLevel1.add(new PlayableSquare(2, 0, Color.GREEN, Shape.FLOWER, false, false));
         squaresForLevel1.add(new PlayableSquare(2, 1, Color.RED, Shape.STAR, false, false));

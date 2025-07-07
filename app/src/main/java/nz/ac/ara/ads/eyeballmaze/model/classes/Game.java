@@ -55,7 +55,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public void setLevel(int newLevel) {
-//        List<PlayableSquare> squaresForLevel = LevelRepository.SQUARES_MAP.get(currentLevel);
         LevelData levelData = LevelRepository.LEVELS.get(levelNumber);
         if (levelData == null) {
             System.out.println("Level not found: " + levelNumber);
