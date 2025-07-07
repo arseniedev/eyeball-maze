@@ -8,7 +8,8 @@ import java.util.Set;
 public class GameLevel {
     public int levelWidth;
     public int levelHeight;
-    public int totalGoalCount;
+//    public int currentLevel = 1;
+    public int totalGoalCount = 1;
     private int completedGoalCount = 0;
     public int moveCount = 0;
     private final Set<Position> completedGoals = new HashSet<>();
@@ -26,12 +27,12 @@ public class GameLevel {
 //        this.completedGoalCount = completedGoalCount;
 //    }
 
-    public void goalCompleted(int row,int col) {
-        //setter
-        Position position = Position.at(row, col);
-        completedGoals.add(position);
-        completedGoalCount++;
-    }
+//    public void goalCompleted(int row,int col) {
+//        //setter
+//        Position position = Position.at(row, col);
+//        completedGoals.add(position);
+//        completedGoalCount++;
+//    }
 
     public int getCompletedGoals() {
         //getter
@@ -39,10 +40,10 @@ public class GameLevel {
         return completedGoals.size();
     }
 
-    public int getTotalGoalCount() {
-        //getter
-        return this.totalGoalCount;
-    }
+//    public int getTotalGoalCount() {
+//        //getter
+//        return this.totalGoalCount;
+//    }
 
     public boolean isValidCoordinate(int row, int col) {
         return row >= 0 && row < levelHeight && col >= 0 && col < levelWidth;

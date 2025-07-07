@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nz.ac.ara.ads.eyeballmaze.enums.*;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
 import nz.ac.ara.ads.eyeballmaze.model.exceptions.InvalidCoordinateException;
@@ -13,15 +14,15 @@ import nz.ac.ara.ads.eyeballmaze.model.interfaces.*;
 public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballHolder,IMoving {
 
     EyeBall theEyeball;
-    public int currentLevel;
-    private GameLevel gameLevel;
+    public int currentLevel = 1;
+    public GameLevel gameLevel;
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <Position, Square> squareCollection = new HashMap<>();
     Set<Position> blanks;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
-        this.currentLevel = 1;
+//        this.currentLevel = 1;
     }
 
     @Override
@@ -63,13 +64,21 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         * */
         try {
             LOGGER.log(Level.INFO, "Setting level: " + newLevel);
-            GameLevel level = this.levelCollection.get(newLevel);
+            GameLevel gameLevelData = this.levelCollection.get(newLevel - 1);
             this.currentLevel = newLevel;
+
             // TODO: apply all the needed changes when changing the level
 //          addGoal();
 //          addEyeball();
-            List<SquareData> squareDataList = LevelRepository.RAW_LEVEL_DATA.get("level" + currentLevel);
-            if (squareDataList == null) {
+            LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+
+            assert gameLevelData != null;
+//            int totalGoalCount = levelData.targetGoalCount();
+//            LOGGER.log(Level.INFO, String.valueOf(totalGoalCount));
+
+//            gameLevelData.moveCount = levelData.moveCount();
+//            List<SquareData> squareDataList = LevelRepository.LEVELS.get("level" + currentLevel);
+            if (gameLevelData == null) {
                 LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
                 return;
             }
@@ -79,7 +88,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         } catch(Exception unknown) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.UNKNOWN_EXCEPTION));
         } finally {
-            LOGGER.log(Level.INFO, "Setting level count: " + this.currentLevel);
+            LOGGER.log(Level.INFO, "Setting level count: " + currentLevel);
         }
     }
     @Override
@@ -116,8 +125,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public int getGoalCount() {
-        GameLevel gameLevel = this.levelCollection.get(this.currentLevel);
-        return gameLevel.getTotalGoalCount();
+//        GameLevel gameLevel = this.levelCollection.get(currentLevel-1);
+//        return gameLevel.getTotalGoalCount();
+        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+        assert levelData != null;
+//        int getTotalGoalCount = levelData.targetGoalCount();
+        return levelData.targetGoalCount();
     }
 
     @Override
@@ -337,7 +350,8 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
             if (this.hasGoalAt(row,column)) {
                 // Update goal completed
-                this.gameLevel.goalCompleted(row,column);
+//                this.gameLevel.goalCompleted(row,column);
+//                this.gameLevel.goalCompleted(row,column);
 //                destinationSquare.isGoal = false;
                 if (this.gameLevel.isLevelComplete()) {
                     LOGGER.log(Level.INFO, "Level Complete");
@@ -349,7 +363,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     }
     @Override
     public int getCompletedGoalCount() {
-        GameLevel gameLevel = this.levelCollection.get(this.currentLevel);
+//        LOGGER.log(Level.INFO, "Completed goals:" + String.valueOf(this.levelCollection.size()));
+        GameLevel gameLevel = this.levelCollection.get(this.currentLevel-1);
+        LOGGER.log(Level.INFO, "Completed goals:" + String.valueOf(gameLevel));
         return gameLevel.getCompletedGoals();
     }
 }

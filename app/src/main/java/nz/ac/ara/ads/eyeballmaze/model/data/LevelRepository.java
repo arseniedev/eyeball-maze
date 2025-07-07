@@ -13,20 +13,26 @@ import nz.ac.ara.ads.eyeballmaze.model.classes.Position;
 
 public class LevelRepository {
 
-//    public static final Map<String, SquareData> LEVELS = new HashMap<>();
-
-    public static final Map<String, List<SquareData>> RAW_LEVEL_DATA = new HashMap<>();
+    public static final Map<String, LevelData> LEVELS = new HashMap<>();
 
     static {
-        RAW_LEVEL_DATA.put("level1", List.of(
-                new SquareData(0, 0, Color.RED, Shape.FLOWER),
-                new SquareData(0, 1, Color.YELLOW, Shape.CROSS),
-                new SquareData(1, 0, Color.BLANK, Shape.BLANK) // ← blank square
+        LEVELS.put("level1", new LevelData(
+                List.of(
+                        new SquareData(0, 0, Color.RED, Shape.FLOWER),
+                        new SquareData(0, 1, Color.YELLOW, Shape.CROSS),
+                        new SquareData(1, 0, Color.BLANK, Shape.BLANK)
+                ),
+                Position.at(0, 0), // Eyeball starting position
+                5                  // Goal count
         ));
 
-        RAW_LEVEL_DATA.put("level2", List.of(
-                new SquareData(0, 0, Color.BLUE, Shape.STAR),
-                new SquareData(0, 1, Color.GREEN, Shape.CROSS)
+        LEVELS.put("level2", new LevelData(
+                List.of(
+                        new SquareData(0, 0, Color.BLUE, Shape.STAR),
+                        new SquareData(0, 1, Color.GREEN, Shape.CROSS)
+                ),
+                Position.at(0, 1),
+                2
         ));
     }
 }

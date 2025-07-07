@@ -17,6 +17,7 @@ import nz.ac.ara.ads.eyeballmaze.model.classes.GameLevel;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Position;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Square;
+import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 import nz.ac.ara.ads.eyeballmaze.model.data.SquareData;
@@ -129,9 +130,10 @@ public class MainActivity extends AppCompatActivity {
         int currentLevel = GAME.currentLevel;
 
         // Safely fetch level data from repository
-        List<SquareData> squareDataList = LevelRepository.RAW_LEVEL_DATA.get("level" + currentLevel);
+        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+//        List<SquareData> squareDataList = LevelRepository.LEVELS.get("level" + currentLevel);
 
-        if (squareDataList == null) {
+        if (levelData == null) {
             LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
             return;
         }
@@ -140,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: Replace with actual per-level dimensions if available
         GAME.addLevel(8, 8);
-        for (SquareData data : squareDataList) {
+        GAME.setLevel(currentLevel);
+
+        for (SquareData data : levelData.squares()) {
             PlayableSquare square = new PlayableSquare(
                     Position.at(data.row(), data.column()),
                     data.color(), data.shape());
@@ -152,8 +156,13 @@ public class MainActivity extends AppCompatActivity {
 //             handleInitialMarker();
             LOGGER.log(Level.INFO, "Setting up initial marker");
             updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
+
             StringBuilder sb = new StringBuilder();
-            sb.append("Goals: ").append(GAME.getCompletedGoalCount()).append("/").append(GAME.getGoalCount());
+            sb.append(GAME.getCompletedGoalCount()).append("/").append(GAME.getGoalCount());
+//            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(GAME.gameLevel.getTotalGoalCount());
+//            sb.append(GAME.gameLevel.getCompletedGoals()).append("/").append(4);
+            updateTextView(R.id.goalsRemainingValue, String.valueOf(sb));
+            updateTextView(R.id.movesMadeValue, String.valueOf(GAME.gameLevel.moveCount));
 
              handleCellAt(square);
         }
@@ -174,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
             if (eyeballRotationDegrees >= 360f) {
                 eyeballRotationDegrees = 0f;
             }
-
 //            rotateEyeball(eyeballView, previousRotation, eyeballRotationDegrees);
 
 //            rotateEyeball(R.drawable.eyeball, previousRotation, eyeballRotationDegrees);
