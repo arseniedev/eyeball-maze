@@ -46,29 +46,29 @@ public class MainActivity extends AppCompatActivity {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
 
-    static {
-        shapeColorDrawableMap.put("STAR_RED", R.drawable.shape_star_red);
-        shapeColorDrawableMap.put("STAR_BLUE", R.drawable.shape_star_blue);
-        shapeColorDrawableMap.put("STAR_YELLOW", R.drawable.shape_star_yellow);
-        shapeColorDrawableMap.put("STAR_GREEN", R.drawable.shape_star_green);
-
-        shapeColorDrawableMap.put("CROSS_RED", R.drawable.shape_cross_red);
-        shapeColorDrawableMap.put("CROSS_BLUE", R.drawable.shape_cross_blue);
-        shapeColorDrawableMap.put("CROSS_YELLOW", R.drawable.shape_cross_yellow);
-        shapeColorDrawableMap.put("CROSS_GREEN", R.drawable.shape_cross_green);
-
-        shapeColorDrawableMap.put("DIAMOND_RED", R.drawable.shape_diamond_red);
-        shapeColorDrawableMap.put("DIAMOND_BLUE", R.drawable.shape_diamond_blue);
-        shapeColorDrawableMap.put("DIAMOND_YELLOW", R.drawable.shape_diamond_yellow);
-        shapeColorDrawableMap.put("DIAMOND_GREEN", R.drawable.shape_diamond_green);
-
-        shapeColorDrawableMap.put("FLOWER_RED", R.drawable.shape_flower_red);
-        shapeColorDrawableMap.put("FLOWER_BLUE", R.drawable.shape_flower_blue);
-        shapeColorDrawableMap.put("FLOWER_YELLOW", R.drawable.shape_flower_yellow);
-        shapeColorDrawableMap.put("FLOWER_GREEN", R.drawable.shape_flower_green);
-
-        shapeColorDrawableMap.put("EMPTY", R.drawable.line_none);
-    }
+//    static {
+//        shapeColorDrawableMap.put("STAR_RED", R.drawable.shape_star_red);
+//        shapeColorDrawableMap.put("STAR_BLUE", R.drawable.shape_star_blue);
+//        shapeColorDrawableMap.put("STAR_YELLOW", R.drawable.shape_star_yellow);
+//        shapeColorDrawableMap.put("STAR_GREEN", R.drawable.shape_star_green);
+//
+//        shapeColorDrawableMap.put("CROSS_RED", R.drawable.shape_cross_red);
+//        shapeColorDrawableMap.put("CROSS_BLUE", R.drawable.shape_cross_blue);
+//        shapeColorDrawableMap.put("CROSS_YELLOW", R.drawable.shape_cross_yellow);
+//        shapeColorDrawableMap.put("CROSS_GREEN", R.drawable.shape_cross_green);
+//
+//        shapeColorDrawableMap.put("DIAMOND_RED", R.drawable.shape_diamond_red);
+//        shapeColorDrawableMap.put("DIAMOND_BLUE", R.drawable.shape_diamond_blue);
+//        shapeColorDrawableMap.put("DIAMOND_YELLOW", R.drawable.shape_diamond_yellow);
+//        shapeColorDrawableMap.put("DIAMOND_GREEN", R.drawable.shape_diamond_green);
+//
+//        shapeColorDrawableMap.put("FLOWER_RED", R.drawable.shape_flower_red);
+//        shapeColorDrawableMap.put("FLOWER_BLUE", R.drawable.shape_flower_blue);
+//        shapeColorDrawableMap.put("FLOWER_YELLOW", R.drawable.shape_flower_yellow);
+//        shapeColorDrawableMap.put("FLOWER_GREEN", R.drawable.shape_flower_green);
+//
+//        shapeColorDrawableMap.put("EMPTY", R.drawable.line_none);
+//    }
 
 //    int[][] gridIds = generateGrid();
     int[][] gridIds = {
@@ -284,13 +284,23 @@ public class MainActivity extends AppCompatActivity {
         return findViewById(gridIds[row][col]);
     }
     private int getDrawableFrom(Shape shape, Color color) {
+        if (shape != null && color != null) {
+            LOGGER.log(Level.INFO, "DrawableKey: " + shape.name() + "_" + color.name());
+            String key = shape.name() + "_" + color.name();
 
-        String key = (shape != null && color != null)
-                ? shape.name() + "_" + color.name()
-                : "EMPTY";
-        LOGGER.log(Level.WARNING, "DrawableKey: " + key);
-
-        return shapeColorDrawableMap.getOrDefault(key, R.drawable.line_none);
+            LOGGER.log(Level.WARNING, "DrawableKey: " + key);
+            return shape.getDrawable(color);
+        } else {
+            return R.drawable.line_none;
+//            "EMPTY";
+        }
+//        String key = (shape != null && color != null)
+//                ? shape.name() + "_" + color.name()
+//                : "EMPTY";
+//        LOGGER.log(Level.WARNING, "DrawableKey: " + key);
+//
+//        assert shape != null;
+//        return shape.getDrawable(color); //shapeColorDrawableMap.getOrDefault(key, R.drawable.line_none);
     }
     private void rotateEyeball(ImageView eyeballView, float prevDegrees, float currentDegrees) {
         android.view.animation.RotateAnimation rotate = new android.view.animation.RotateAnimation(
