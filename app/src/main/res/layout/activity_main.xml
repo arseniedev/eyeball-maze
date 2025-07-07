@@ -1213,10 +1213,11 @@
             android:layout_width="186dp"
             android:layout_height="50dp"
 
+            android:layout_marginTop="14dp"
             android:layout_marginBottom="14dp"
+
             android:background="@color/colorStartButton"
             android:onClick="handleStartButtonClick"
-
             android:text="@string/label_button_start"
             android:textColor="@android:color/white"
             android:textSize="12sp"
@@ -1224,13 +1225,15 @@
             app:layout_constraintEnd_toStartOf="@+id/undoButton"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/resetButton"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="OnClick" />
 
         <Button
             android:id="@+id/resetButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
             android:background="#1F221F72"
             android:onClick="handleResetButtonClick"
             android:paddingLeft="0dp"
@@ -1239,27 +1242,30 @@
             android:paddingRight="0dp"
             android:paddingBottom="0dp"
             android:text="@string/label_button_reset"
-            android:textSize="25sp"
+            android:textSize="10sp"
             app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_start"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/undoButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
             android:background="#721F1F1F"
             android:onClick="handleUndoButtonClick"
             android:text="@string/label_button_undo"
-            android:textSize="20sp"
+            android:textSize="10sp"
             app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_start" />
+            app:layout_constraintStart_toEndOf="@+id/button_start"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
