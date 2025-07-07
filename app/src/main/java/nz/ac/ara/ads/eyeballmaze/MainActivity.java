@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     data.color(), data.shape());
 
 //            renderAllCells();
-            renderCell(data.row(),data.column());
+//            renderCell(data.row(),data.column());
 
             GAME.addSquare(square, data.row(), data.column());
 //            placeEyeball(square);
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
             cell.setImageDrawable(layeredDrawable);
         } else {
-            cell.setImageResource(fallbackResId);
+//            cell.setImageResource(fallbackResId);
         }
     }
     private void logMissingCell(int row, int col) {

@@ -188,12 +188,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
         }
     }
 
-    public Square createSquare(Position pos, Color color, Shape shape, Set<Position> blanks) {
-        if (blanks.contains(pos)) {
-            return new BlankSquare(pos);
-        }
-        return new PlayableSquare(pos, color, shape);
-    }
+//    public Square createSquare(Position pos, Color color, Shape shape, Set<Position> blanks) {
+//        if (blanks.contains(pos)) {
+//            return new BlankSquare(pos);
+//        }
+//        return new PlayableSquare(pos, color, shape);
+//    }
 
     @Override
     public void addEyeball(int row, int column, Direction direction) {
