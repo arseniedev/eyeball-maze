@@ -184,17 +184,14 @@ public class MainActivity extends AppCompatActivity {
 
         LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
 
-        // 🧹 Remove eyeball from the previous current square
         PlayableSquare previous = GAME.getCurrentSquare();
         if (previous != null) {
             previous.setCurrent(false);
             handleCellAt(previous);  // Refresh UI for previous
         }
-        // 🎯 Set new square as current and refresh UI
         square.setCurrent(true);
         handleCellAt(square);
 
-        // 🎮 Optionally track move count
         GAME.moveCount++;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }

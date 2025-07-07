@@ -18,10 +18,6 @@ public class PlayableSquare extends Square {
         this.isGoal = isGoal;
     }
 
-    public PlayableSquare() {
-
-    }
-
     @Override
     public Color getColor() {
         return this.color;
