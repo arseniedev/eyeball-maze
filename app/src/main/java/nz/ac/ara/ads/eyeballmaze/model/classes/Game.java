@@ -15,6 +15,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     private GameLevel gameLevel;
     private final List<GameLevel> levelCollection =  new ArrayList<>();
     Map <Position, Square> squareCollection = new HashMap<>();
+    Set<Position> blanks;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public Game() {
@@ -147,7 +148,9 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     public void addSquare(int row, int column, Color color, Shape shape) {
         try {
             Position position = Position.at(row, column);
+
             Square square = this.createSquare(position, color, shape, new HashSet<>());
+
             LOGGER.log(Level.INFO, "Adding a square at: " + position);
 
             this.squareCollection.put(position,square);

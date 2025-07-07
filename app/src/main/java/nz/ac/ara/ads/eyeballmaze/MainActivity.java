@@ -126,13 +126,12 @@ public class MainActivity extends AppCompatActivity {
         int currentLevel = GAME.currentLevel;
 
         // Safely fetch level data from repository
-        SquareData squareData = LevelRepository.LEVELS.get("level" + currentLevel);
+        List<SquareData> squareData = LevelRepository.RAW_LEVEL_DATA.get("level" + currentLevel);
 
         if (squareData == null) {
             LOGGER.log(Level.WARNING, "Level not found: level" + currentLevel);
             return;
         }
-
         LOGGER.log(Level.INFO, "Setting up Level " + currentLevel);
 
         // Initialize level in game with dimensions from LevelData

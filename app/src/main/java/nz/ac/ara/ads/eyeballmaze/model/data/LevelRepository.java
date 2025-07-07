@@ -13,7 +13,7 @@ import nz.ac.ara.ads.eyeballmaze.model.classes.Position;
 
 public class LevelRepository {
 
-    public static final Map<String, SquareData> LEVELS = new HashMap<>();
+//    public static final Map<String, SquareData> LEVELS = new HashMap<>();
 
     public static final Map<String, List<SquareData>> RAW_LEVEL_DATA = new HashMap<>();
 
