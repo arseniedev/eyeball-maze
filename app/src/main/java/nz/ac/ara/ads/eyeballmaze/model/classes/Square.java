@@ -2,8 +2,7 @@ package nz.ac.ara.ads.eyeballmaze.model.classes;
 
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
-import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
-import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
+//import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 
 public abstract class Square {
 
@@ -25,8 +24,8 @@ public abstract class Square {
     public Shape getShape() {
         return this.shape;
     }
-    public int getRow() { return position.row; }
-    public int getCol() { return position.col; }
+    public int getRow() { return position.row(); }
+    public int getCol() { return position.col(); }
 
 //    public int[] getCoordinates() {
 //        return new int[] { this.row, this.col };

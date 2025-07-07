@@ -176,8 +176,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
                         "\nKey:" + coordinateKey);
 
 
-
-
         } catch (IllegalArgumentException  e) {
             throw new IllegalArgumentException(String.valueOf(ErrorCode.INDEX_OUT_OF_BOUNDS));
         }  catch (Exception unknown) {

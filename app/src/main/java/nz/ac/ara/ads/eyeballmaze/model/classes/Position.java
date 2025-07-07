@@ -1,11 +1,4 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
-public class Position {
-    public final int row;
-    public final int col;
-
-    public Position(int row, int col) {
-        this.row = row;
-        this.col = col;
-    }
+public record Position(int row, int col) {
 }
