@@ -23,7 +23,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
 
     @Override
     public void addLevel(int height, int width) {
-        gameLevel = new GameLevel(this.currentLevel, height, width);
+        gameLevel = new GameLevel(height, width);
         this.levelCollection.add(gameLevel);
     }
     @Override
@@ -81,7 +81,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(Level.INFO, "Setting level count: " + this.currentLevel);
         }
     }
-
     @Override
     public void addGoal(int row, int column) {
         try {
@@ -117,7 +116,7 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     @Override
     public int getGoalCount() {
         GameLevel gameLevel = this.levelCollection.get(this.currentLevel);
-        return gameLevel.getTotalGoals();
+        return gameLevel.getTotalGoalCount();
     }
 
     @Override
@@ -330,9 +329,12 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             this.theEyeball.confirmMove();
 
             if (this.hasGoalAt(row,column)) {
-                this.gameLevel.completedGoalCount++;
-                this.gameLevel.totalGoalCount--;
-                destinationSquare.isGoal = false;
+                // Update goal completed
+                this.gameLevel.goalCompleted(row,column);
+//                destinationSquare.isGoal = false;
+                if (this.gameLevel.isLevelComplete()) {
+                    LOGGER.log(Level.INFO, "Level Complete");
+                }
             }
         } else {
             LOGGER.log(Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
@@ -341,6 +343,6 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
     @Override
     public int getCompletedGoalCount() {
         GameLevel gameLevel = this.levelCollection.get(this.currentLevel);
-        return gameLevel.completedGoalCount;
+        return gameLevel.getCompletedGoals();
     }
 }

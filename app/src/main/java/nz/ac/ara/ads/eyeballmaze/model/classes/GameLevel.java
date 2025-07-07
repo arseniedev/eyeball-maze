@@ -1,23 +1,24 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class GameLevel {
-    private final int totalGoals;
-    private int completedGoals;
-//    protected int levelNumber;
     public int levelWidth;
     public int levelHeight;
     public int totalGoalCount;
-    public int completedGoalCount = 0;
-    Map<String, Square> squareCollection = new HashMap<>();
-    public GameLevel(
-            int totalGoals,
-            int height,
-            int width
-    ) {
-        this.totalGoals = totalGoals;
+    private int completedGoalCount = 0;
+    public int moveCount = 0;
+    private final Set<Position> completedGoals = new HashSet<>();
+    private static final int MAX_COLS = 20;
+    private static final int MAX_ROWS = 20;
+
+//    Map<String, Square> squareCollection = new HashMap<>();
+
+    public GameLevel(int height, int width) {
+//        this.totalGoalCount = totalGoals;
         this.levelWidth = width;
         this.levelHeight = height;
     }
@@ -25,38 +26,28 @@ public class GameLevel {
 //        this.completedGoalCount = completedGoalCount;
 //    }
 
-    public void goalCompleted() {
-        this.completedGoalCount++;
+    public void goalCompleted(int row,int col) {
+        //setter
+        Position position = Position.at(row, col);
+        completedGoals.add(position);
+        completedGoalCount++;
     }
-//    public void addGoal() {
-//        this.totalGoalCount++;
-//    }
-    public void incrementGoalCount() {
-        this.totalGoalCount++;
+
+    public int getCompletedGoals() {
+        //getter
+//        int completedGoalCount = completedGoals.size();
+        return completedGoals.size();
     }
 
     public int getTotalGoalCount() {
+        //getter
         return this.totalGoalCount;
-    }
-
-//    public int getLevelWidth() {
-//        return levelWidth;
-//    }
-//    public int getLevelHeight() {
-//        return levelHeight;
-//    }
-    public int getCompletedGoals() {
-        return completedGoals;
-    }
-    public int getTotalGoals() {
-        return totalGoals;
     }
 
     public boolean isValidCoordinate(int row, int col) {
         return row >= 0 && row < levelHeight && col >= 0 && col < levelWidth;
     }
-
     public boolean isLevelComplete() {
-        return completedGoals >= totalGoals;
+        return completedGoalCount >= totalGoalCount;
     }
 }

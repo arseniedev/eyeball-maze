@@ -12,9 +12,9 @@ import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
 import nz.ac.ara.ads.eyeballmaze.enums.Shape;
 import nz.ac.ara.ads.eyeballmaze.model.classes.Game;
+import nz.ac.ara.ads.eyeballmaze.model.classes.GameLevel;
 import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
-import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -31,6 +31,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
+    private GameLevel gameLevel = new GameLevel(20, 20);
+
     static final int maxLevel = 4;
     private float eyeballRotationDegrees = 0f;
     private final static Logger LOGGER =
@@ -106,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void handleResetButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
-        GAME.moveCount = 0;
-        GAME.setLevelNumber(1);
+        gameLevel.moveCount = 0;
+        GAME.setLevel(1);
         updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
         updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+        updateTextView(R.id.movesMadeValue, String.valueOf(gameLevel.moveCount));
     }
     public void handleUndoButtonClick(View view) {
         LOGGER.log(Level.INFO, "Clear Grid");
@@ -119,36 +121,36 @@ public class MainActivity extends AppCompatActivity {
     }
     public void handleStartButtonClick(View view) {
         int currentLevel = GAME.getLevelCount();
-        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
-
-        if (levelData == null) {
-            LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
-            return;
-        }
+//        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+// TODO fix this leveldata src file
+//        if (levelData == null) {
+//            LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
+//            return;
+//        }
         LOGGER.log(Level.INFO, "Setting Level " + currentLevel);
 
-        GAME.addLevel(levelData.levelHeight(), levelData.levelWidth());
-        for (PlayableSquare square : levelData.squares()) {
-            handleInitialMarker(square);
-            handleCellAt(square);
-        }
-        if (currentLevel >= maxLevel) {
-            GAME.setLevel(1);
-        }
-        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
+//        GAME.addLevel(levelData.levelHeight(), levelData.levelWidth());
+//        for (PlayableSquare square : levelData.squares()) {
+//            handleInitialMarker(square);
+//            handleCellAt(square);
+//        }
+//        if (currentLevel >= maxLevel) {
+//            GAME.setLevel(1);
+//        }
+//        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
 //        int targetGoalCount = GAME.getGoalCount();
 //        int completedGoalCount = GAME.getCompletedGoalCount();
 
-        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
+//        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
     private void handleInitialMarker(@NonNull PlayableSquare square) {
 
-        GAME.addSquare(square, square.row, square.col);
-        GAME.addEyeball(square.row, square.col, Direction.UP);
+        GAME.addSquare(square, square.getRow(), square.getCol());
+        GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
     }
     private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
-        ImageView eyeballView = findCell(square.row, square.col);
+        ImageView eyeballView = findCell(square.getRow(), square.getCol());
 
 
         if (eyeballView != null) {
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
             eyeballView.setOnClickListener(v -> handleCellClick(square));
 
         } else {
-            logMissingCell(square.row, square.col);
+            logMissingCell(square.getRow(), square.getCol());
         }
     }
     private Drawable getOverlay(@NonNull PlayableSquare square) {
@@ -183,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
             if (overlay != null) overlay.setAlpha(100);
         } else if (square.isCurrent()) {
-            GAME.addEyeball(square.row, square.col, Direction.UP);
+            GAME.addEyeball(square.getRow(), square.getCol(), Direction.UP);
             overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
         }
 
@@ -201,21 +203,21 @@ public class MainActivity extends AppCompatActivity {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
     private void handleCellClick(@NonNull PlayableSquare square) {
-        int row = square.row;
-        int col = square.col;
+        int row = square.getRow();
+        int col = square.getCol();
 
         LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
 
-        PlayableSquare previous = GAME.getCurrentSquare();
-        if (previous != null) {
-            previous.setCurrent(false);
-            handleCellAt(previous);  // Refresh UI for previous
-        }
-        square.setCurrent(true);
-        handleCellAt(square);
-
-        GAME.moveCount++;
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+//        PlayableSquare previous = GAME.getCurrentSquare();
+//        if (previous != null) {
+//            previous.setCurrent(false);
+//            handleCellAt(previous);  // Refresh UI for previous
+//        }
+//        square.setCurrent(true);
+//        handleCellAt(square);
+//
+//        GAME.moveCount++;
+//        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);
