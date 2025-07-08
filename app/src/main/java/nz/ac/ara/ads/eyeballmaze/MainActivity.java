@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void resetCellToBaseDrawable(ImageView cell) {
         Drawable baseDrawable = getBaseDrawableForCell(cell);
-        cell.setImageDrawable(baseDrawable != null ? baseDrawable : null);
+        cell.setImageDrawable(baseDrawable);
     }
     private Drawable getBaseDrawableForCell(ImageView cell) {
         int[] rowCol = getRowColFromViewId(cell.getId());
@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
         eyeballRow = -1;  // clear previous internal tracking
         eyeballCol = -1;
         previousEyeballCell = null;
-        placeEyeballAt(6, 0, Direction.UP);
+        placeEyeballAt(7, 1, Direction.UP);
 
         // Update UI text
         updateTextView(R.id.currentLevelValue, "1");

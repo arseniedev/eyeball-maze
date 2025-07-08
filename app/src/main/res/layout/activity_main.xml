@@ -1153,7 +1153,7 @@
             android:layout_marginBottom="14dp"
 
             android:background="@color/colorStartButton"
-            android:onClick="handleStartButtonClick"
+            android:onClick="handleResetButtonClick"
             android:text="@string/label_button_start"
             android:textColor="@android:color/white"
             android:textSize="12sp"
