@@ -213,29 +213,30 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView clickedCell = (ImageView) view;
 
-        // Remove eyeball overlay from previous cell, reset to base drawable
-//        if (previousEyeballCell != null && previousEyeballCell != clickedCell) {
-//            resetCellToBaseDrawable(previousEyeballCell);
-//        }
+        // Clear previous eyeball overlay (reset to base drawable)
+        if (previousEyeballCell != null && previousEyeballCell != clickedCell) {
+            resetCellToBaseDrawable(previousEyeballCell);
+        }
 
         // Prepare eyeball drawable overlay
         int eyeballRes = isFacingSouth ? R.drawable.eyeball_north : R.drawable.eyeball_south;
         Drawable eyeballDrawable = ContextCompat.getDrawable(this, eyeballRes);
-        if (eyeballDrawable != null) {
-            eyeballDrawable.setTintList(null); // no tint
 
-            // Get base drawable for the clicked cell
+        if (eyeballDrawable != null) {
+            eyeballDrawable.setTintList(null); // remove tint if any
+
+            // Get base drawable for clicked cell
             Drawable baseDrawable = getBaseDrawableForCell(clickedCell);
             if (baseDrawable == null) {
                 LOGGER.log(Level.WARNING, "Base drawable not found for clicked cell");
-                baseDrawable = ContextCompat.getDrawable(this, R.drawable.line_none); // fallback
+                baseDrawable = ContextCompat.getDrawable(this, R.drawable.line_none); // fallback drawable
             }
 
-            // Compose layered drawable: base + eyeball overlay
+            // Combine base + eyeball overlay in a LayerDrawable
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{baseDrawable, eyeballDrawable});
             clickedCell.setImageDrawable(layeredDrawable);
 
-            // Update tracking
+            // Update tracker
             previousEyeballCell = clickedCell;
             isFacingSouth = !isFacingSouth;
         }
@@ -243,11 +244,21 @@ public class MainActivity extends AppCompatActivity {
         LOGGER.log(Level.INFO, "Eyeball moved to view ID: " + view.getId());
     }
 
+    // Reset a cell's image to just its base drawable (remove eyeball overlay)
+    private void resetCellToBaseDrawable(ImageView cell) {
+        Drawable baseDrawable = getBaseDrawableForCell(cell);
+        if (baseDrawable != null) {
+            cell.setImageDrawable(baseDrawable);
+        } else {
+            cell.setImageDrawable(null);
+        }
+    }
+
+    // Get the base drawable for a given ImageView cell by extracting its row and col from the ID
     private Drawable getBaseDrawableForCell(ImageView cell) {
-        // Example: get row/col from cell's tag or id and then from your GAME grid get the PlayableSquare
-        // This is just a placeholder example; adapt to your codebase:
-        int row = getRowFromViewId(cell.getId());
-        int col = getColFromViewId(cell.getId());
+        int[] rowCol = getRowColFromViewId(cell.getId());
+        int row = rowCol[0];
+        int col = rowCol[1];
 
         Square square = GAME.getSquareAt(row, col);
         if (square instanceof PlayableSquare) {
@@ -258,16 +269,20 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    // Example helpers (implement based on your id naming pattern)
-    private int getRowFromViewId(int id) {
-        // Parse row from R.id.cellGrid_#_#
-        // ... your logic here
-        return 0;
-    }
-
-    private int getColFromViewId(int id) {
-        // Parse col from R.id.cellGrid_#_#
-        // ... your logic here
-        return 0;
+    // Parse the row and column from your grid cell ID (assuming IDs like cellGrid_3_5)
+    private int[] getRowColFromViewId(int viewId) {
+        String resourceName = getResources().getResourceEntryName(viewId);
+        // resourceName is like "cellGrid_3_5"
+        String[] parts = resourceName.split("_");
+        if (parts.length >= 3) {
+            try {
+                int row = Integer.parseInt(parts[1]) - 1; // zero-based index
+                int col = Integer.parseInt(parts[2]) - 1; // zero-based index
+                return new int[]{row, col};
+            } catch (NumberFormatException e) {
+                LOGGER.log(Level.WARNING, "Failed to parse row/col from view id: " + resourceName, e);
+            }
+        }
+        return new int[]{0, 0}; // fallback
     }
 }
