@@ -27,13 +27,10 @@ public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
     static final GameLevel GAME_LEVEL = new GameLevel(8, 8);
 //    EyeBall eyeBall = GAME.theEyeball;
-    private boolean isFacingSouth = false;
     private ImageView previousEyeballCell = null;
-
-    private Direction eyeballDirection = Direction.UP;  // track current eyeball facing direction
+    private Direction eyeballDirection = Direction.UP;
     private int eyeballRow = -1;
     private int eyeballCol = -1;
-
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     int[][] gridIds = {
@@ -61,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
         LevelData levelData = LevelRepository.LEVELS.get("level1");
         assert levelData != null;
         GAME_LEVEL.totalGoalCount = levelData.targetGoalCount();
-//        // Initialize eyeball position and direction on load (row 7, col 1 -> zero-based 6,0)
-//
     }
 
     public void handleStartButtonClick(View view) {
@@ -199,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Calculate direction from current eyeball position to clicked cell
         Direction moveDir = getDirectionFromTo(eyeballRow, eyeballCol, clickedRow, clickedCol);
 
         if (moveDir == null) {
@@ -214,24 +208,20 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Move eyeball to new cell with new direction
         placeEyeballAt(clickedRow, clickedCol, moveDir);
 
-        // Update moves count and UI
         GAME.moveCount++;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
         boolean checkGoal = GAME.hasGoalAt(clickedRow,clickedCol);
         updateTextView(R.id.goalsRemainingValue, GAME_LEVEL.completedGoalCount + "/" + GAME_LEVEL.totalGoalCount);
         if (checkGoal) {
 
-//            GAME.addGoal(clickedRow, clickedCol);
             updateTextView(R.id.goalsRemainingValue, GAME_LEVEL.completedGoalCount + "/" + GAME_LEVEL.totalGoalCount);
         }
 
         LOGGER.log(Level.INFO, "Eyeball moved to row=" + clickedRow + ", col=" + clickedCol + ", direction=" + moveDir);
     }
 
-    // Place eyeball at given cell with given direction
     private void placeEyeballAt(int row, int col, Direction direction) {
         ImageView cell = findCell(row, col);
         if (cell == null) {
@@ -239,18 +229,15 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Reset previous eyeball cell to base drawable
         if (previousEyeballCell != null && previousEyeballCell != cell) {
             resetCellToBaseDrawable(previousEyeballCell);
         }
 
-        // Get base drawable for new cell
         Drawable baseDrawable = getBaseDrawableForCell(cell);
         if (baseDrawable == null) {
             baseDrawable = ContextCompat.getDrawable(this, R.drawable.line_none);
         }
 
-        // Get eyeball drawable based on direction
         int eyeballRes = switch (direction) {
             case UP -> R.drawable.eyeball_north;
             case DOWN -> R.drawable.eyeball_south;
