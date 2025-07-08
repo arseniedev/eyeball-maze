@@ -26,12 +26,12 @@ public class GameLevel {
 //        this.completedGoalCount = completedGoalCount;
 //    }
 
-//    public void goalCompleted(int row,int col) {
-//        //setter
-//        Position position = Position.at(row, col);
-//        completedGoals.add(position);
-//        completedGoalCount++;
-//    }
+    public void goalCompleted(int row,int col) {
+        //setter
+        Position position = Position.at(row, col);
+        completedGoals.add(position);
+        completedGoalCount++;
+    }
 
     public int getCompletedGoals() {
         //getter

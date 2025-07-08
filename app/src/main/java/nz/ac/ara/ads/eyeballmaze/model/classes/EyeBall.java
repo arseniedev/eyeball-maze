@@ -63,7 +63,7 @@ public class EyeBall {
         return currentFacing;
     }
 
-    public Direction targetDirection(Position targetPosition) {
+    public Direction targetDirection(@NonNull Position targetPosition) {
         Position currentPosition = this.position;
         // to -< from
         int rowDiff = targetPosition.row() - currentPosition.row();

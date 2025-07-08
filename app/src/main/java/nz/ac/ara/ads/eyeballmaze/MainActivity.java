@@ -56,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+//        // Initialize eyeball position and direction on load (row 7, col 1 -> zero-based 6,0)
+//
+//
+//        // Initialize eyeBall tracking variables accordingly
+//        eyeballRow = 7;
+//        eyeballCol = 1;
+//        eyeballDirection = Direction.UP;
     }
 
     public void handleStartButtonClick(View view) {
@@ -87,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + "/" + GAME.getGoalCount());
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
         updateTextView(R.id.movesMadeValue, String.valueOf(currentMoveCount));
+
+        placeEyeballAt(7, 1, Direction.UP);
     }
 
     private void placeEyeball(@NonNull PlayableSquare square) {
