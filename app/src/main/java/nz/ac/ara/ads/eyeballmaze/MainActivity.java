@@ -25,7 +25,8 @@ import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
-    EyeBall eyeBall = GAME.theEyeball;
+    static final GameLevel GAME_LEVEL = new GameLevel(8, 8);
+//    EyeBall eyeBall = GAME.theEyeball;
     private boolean isFacingSouth = false;
     private ImageView previousEyeballCell = null;
 
@@ -57,13 +58,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        LevelData levelData = LevelRepository.LEVELS.get("level1");
+        assert levelData != null;
+        GAME_LEVEL.totalGoalCount = levelData.targetGoalCount();
 //        // Initialize eyeball position and direction on load (row 7, col 1 -> zero-based 6,0)
 //
-//
-//        // Initialize eyeBall tracking variables accordingly
-//        eyeballRow = 7;
-//        eyeballCol = 1;
-//        eyeballDirection = Direction.UP;
     }
 
     public void handleStartButtonClick(View view) {
@@ -221,6 +220,14 @@ public class MainActivity extends AppCompatActivity {
         // Update moves count and UI
         GAME.moveCount++;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+        boolean checkGoal = GAME.hasGoalAt(clickedRow,clickedCol);
+        updateTextView(R.id.goalsRemainingValue, GAME_LEVEL.completedGoalCount + "/" + GAME_LEVEL.totalGoalCount);
+        if (checkGoal) {
+
+//            GAME.addGoal(clickedRow, clickedCol);
+            updateTextView(R.id.goalsRemainingValue, GAME_LEVEL.completedGoalCount + "/" + GAME_LEVEL.totalGoalCount);
+        }
+
         LOGGER.log(Level.INFO, "Eyeball moved to row=" + clickedRow + ", col=" + clickedCol + ", direction=" + moveDir);
     }
 
@@ -295,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // Get direction from one cell to adjacent cell
     private Direction getDirectionFromTo(int fromRow, int fromCol, int toRow, int toCol) {
-        if (toRow == fromRow - 1 && toCol == fromCol) return Direction.UP;
+        if (toRow <= fromRow - 1 && toCol == fromCol) return Direction.UP;
         if (toRow == fromRow + 1 && toCol == fromCol) return Direction.DOWN;
         if (toCol == fromCol - 1 && toRow == fromRow) return Direction.LEFT;
         if (toCol == fromCol + 1 && toRow == fromRow) return Direction.RIGHT;
@@ -343,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
         // Update UI text
         updateTextView(R.id.currentLevelValue, "1");
         updateTextView(R.id.movesMadeValue, "0");
-        updateTextView(R.id.goalsRemainingValue, "0/" + GAME.getGoalCount());
+        updateTextView(R.id.goalsRemainingValue, GAME_LEVEL.completedGoalCount + "/" + GAME_LEVEL.totalGoalCount);
 
         Toast.makeText(this, "Game reset to Level 1", Toast.LENGTH_SHORT).show();
     }
