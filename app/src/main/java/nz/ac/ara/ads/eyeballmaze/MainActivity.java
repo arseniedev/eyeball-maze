@@ -27,7 +27,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     static final Game GAME = new Game();
     EyeBall eyeBall = GAME.theEyeball;
-
+    private boolean isFacingSouth = false;
+    private ImageView previousEyeballCell = null;
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -54,19 +55,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    public void handleResetButtonClick(View view) {
-//        LOGGER.log(Level.INFO, "Clear Grid");
-//        moveCount = 0;
-//        GAME.setLevel(1);
-//        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-//        updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
-//
-//    }
-//    public void handleUndoButtonClick(View view) {
-//        LOGGER.log(Level.INFO, "Clear Grid");
-//        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-//        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
-//    }
     public void handleStartButtonClick(View view) {
         int currentLevel = GAME.currentLevel;
         int currentMoveCount = GAME.moveCount;
@@ -117,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         if (cell != null) {
             LOGGER.log(Level.INFO, "Found cell at: row=" + square.getRow() + ", col=" + square.getCol());
             applyDrawableToCell(cell, base, overlay, drawableRes);
-            cell.setOnClickListener(v -> handleCellClick(square));
+//            cell.setOnClickListener(v -> handleCellClick(square));
         } else {
             logMissingCell(square.getRow(), square.getCol());
         }
@@ -140,23 +128,23 @@ public class MainActivity extends AppCompatActivity {
                 var startDir = Direction.UP;
                 GAME.addEyeball(row, col, startDir);
 
-                overlay = switch (startDir) {
-                    case UP, DOWN, LEFT, RIGHT -> getEyeballDrawable(startDir);
-                    default -> throw new IllegalStateException("Unexpected direction: " + startDir);
-                };
+//                overlay = switch (startDir) {
+////                    case UP, DOWN, LEFT, RIGHT -> getEyeballDrawable(startDir);
+////                    default -> throw new IllegalStateException("Unexpected direction: " + startDir);
+//                };
             }
         return overlay;
     }
-    private static final Map<Direction, Integer> DIRECTION_TO_DRAWABLE = Map.of(
-            Direction.UP, R.drawable.eyeball_north,
-            Direction.DOWN, R.drawable.eyeball_south,
-            Direction.LEFT, R.drawable.eyeball_west,
-            Direction.RIGHT, R.drawable.eyeball_east
-    );
-    private Drawable getEyeballDrawable(Direction direction) {
-        var resId = DIRECTION_TO_DRAWABLE.get(direction);
-        return ContextCompat.getDrawable(this, resId);
-    }
+//    private static final Map<Direction, Integer> DIRECTION_TO_DRAWABLE = Map.of(
+//            Direction.UP, R.drawable.eyeball_north,
+//            Direction.DOWN, R.drawable.eyeball_south,
+//            Direction.LEFT, R.drawable.eyeball_west,
+//            Direction.RIGHT, R.drawable.eyeball_east
+//    );
+//    private Drawable getEyeballDrawable(Direction direction) {
+//        var resId = DIRECTION_TO_DRAWABLE.get(direction);
+//        return ContextCompat.getDrawable(this, resId);
+//    }
     private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {
         if (overlay != null || base != null) {
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
@@ -167,19 +155,19 @@ public class MainActivity extends AppCompatActivity {
     private void logMissingCell(int row, int col) {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
-    public void handleCellClick(@NonNull Square clickedSquare) {
-        int clickedRow = clickedSquare.getRow();
-        int clickedCol = clickedSquare.getCol();
-
-        eyeBall.selectNextGrid(clickedRow,clickedCol);
-        LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
-//        PlayableSquare previous = GAME.getCurrentSquare();
-
-        GAME.moveCount ++;
-        // Update UI
-        updateTextView(R.id.movesMadeValue, String.valueOf(++GAME.moveCount));
-        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
-    }
+//    public void handleCellClick(@NonNull Square clickedSquare) {
+//        int clickedRow = clickedSquare.getRow();
+//        int clickedCol = clickedSquare.getCol();
+//
+//        eyeBall.selectNextGrid(clickedRow,clickedCol);
+//        LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
+////        PlayableSquare previous = GAME.getCurrentSquare();
+//
+//        GAME.moveCount ++;
+//        // Update UI
+//        updateTextView(R.id.movesMadeValue, String.valueOf(++GAME.moveCount));
+//        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
+//    }
     private void renderAllCells() {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 7; col++) {
@@ -191,29 +179,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-//    private void renderCell(int row, int col) {
-//        Square square = GAME.getSquareAt(row, col);
-//        if (!(square instanceof PlayableSquare)) return;
-//
-//        PlayableSquare pSquare = (PlayableSquare) square;
-//        ImageView cell = findCell(row, col);
-//        if (cell == null) {
-//            logMissingCell(row, col);
-//            return;
-//        }
-//        int baseDrawableId = getDrawableFrom(pSquare.getShape(), pSquare.getColor());
-//        Drawable base = ContextCompat.getDrawable(this, baseDrawableId);
-//
-//        Drawable overlay = null;
-//        if (GAME.hasGoalAt(row, col)) {
-//            overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
-//            if (overlay != null) overlay.setAlpha(100);
-//        }
-//        if (GAME.isEyeballAt(row, col)) {
-//            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-//        }
-//        applyDrawableToCell(cell, base, overlay, baseDrawableId);
-//    }
+
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);
     }
@@ -228,17 +194,7 @@ public class MainActivity extends AppCompatActivity {
             return R.drawable.line_none;
         }
     }
-    private void rotateEyeball(@NonNull ImageView eyeballView, float prevDegrees, float currentDegrees) {
-        android.view.animation.RotateAnimation rotate = new android.view.animation.RotateAnimation(
-                prevDegrees,
-                currentDegrees,
-                android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
-                android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
-        );
-        rotate.setDuration(300); // duration in ms
-        rotate.setFillAfter(true); // maintain end position
-        eyeballView.startAnimation(rotate);
-    }
+
     public void updateTextView(int viewId, String newText) {
         TextView textView = findViewById(viewId);
         if (textView != null) {
@@ -246,5 +202,72 @@ public class MainActivity extends AppCompatActivity {
         } else {
             LOGGER.log(Level.WARNING, "View ID not found: " + viewId);
         }
+    }
+    public void handleGridClick(View view) {
+        LOGGER.log(Level.INFO, "Toggling eyeball direction");
+
+        if (!(view instanceof ImageView)) {
+            LOGGER.log(Level.WARNING, "Clicked view is not an ImageView");
+            return;
+        }
+
+        ImageView clickedCell = (ImageView) view;
+
+        // Remove eyeball overlay from previous cell, reset to base drawable
+//        if (previousEyeballCell != null && previousEyeballCell != clickedCell) {
+//            resetCellToBaseDrawable(previousEyeballCell);
+//        }
+
+        // Prepare eyeball drawable overlay
+        int eyeballRes = isFacingSouth ? R.drawable.eyeball_north : R.drawable.eyeball_south;
+        Drawable eyeballDrawable = ContextCompat.getDrawable(this, eyeballRes);
+        if (eyeballDrawable != null) {
+            eyeballDrawable.setTintList(null); // no tint
+
+            // Get base drawable for the clicked cell
+            Drawable baseDrawable = getBaseDrawableForCell(clickedCell);
+            if (baseDrawable == null) {
+                LOGGER.log(Level.WARNING, "Base drawable not found for clicked cell");
+                baseDrawable = ContextCompat.getDrawable(this, R.drawable.line_none); // fallback
+            }
+
+            // Compose layered drawable: base + eyeball overlay
+            LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{baseDrawable, eyeballDrawable});
+            clickedCell.setImageDrawable(layeredDrawable);
+
+            // Update tracking
+            previousEyeballCell = clickedCell;
+            isFacingSouth = !isFacingSouth;
+        }
+
+        LOGGER.log(Level.INFO, "Eyeball moved to view ID: " + view.getId());
+    }
+
+    private Drawable getBaseDrawableForCell(ImageView cell) {
+        // Example: get row/col from cell's tag or id and then from your GAME grid get the PlayableSquare
+        // This is just a placeholder example; adapt to your codebase:
+        int row = getRowFromViewId(cell.getId());
+        int col = getColFromViewId(cell.getId());
+
+        Square square = GAME.getSquareAt(row, col);
+        if (square instanceof PlayableSquare) {
+            PlayableSquare pSquare = (PlayableSquare) square;
+            int baseResId = getDrawableFrom(pSquare.getShape(), pSquare.getColor());
+            return ContextCompat.getDrawable(this, baseResId);
+        }
+        return null;
+    }
+
+    // Example helpers (implement based on your id naming pattern)
+    private int getRowFromViewId(int id) {
+        // Parse row from R.id.cellGrid_#_#
+        // ... your logic here
+        return 0;
+    }
+
+    private int getColFromViewId(int id) {
+        // Parse col from R.id.cellGrid_#_#
+        // ... your logic here
+        return 0;
     }
 }
