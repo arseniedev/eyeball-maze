@@ -397,6 +397,10 @@ public class Game implements ILevelHolder, IGoalHolder, ISquareHolder, IEyeballH
             LOGGER.log(Level.WARNING, String.valueOf(ErrorCode.INVALID_MOVE));
         }
     }
+
+//    public void resetCompletedGoals() {
+//        this.gameLevel.completedGoalCount = 0;
+//    }
     @Override
     public int getCompletedGoalCount() {
 //        LOGGER.log(Level.INFO, "Completed goals:" + String.valueOf(this.levelCollection.size()));

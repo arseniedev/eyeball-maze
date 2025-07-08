@@ -309,5 +309,43 @@ public class MainActivity extends AppCompatActivity {
                 (dir1 == Direction.LEFT && dir2 == Direction.RIGHT) ||
                 (dir1 == Direction.RIGHT && dir2 == Direction.LEFT);
     }
+    public void handleResetButtonClick(View view) {
+        LOGGER.log(Level.INFO, "Resetting game state");
+
+        GAME.currentLevel = 1;
+        GAME.moveCount = 0;
+//        GAME.resetCompletedGoals(); // Assumes such a method exists; if not, manually reset
+
+        LevelData levelData = LevelRepository.LEVELS.get("level1");
+        if (levelData == null) {
+            LOGGER.log(Level.WARNING, "Level 1 data not found");
+            return;
+        }
+
+        // Reset board
+        GAME.addLevel(8, 8);
+        GAME.setLevel(1);
+        for (SquareData data : levelData.squares()) {
+            PlayableSquare square = new PlayableSquare(
+                    Position.at(data.row(), data.column()),
+                    data.color(), data.shape());
+            GAME.addSquare(square, data.row(), data.column());
+        }
+
+        renderAllCells();
+
+        // Reset eyeball to (6, 0) = grid position 7,1
+        eyeballRow = -1;  // clear previous internal tracking
+        eyeballCol = -1;
+        previousEyeballCell = null;
+        placeEyeballAt(6, 0, Direction.UP);
+
+        // Update UI text
+        updateTextView(R.id.currentLevelValue, "1");
+        updateTextView(R.id.movesMadeValue, "0");
+        updateTextView(R.id.goalsRemainingValue, "0/" + GAME.getGoalCount());
+
+        Toast.makeText(this, "Game reset to Level 1", Toast.LENGTH_SHORT).show();
+    }
 
 }
