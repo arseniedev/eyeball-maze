@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         if (cell != null) {
             LOGGER.log(Level.INFO, "Found cell at: row=" + square.getRow() + ", col=" + square.getCol());
             applyDrawableToCell(cell, base, overlay, drawableRes);
-//            cell.setOnClickListener(v -> handleCellClick(square));
         } else {
             logMissingCell(square.getRow(), square.getCol());
         }
@@ -128,23 +127,10 @@ public class MainActivity extends AppCompatActivity {
                 var startDir = Direction.UP;
                 GAME.addEyeball(row, col, startDir);
 
-//                overlay = switch (startDir) {
-////                    case UP, DOWN, LEFT, RIGHT -> getEyeballDrawable(startDir);
-////                    default -> throw new IllegalStateException("Unexpected direction: " + startDir);
-//                };
             }
         return overlay;
     }
-//    private static final Map<Direction, Integer> DIRECTION_TO_DRAWABLE = Map.of(
-//            Direction.UP, R.drawable.eyeball_north,
-//            Direction.DOWN, R.drawable.eyeball_south,
-//            Direction.LEFT, R.drawable.eyeball_west,
-//            Direction.RIGHT, R.drawable.eyeball_east
-//    );
-//    private Drawable getEyeballDrawable(Direction direction) {
-//        var resId = DIRECTION_TO_DRAWABLE.get(direction);
-//        return ContextCompat.getDrawable(this, resId);
-//    }
+
     private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {
         if (overlay != null || base != null) {
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
