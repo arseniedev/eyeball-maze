@@ -2,6 +2,7 @@ package nz.ac.ara.ads.eyeballmaze;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         GAME.addEyeball(startPos.row(), startPos.col(), Direction.UP);
         placeEyeball((PlayableSquare) GAME.getSquareAt(startPos.row(), startPos.col()));
 
-        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + "/" + GAME.getGoalCount());
+        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + "/" + GAME_LEVEL.totalGoalCount);
         updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
         updateTextView(R.id.movesMadeValue, String.valueOf(currentMoveCount));
 
@@ -106,28 +107,26 @@ public class MainActivity extends AppCompatActivity {
 
         applyLayeredDrawable(cell, base, overlay);
     }
-
     private Drawable getDrawableForSquare(@NonNull PlayableSquare square) {
         return ContextCompat.getDrawable(this, getDrawableFrom(square.getShape(), square.getColor()));
     }
-
+    @Nullable
     private Drawable getOverlayDrawable(@NonNull PlayableSquare square) {
         LevelData levelData = LevelRepository.LEVELS.get("level" + GAME.currentLevel);
         assert levelData != null;
-        int startRow = levelData.eyeballPosition().row();
-        int startCol = levelData.eyeballPosition().col();
+//        int startRow = levelData.eyeballPosition().row();
+//        int startCol = levelData.eyeballPosition().col();
 
         int row = square.getRow();
         int col = square.getCol();
 
+//        GOAL_COORDINATES
+        boolean goalCoordinates = LevelRepository.GOAL_COORDINATES.containsValue(Position.at(row, col));
         if (GAME.hasGoalAt(row, col)) {
             Drawable overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
             if (overlay != null) overlay.setAlpha(100);
             return overlay;
         }
-
-        // Note: You might want to add eyeball overlay here if it's at start position.
-        // Currently, this method does not add eyeball overlay.
         return null;
     }
 
@@ -178,16 +177,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void handleGridClick(View view) {
-        if (!(view instanceof ImageView)) {
+        if (!(view instanceof ImageView clickedCell)) {
             LOGGER.log(Level.WARNING, "Clicked view is not an ImageView");
             return;
         }
 
-        ImageView clickedCell = (ImageView) view;
         int[] clickedPos = getRowColFromViewId(clickedCell.getId());
         int clickedRow = clickedPos[0];
         int clickedCol = clickedPos[1];
 
+        Square s = GAME.getSquareAt(clickedRow, clickedCol);
+        boolean isBlank = s instanceof BlankSquare;
+        LOGGER.log(Level.INFO, String.valueOf(isBlank));
         // If no eyeball on grid yet, place it on clicked cell facing UP
         if (eyeballRow == -1 && eyeballCol == -1) {
             placeEyeballAt(clickedRow, clickedCol, Direction.UP);
@@ -202,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Check if moveDir is opposite of current eyeballDirection
         if (isOppositeDirection(moveDir, eyeballDirection)) {
             Toast.makeText(this, "Cannot move in opposite direction!", Toast.LENGTH_SHORT).show();
             return;
@@ -213,12 +213,11 @@ public class MainActivity extends AppCompatActivity {
         GAME.moveCount++;
         updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
         boolean checkGoal = GAME.hasGoalAt(clickedRow,clickedCol);
-        updateTextView(R.id.goalsRemainingValue, GAME_LEVEL.completedGoalCount + "/" + GAME_LEVEL.totalGoalCount);
+        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + "/" + GAME_LEVEL.totalGoalCount);
         if (checkGoal) {
 
-            updateTextView(R.id.goalsRemainingValue, GAME_LEVEL.completedGoalCount + "/" + GAME_LEVEL.totalGoalCount);
+            updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + "/" + GAME_LEVEL.totalGoalCount);
         }
-
         LOGGER.log(Level.INFO, "Eyeball moved to row=" + clickedRow + ", col=" + clickedCol + ", direction=" + moveDir);
     }
 
@@ -262,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
         Drawable baseDrawable = getBaseDrawableForCell(cell);
         cell.setImageDrawable(baseDrawable);
     }
+    @Nullable
     private Drawable getBaseDrawableForCell(ImageView cell) {
         int[] rowCol = getRowColFromViewId(cell.getId());
         int row = rowCol[0];
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // Get direction from one cell to adjacent cell
     private Direction getDirectionFromTo(int fromRow, int fromCol, int toRow, int toCol) {
-        if (toRow <= fromRow - 1 && toCol == fromCol) return Direction.UP;
+        if (toRow == fromRow - 1 && toCol == fromCol) return Direction.UP;
         if (toRow == fromRow + 1 && toCol == fromCol) return Direction.DOWN;
         if (toCol == fromCol - 1 && toRow == fromRow) return Direction.LEFT;
         if (toCol == fromCol + 1 && toRow == fromRow) return Direction.RIGHT;
@@ -308,7 +308,6 @@ public class MainActivity extends AppCompatActivity {
 
         GAME.currentLevel = 1;
         GAME.moveCount = 0;
-//        GAME.resetCompletedGoals(); // Assumes such a method exists; if not, manually reset
 
         LevelData levelData = LevelRepository.LEVELS.get("level1");
         if (levelData == null) {
@@ -319,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
         // Reset board
         GAME.addLevel(8, 8);
         GAME.setLevel(1);
+        GAME.moveCount = 0;
         for (SquareData data : levelData.squares()) {
             PlayableSquare square = new PlayableSquare(
                     Position.at(data.row(), data.column()),
@@ -337,9 +337,9 @@ public class MainActivity extends AppCompatActivity {
         // Update UI text
         updateTextView(R.id.currentLevelValue, "1");
         updateTextView(R.id.movesMadeValue, "0");
-        updateTextView(R.id.goalsRemainingValue, GAME_LEVEL.completedGoalCount + "/" + GAME_LEVEL.totalGoalCount);
-
+        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + "/" + GAME_LEVEL.totalGoalCount);
         Toast.makeText(this, "Game reset to Level 1", Toast.LENGTH_SHORT).show();
+
     }
 
 }

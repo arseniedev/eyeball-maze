@@ -32,7 +32,6 @@ public class EyeBall {
         moveTo(clickedRow, clickedCol);
     }
 
-
     // Helper: Calculate Direction from posA to posB (assumes one-step adjacent move)
     private Direction calculateDirection(Position from, Position to) {
         int dRow = to.row() - from.row();
@@ -63,7 +62,7 @@ public class EyeBall {
         return currentFacing;
     }
 
-    public Direction targetDirection(@NonNull Position targetPosition) {
+    public Direction targetDirection(Position targetPosition) {
         Position currentPosition = this.position;
         // to -< from
         int rowDiff = targetPosition.row() - currentPosition.row();
@@ -83,37 +82,3 @@ public class EyeBall {
     }
 }
 
-//    public Direction rotateDirection(Direction currentDirection, boolean clockwise) {
-//        switch (currentDirection) {
-//            case UP: return clockwise ? Direction.RIGHT : Direction.LEFT;
-//            case RIGHT: return clockwise ? Direction.DOWN : Direction.UP;
-//            case DOWN: return clockwise ? Direction.LEFT : Direction.RIGHT;
-//            case LEFT: return clockwise ? Direction.UP : Direction.DOWN;
-//            default: return Direction.UP;
-//        }
-//    }
-
-//    public void updateEyeball(int row, int column) {
-//        this.previousDirection = this.currentDirection;
-//        this.getNewEyeballFacingDirection(row, column);
-////        this.currenPosition = new Position(row, column);
-//    }
-
-//    public Direction setTargetDirection(int targetY, int targetX) {
-//        Direction direction;
-//
-//        boolean isMovingVertical= targetY != currentY;
-//        boolean isMovingHorizontal = targetX != currentX;
-//        if (isMovingVertical && isMovingHorizontal) {
-//            direction = Direction.DIAGONAL;
-//        } else {
-//            if (isMovingHorizontal) {
-//                direction = targetX > currentX ? Direction.RIGHT : Direction.LEFT;
-//
-//            } else { //if (isMovingVertical)
-//                direction = targetY < currentY ? Direction.UP : Direction.DOWN;
-//            }
-//        }
-//
-//        return direction;
-//    }

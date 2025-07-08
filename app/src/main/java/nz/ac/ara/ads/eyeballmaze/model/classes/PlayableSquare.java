@@ -10,15 +10,6 @@ public class PlayableSquare extends Square {
         super(position, color, shape);
     }
 
-//    @Override
-//    public Color getColor() {
-//        return this.color;
-//    }
-//    @Override
-//    public Shape getShape() {
-//        return this.shape;
-//    }
-
     public boolean isCurrent() {
         return isCurrent;
     }
@@ -30,11 +21,4 @@ public class PlayableSquare extends Square {
         this.isGoal = true;
     }
 
-//    public void setCurrent(PlayableSquare square) {
-//        if (this != null) {
-//            isCurrent =  setCurrent(false);
-//        }
-//        this = square;
-//        this.setCurrent(true);
-//    }
 }
