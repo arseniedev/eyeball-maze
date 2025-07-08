@@ -155,19 +155,10 @@ public class MainActivity extends AppCompatActivity {
     private void logMissingCell(int row, int col) {
         LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
     }
-//    public void handleCellClick(@NonNull Square clickedSquare) {
-//        int clickedRow = clickedSquare.getRow();
-//        int clickedCol = clickedSquare.getCol();
-//
-//        eyeBall.selectNextGrid(clickedRow,clickedCol);
-//        LOGGER.log(Level.INFO, "Clicked on: [" + clickedRow + "][" + clickedCol + "]");
-////        PlayableSquare previous = GAME.getCurrentSquare();
-//
-//        GAME.moveCount ++;
-//        // Update UI
-//        updateTextView(R.id.movesMadeValue, String.valueOf(++GAME.moveCount));
-//        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
-//    }
+
+
+
+
     private void renderAllCells() {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 7; col++) {
@@ -197,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateTextView(int viewId, String newText) {
         TextView textView = findViewById(viewId);
+
         if (textView != null) {
             textView.setText(newText);
         } else {
@@ -212,6 +204,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ImageView clickedCell = (ImageView) view;
+        GAME.moveCount ++;
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
 
         // Clear previous eyeball overlay (reset to base drawable)
         if (previousEyeballCell != null && previousEyeballCell != clickedCell) {
