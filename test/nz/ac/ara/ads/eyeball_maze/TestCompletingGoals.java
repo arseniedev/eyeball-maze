@@ -1,9 +1,12 @@
 package nz.ac.ara.ads.eyeball_maze;
 
-import nz.ac.ara.ads.eyeball_maze.enums.*;
+import nz.ac.ara.ads.eyeball_maze.enums.Color;
+import nz.ac.ara.ads.eyeball_maze.enums.Direction;
+import nz.ac.ara.ads.eyeball_maze.enums.Message;
+import nz.ac.ara.ads.eyeball_maze.enums.Shape;
 import nz.ac.ara.ads.eyeball_maze.model.classes.*;
-
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestCompletingGoals {
