@@ -1,15 +1,8 @@
-# Eyeball Maze (C#.NET)
+# Eyeball Maze
 A simple maze game where the player navigates an eyeball through a maze. Built using C#.NET, this project demonstrates basic game logic, collision detection, and user input handling.
 
-## Table of Contents
-Overview
-Features
-Setup & Installation
-Controls
-Project Structure
-Diagram
-Contributing
-License
+> BCDE223 Best Programming Practices (Java)
+🔗 Live Demo: [Link to be added]
 
 ## Overview
 Eyeball Maze is a desktop-based game where players guide an eyeball through a maze to reach the goal. The game showcases:
@@ -18,8 +11,13 @@ Eyeball Maze is a desktop-based game where players guide an eyeball through a ma
 - Smooth user input handling
 - Basic game loop implementation
 
-
 This project is ideal for beginners learning C#.NET game programming concepts.
+
+## Important Notice: Academic Integrity
+
+This portfolio contains original work completed as part of my **BCDE101 - Introduction to Programming** course at Ara Institute of Canterbury. I do **not condone plagiarism or academic misconduct** in any form. This project is for academic purposes only and is not intended to be copied or used without proper authorisation.
+
+The university has a <span style="color:red;">**STRICT**</span> policy on academic misconduct, and I fully support this policy. Any attempt to plagiarize, copy, or use this work as your own will result in serious consequences. Please respect academic integrity and do not attempt to pass off this work as your own.
 
 ## Features
 - Navigate an eyeball through predefined mazes
@@ -68,5 +66,5 @@ EyeballMaze/
 A visual representation of the maze and game logic is available in the PDF file:
 [Diagrams/MazeDiagram.pdf](https://github.com/arsenie-sarmiento/draft-project-eyeball-maze/blob/main/eyeball-maze-diagram.pdf)
 
-## License
-This project is licensed under the MIT License.
+**Disclaimer**
+All the content presented here is the result of my own individual work, and any resemblance to other works is purely coincidental. If you are a student, please refrain from using or copying this work in any way that violates the principles of academic honesty and integrity.
