@@ -1,5 +1,5 @@
 # Eyeball Maze
-A simple maze game where the player navigates an eyeball through a maze. Built using C#.NET, this project demonstrates basic game logic, collision detection, and user input handling.
+A simple maze game where the player navigates an eyeball through a maze. Built using Java, this project demonstrates basic game logic, collision detection, and user input handling.
 
 ---
 
@@ -52,18 +52,14 @@ git clone https://github.com/arsenie-sarmiento/draft-project-eyeball-maze.git
 ## Project Structure
 ```
 EyeballMaze/
-│
-├─ EyeballMaze.sln          # Visual Studio solution file
-├─ EyeballMaze/
-│  ├─ Program.cs            # Main entry point
-│  ├─ Game.cs               # Game logic
-│  ├─ Player.cs             # Eyeball/player logic
-│  ├─ Maze.cs               # Maze generation and data
-│  ├─ Resources/            # Images, sprites, sounds
-│  └─ README.md
-├─ Diagrams/
-│  └─ MazeDiagram.pdf       # PDF diagram of the maze/game logic
-└─ README.md
+  ├── Game.java          # Main game loop and entry point
+  ├── Maze.java          # Maze structure and layout logic
+  ├── Player.java        # Eyeball entity (movement & state)
+  ├── InputHandler.java  # Keyboard input processing
+  └── Utils/             # Helper classes (if any)
+
+/docs
+  └── EyeballMazeDiagram.pdf   # System/design diagram
 ```
 ## Diagram
 A visual representation of the maze and game logic is available in the PDF file:
