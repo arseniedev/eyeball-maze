@@ -72,9 +72,9 @@ A visual representation of the maze and game logic is available in the PDF file:
 ---
 > [!WARNING]
 > ## Important Notice: Academic Integrity
-> **BCDE222 Best Programming Practices (C# .NET)**
+> **BCDE223 Best Programming Practices (Java)**
 > 
-> This portfolio contains original work completed as part of my **BCDE222 Best Programming Practices (C# .NET)** course at Ara Institute of Canterbury. I do **not condone plagiarism or academic misconduct** in any form. This project is for academic purposes only and is not intended to be copied or used without proper authorisation.
+> This portfolio contains original work completed as part of my **BCDE223 Best Programming Practices (Java)** course at Ara Institute of Canterbury. I do **not condone plagiarism or academic misconduct** in any form. This project is for academic purposes only and is not intended to be copied or used without proper authorisation.
 > The university has a <span style="color:red;">**STRICT**</span> policy on academic misconduct, and I fully support this policy. Any attempt to plagiarize, copy, or use this work as your own will result in serious consequences. Please respect academic integrity and do not attempt to pass off this work as your own.
 >
 > ## **Disclaimer**
