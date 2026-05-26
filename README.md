@@ -74,8 +74,6 @@ A visual representation of the maze and game logic is available in the PDF file:
 [Diagrams/MazeDiagram.pdf](https://github.com/arsenie-sarmiento/draft-project-eyeball-maze/blob/main/eyeball-maze-diagram.pdf)
 
 ---
-<div style="white-space: pre-wrap; word-wrap: break-word;">
-
 
 > ![IMPORTANT_NOTICE-_Academic_Integrity](https://img.shields.io/badge/IMPORTANT_NOTICE-_Academic_Integrity-%23800000.svg?style=for-the-badge&logoColor=white)
 > 
