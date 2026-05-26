@@ -1,5 +1,13 @@
 # Eyeball Maze
-A simple maze game where the player navigates an eyeball through a maze. Built using Java, this project demonstrates basic game logic, collision detection, and user input handling.
+![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![JUnit5](https://img.shields.io/badge/JUnit5-%2325A162.svg?style=for-the-badge&logo=junit5&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android%20Studio-%230052CC.svg?style=for-the-badge&logo=androidstudio&logoColor=white)
+![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
+
+> BCDE223 Best Programming Practices (Java)
+> 
+> A simple maze game where the player navigates an eyeball through a maze. Built using Java, as part of the **BCDE223 Best Programming Practices (Java)** course, this project demonstrates basic game logic, collision detection, and user input handling.
+
 
 ---
 
@@ -66,12 +74,18 @@ A visual representation of the maze and game logic is available in the PDF file:
 [Diagrams/MazeDiagram.pdf](https://github.com/arsenie-sarmiento/draft-project-eyeball-maze/blob/main/eyeball-maze-diagram.pdf)
 
 ---
-> [!WARNING]
-> ## Important Notice: Academic Integrity
+<div style="white-space: pre-wrap; word-wrap: break-word;">
+
+
+> ![IMPORTANT_NOTICE-_Academic_Integrity](https://img.shields.io/badge/IMPORTANT_NOTICE-_Academic_Integrity-%23800000.svg?style=for-the-badge&logoColor=white)
+> 
 > **BCDE223 Best Programming Practices (Java)**
 > 
 > This portfolio contains original work completed as part of my **BCDE223 Best Programming Practices (Java)** course at Ara Institute of Canterbury. I do **not condone plagiarism or academic misconduct** in any form. This project is for academic purposes only and is not intended to be copied or used without proper authorisation.
 > The university has a <span style="color:red;">**STRICT**</span> policy on academic misconduct, and I fully support this policy. Any attempt to plagiarize, copy, or use this work as your own will result in serious consequences. Please respect academic integrity and do not attempt to pass off this work as your own.
 >
-> ## **Disclaimer**
+>
+> **Disclaimer**
 > All the content presented here is the result of my own individual work, and any resemblance to other works is purely coincidental. If you are a student, please refrain from using or copying this work in any way that violates the principles of academic honesty and integrity.
+
+
