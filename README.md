@@ -11,11 +11,9 @@
 
 ---
 
-## Demo
-🔗 **Live Demo:** [Link to be added]
+[![Live Demo](https://img.shields.io/badge/Download_APK-Live%20Demo%20-181717?style=for-the-badge&logo=android&labelColor=gray)]()
 
-**Snapshots**
-[]
+[![Video Demo](https://img.shields.io/badge/YouTube-View%20Recorded%20Demo-1a1a2e?style=for-the-badge&logo=youtube&labelColor=16213e)]()
 
 ---
 
@@ -82,8 +80,8 @@ A visual representation of the maze and game logic is available in the PDF file:
 > This portfolio contains original work completed as part of my **BCDE223 Best Programming Practices (Java)** course at Ara Institute of Canterbury. I do **not condone plagiarism or academic misconduct** in any form. This project is for academic purposes only and is not intended to be copied or used without proper authorisation.
 > The university has a <span style="color:red;">**STRICT**</span> policy on academic misconduct, and I fully support this policy. Any attempt to plagiarize, copy, or use this work as your own will result in serious consequences. Please respect academic integrity and do not attempt to pass off this work as your own.
 >
->
 > **Disclaimer**
+> 
 > All the content presented here is the result of my own individual work, and any resemblance to other works is purely coincidental. If you are a student, please refrain from using or copying this work in any way that violates the principles of academic honesty and integrity.
 
 
