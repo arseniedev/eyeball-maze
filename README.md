@@ -83,18 +83,16 @@ git clone https://github.com/arsenie-sarmiento/draft-project-eyeball-maze.git
 ## Project Structure
 
 <!-- START_STRUCTURE -->
-
 ```text
-EyeballMaze/
-  ├── Game.java          # Main game loop and entry point
-  ├── Maze.java          # Maze structure and layout logic
-  ├── Player.java        # Eyeball entity (movement & state)
-  ├── InputHandler.java  # Keyboard input processing
-  └── Utils/             # Helper classes (if any)
+.
+├── README.md
+├── assets
+│   └── clips
+├── diagrams
+│   └── eyeball-maze-class-diagram-iteration-1.pdf
+└── structure.txt
 
-/docs
-  └── EyeballMazeDiagram.pdf   # System/design diagram
-
+4 directories, 3 files
 ```
 <!-- END_STRUCTURE -->
 
