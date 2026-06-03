@@ -78,7 +78,7 @@ git clone https://github.com/arseniedev/eyeball-maze.git
 3. Build the project (`Ctrl` + `Shift` + `B`).
 4. Run the game (F5 or Debug → Start Debugging).
 
-> [![📖 Wiki — Full Local Setup Guide](https://img.shields.io/badge/📖_Wiki-Full%20Local%20Setup%20Guide_⊿_-1a1a2e?style=for-the-badge&labelColor=16213e)](https://github.com/arseniedev/music-catalogue/wiki/Local-Installation-Guide) <br/>
+> [![📖 Wiki — Full Local Setup Guide](https://img.shields.io/badge/📖_Wiki-Full%20Local%20Setup%20Guide_⊿_-1a1a2e?style=for-the-badge&labelColor=16213e)](https://github.com/arseniedev/eyeball-maze/wiki/Local-Installation-Guide) <br/>
 
 ## Project Structure
 
