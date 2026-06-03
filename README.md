@@ -1,8 +1,11 @@
 # Eyeball Maze
 ![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![JDK 17](https://img.shields.io/badge/JDK_17-007396?style=for-the-badge&logo=java&logoColor=white)
 ![JUnit5](https://img.shields.io/badge/JUnit5-%2325A162.svg?style=for-the-badge&logo=junit5&logoColor=white)
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-%230052CC.svg?style=for-the-badge&logo=androidstudio&logoColor=white)
 ![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
+![Android SDK](https://img.shields.io/badge/Android_SDK-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Min SDK](https://img.shields.io/badge/Min_SDK-28+-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 
 > BCDE223 Best Programming Practices (Java)
 
