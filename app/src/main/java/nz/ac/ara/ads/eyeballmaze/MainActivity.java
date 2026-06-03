@@ -190,6 +190,26 @@ public class MainActivity extends AppCompatActivity {
             cell.setImageResource(fallbackResId);
         }
     }
+    private void logMissingCell(int row, int col) {
+        LOGGER.log(Level.WARNING, "Cell not found at: [" + row + "][" + col + "]");
+    }
+    private void handleCellClick(@NonNull PlayableSquare square) {
+        int row = square.row;
+        int col = square.col;
+
+        LOGGER.log(Level.INFO, "Clicked on: [" + row + "][" + col + "]");
+
+        PlayableSquare previous = GAME.getCurrentSquare();
+        if (previous != null) {
+            previous.setCurrent(false);
+            handleCellAt(previous);  // Refresh UI for previous
+        }
+        square.setCurrent(true);
+        handleCellAt(square);
+
+        GAME.moveCount++;
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
+    }
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);
     }
