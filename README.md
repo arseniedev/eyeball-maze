@@ -1,146 +1,124 @@
-# 🧩 Android Dynamic View Demo App
+# Eyeball Maze
 
-This Android application demonstrates the difference between creating views **programmatically (dynamic)** and **manually (XML-based)** using the MVC design pattern. It includes responsive layouts, user interaction, and clean separation of concerns.
+![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![JDK 17](https://img.shields.io/badge/JDK_17-007396?style=for-the-badge&logo=java&logoColor=white)
+![JUnit5](https://img.shields.io/badge/JUnit5-%2325A162.svg?style=for-the-badge&logo=junit5&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android%20Studio-%230052CC.svg?style=for-the-badge&logo=androidstudio&logoColor=white)
+![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
+![Android SDK](https://img.shields.io/badge/Android_SDK-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Min SDK](https://img.shields.io/badge/Min_SDK-28+-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 
----
-
-## 🚀 Tech Stack
-
-| Tool/Library         | Version       | Description                             |
-|----------------------|---------------|-----------------------------------------|
-| Android Studio       | Hedgehog (2023.3.1) or later | Recommended IDE for development         |
-| Gradle               | 8.4           | Build automation                         |
-| Android Gradle Plugin| 8.4.1         | Android-specific Gradle plugin           |
-| Java (JDK)           | 17            | Language used for development            |
-| Android SDK          | API 34 (Android 14) | Compile and target SDK                   |
-| Min SDK              | API 24        | Minimum supported Android version        |
-| ConstraintLayout     | 2.1.4         | For building responsive UI               |
+> BCDE223 Best Programming Practices (Java)
+>
+> A simple maze game where the player navigates an eyeball through a maze. Built using Java, as part of the **BCDE223 Best Programming Practices (Java)** course, this project demonstrates basic game logic, collision detection, and user input handling.
 
 ---
 
-## ⚙️ Configuration Summary
+[![Live Demo](https://img.shields.io/badge/Download_APK-Live%20Demo%20-181717?style=for-the-badge&logo=android&labelColor=gray)]()
 
-### `build.gradle (Project)`
+[![Video Demo](https://img.shields.io/badge/YouTube-View%20Recorded%20Demo-1a1a2e?style=for-the-badge&logo=youtube&labelColor=16213e)]()
 
-```groovy
-buildscript {
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.4.1'
-    }
-}
+---
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
+## Features
+
+- Navigate an eyeball through predefined mazes
+- Simple collision detection with walls
+- Keyboard input controls (arrow keys)
+- Goal detection and game completion feedback
+
+> [![📖 See Wiki ](https://img.shields.io/badge/See_Wiki_⊿_-1a1a2e?style=for-the-badge&labelColor=16213e)](https://github.com/arseniedev/eyeball-maze/wiki)</br>
+> for the iteration snapshots, full admin usage instructions, and data model details.
+
+<table>
+    <tr>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-001.gif" width="200" alt="clip-001.gif"></image></td>
+        <td>
+            <ul>
+                <li>Display starting level + level name</li>
+                <li>Diplay level goal(s)</li>
+                <li>Diplay image of player character + correct direction</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-002.gif" width="200" alt="clip-002.gif"></td>
+        <td>
+            <ul>
+                <li>Event handler (button clicks/ tough gestures) to control player movement</li>
+                <li>Display an updated move count for player character</li>
+                <li></li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-003.gif" width="200" alt="clip-003.gif"></td>
+        <td>
+            <ul>
+                <li>A button or menu to restart the current maze*</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-004.gif" width="200" alt="clip-004.gif"></td>
+        <td>
+            <ul>
+                <li>Diplay rules/prompt if move does not obey move logic rules</li>
+                <li>Play a short relevant and suitable audio / video if player character intends to move incorrectly*</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+
+## Setup & Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/arseniedev/eyeball-maze.git
 ```
 
+2. Open the solution in Visual Studio.
+3. Build the project (`Ctrl` + `Shift` + `B`).
+4. Run the game (F5 or Debug → Start Debugging).
 
-----
-<!--
-Packages to install: - Sources for Android 36 (sources;android-36)
-- Android SDK Platform 36 (platforms;android-36)
-- Android SDK Platform-Tools (platform-tools)
-- Android Auto API Simulators (extras;google;simulators)
-- Android Emulator (emulator)
-- Android SDK Build-Tools 36 (build-tools;36.0.0)
+> [![📖 Wiki — Full Local Setup Guide](https://img.shields.io/badge/📖_Wiki-Full%20Local%20Setup%20Guide_⊿_-1a1a2e?style=for-the-badge&labelColor=16213e)](https://github.com/arseniedev/eyeball-maze/wiki/Local-Installation-Guide) </br>
 
+## Project Structure
 
-Preparing "Install Sources for Android 36 (revision 1)".
-Downloading https://dl.google.com/android/repository/source-36_r01.zip
+<!-- START_STRUCTURE -->
 
-he following components will be installed:
+```text
+EyeballMaze/
+  ├── Game.java          # Main game loop and entry point
+  ├── Maze.java          # Maze structure and layout logic
+  ├── Player.java        # Eyeball entity (movement & state)
+  ├── InputHandler.java  # Keyboard input processing
+  └── Utils/             # Helper classes (if any)
 
-- Android SDK Build-Tools 20 v.20.0.0
-- Android SDK Build-Tools 25.0.3 v.25.0.3
-- Android SDK Build-Tools 23.0.2 v.23.0.2
-- Google APIs ARM 64 v8a System Image API 36.0 (revision 6)
-- Android SDK Build-Tools 24.0.2 v.24.0.2
-- Android SDK Build-Tools 22.0.1 v.22.0.1
-- Android SDK Build-Tools 19.1 v.19.1.0
-- Android SDK Build-Tools 24.0.3 v.24.0.3
-- Android SDK Build-Tools 26.0.3 v.26.0.3
-- Android SDK Build-Tools 32.1-rc1 v.32.1.0 rc1
-- Android SDK Build-Tools 35-rc1 v.35.0.0 rc1
-- Android SDK Build-Tools 27 v.27.0.0
-- Android SDK Build-Tools 29 v.29.0.0
-- Android SDK Build-Tools 30.0.3 v.30.0.3
-- Android SDK Build-Tools 32 v.32.0.0
-- Android SDK Build-Tools 33 v.33.0.0
-- Android SDK Build-Tools 34 v.34.0.0
-- Android SDK Build-Tools 28 v.28.0.0
-- Android SDK Build-Tools 35-rc4 v.35.0.0 rc4
-- Android SDK Build-Tools 30.0.2 v.30.0.2
-- Pre-Release 16 KB Page Size Google APIs Intel x86_64 Atom System Image API 36.0 (revision 6)
-- Android SDK Build-Tools 31 v.31.0.0
-- Android SDK Build-Tools 34-rc3 v.34.0.0 rc3
-- Android SDK Build-Tools 25.0.2 v.25.0.2
-- Android SDK Build-Tools 28.0.3 v.28.0.3
-- Android SDK Build-Tools 35-rc2 v.35.0.0 rc2
-- Android SDK Build-Tools 23.0.1 v.23.0.1
-- Pre-Release 16 KB Page Size Google APIs ARM 64 v8a System Image API 36.0 (revision 6)
-- Sources for Android 36 (revision 1)
-- Android SDK Build-Tools 34-rc1 v.34.0.0 rc1
-- Android SDK Build-Tools 25.0.1 v.25.0.1
-- Android SDK Build-Tools 36-rc4 v.36.0.0 rc4
-- Pre-Release 16 KB Page Size Google Play Intel x86_64 Atom System Image API 36.0 (revision 6)
-- Google Play ARM 64 v8a System Image API 36.0 (revision 6)
-- Android SDK Build-Tools 27.0.1 v.27.0.1
-- Android SDK Build-Tools 29.0.1 v.29.0.1
-- Google APIs Intel x86_64 Atom System Image API 36.0 (revision 6)
-- Android SDK Build-Tools 26.0.1 v.26.0.1
-- Android SDK Build-Tools 28.0.2 v.28.0.2
-- Android SDK Build-Tools 24 v.24.0.0
-- Android SDK Build-Tools 29.0.3 v.29.0.3
-- Android SDK Build-Tools 33.0.3 v.33.0.3
-- Android SDK Platform 36 (revision 2)
-- Android SDK Build-Tools 27.0.2 v.27.0.2
-- Android SDK Build-Tools 30.0.1 v.30.0.1
-- Android SDK Build-Tools 33.0.2 v.33.0.2
-- Android SDK Build-Tools 36 v.36.0.0
-- Android SDK Build-Tools 25 v.25.0.0
-- Android SDK Build-Tools 29.0.2 v.29.0.2
-- Google Play Intel x86_64 Atom System Image API 36.0 (revision 6)
-- Android SDK Build-Tools 26 v.26.0.0
-- Android SDK Build-Tools 21.1.2 v.21.1.2
-- Android SDK Build-Tools 35 v.35.0.0
-- Android SDK Build-Tools 23.0.3 v.23.0.3
-- Pre-Release 16 KB Page Size Google Play ARM 64 v8a System Image API 36.0 (revision 6)
-- Google TV Intel x86 Atom System Image API 36.0 (revision 1)
-- Android SDK Build-Tools 34-rc2 v.34.0.0 rc2
-- Android SDK Build-Tools 28.0.1 v.28.0.1
-- Android SDK Build-Tools 30 v.30.0.0
-- Google TV ARM 64 v8a System Image API 36.0 (revision 1)
-- Android SDK Build-Tools 27.0.3 v.27.0.3
-- Android SDK Build-Tools 26.0.2 v.26.0.2
-- Android SDK Build-Tools 35-rc3 v.35.0.0 rc3
-- Android SDK Build-Tools 36-rc5 v.36.0.0 rc5
-- Android SDK Build-Tools 24.0.1 v.24.0.1
-- Android SDK Build-Tools 36-rc3 v.36.0.0 rc3
-- Android SDK Build-Tools 33.0.1 v.33.0.1
-- Android SDK Build-Tools 35.0.1 v.35.0.1
-- Android SDK Build-Tools 36-rc1 v.36.0.0 rc1
-- Android Emulator (Required by Pre-Release 16 KB Page Size Google Play ARM 64 v8a System Image, Google TV Intel x86 Atom System Image, Pre-Release 16 KB Page Size Google Play Intel x86_64 Atom System Image, Google Play ARM 64 v8a System Image, Pre-Release 16 KB Page Size Google APIs Intel x86_64 Atom System Image, Google APIs ARM 64 v8a System Image, Google Play Intel x86_64 Atom System Image, Google TV ARM 64 v8a System Image, Google APIs Intel x86_64 Atom System Image, Pre-Release 16 KB Page Size Google APIs ARM 64 v8a System Image)
-Disk usage:
+/docs
+  └── EyeballMazeDiagram.pdf   # System/design diagram
 
-- Estimated download size: 19.1 GB
-- Estimated disk space to be additionally occupied on SDK partition after installation: 76.5 GB
-- Currently available disk space in SDK root (C:\Users\ads0417\AppData\Local\platform-tools): 305.2 GB
-Packages to install: - Android Emulator (emulator)
+```
+<!-- END_STRUCTURE -->
 
+## Diagram
 
-Preparing "Install Android Emulator v.35.5.10".
-Package "Android Emulator" (emulator) should be installed in 
-"C:\Users\ads0417\AppData\Local\platform-tools\emulator" but 
-it already exists.
-Installing in "C:\Users\ads0417\AppData\Local\platform-tools\emulator-5" instead.
-Downloading https://dl.google.com/android/repository/emulator-windows_x64-13402964.zip
+A visual representation of the maze and game logic is available in the PDF file:
 
--->
+- [Iteration 1](https://github.com/arseniedev/eyeball-maze/blob/docs/diagrams/eyeball-maze-class-diagram-iteration-1.pdf)
 
-Link: 
-- https://youtu.be/myjSxtAk9XM?list=PLS1QulWo1RIbb1cYyzZpLFCKvdYV_yJ-E
-- https://www.youtube.com/watch?v=8sJvzZ-y9bw&list=PLXiaMWHbNgp3JCTw0qrPLISkfXWdQUW1Q&index=19
+---
 
+</br>
+
+> ![IMPORTANT_NOTICE-_Academic_Integrity](https://img.shields.io/badge/IMPORTANT_NOTICE-_Academic_Integrity-%23800000.svg?style=for-the-badge&logoColor=white)
+>
+> **BCDE223 Best Programming Practices (Java)**
+>
+> This portfolio contains original work completed as part of my **BCDE223 Best Programming Practices (Java)** course at Ara Institute of Canterbury. I do **not condone plagiarism or academic misconduct** in any form. This project is for academic purposes only and is not intended to be copied or used without proper authorisation.
+> The university has a <span style="color:red;">**STRICT**</span> policy on academic misconduct, and I fully support this policy. Any attempt to plagiarize, copy, or use this work as your own will result in serious consequences. Please respect academic integrity and do not attempt to pass off this work as your own.
+>
+> **Disclaimer**
+> 
+> All the content presented here is the result of my own individual work, and any resemblance to other works is purely coincidental. If you are a student, please refrain from using or copying this work in any way that violates the principles of academic honesty and integrity.
