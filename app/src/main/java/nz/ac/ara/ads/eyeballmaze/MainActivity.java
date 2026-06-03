@@ -1,5 +1,12 @@
 package nz.ac.ara.ads.eyeballmaze;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +14,11 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import nz.ac.ara.ads.eyeballmaze.enums.Color;
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
@@ -16,26 +28,13 @@ import nz.ac.ara.ads.eyeballmaze.model.classes.PlayableSquare;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelData;
 import nz.ac.ara.ads.eyeballmaze.model.data.LevelRepository;
 
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.os.Bundle;
-import android.view.View;
-import java.util.*;
-
-import android.widget.ImageView;
-import android.widget.TextView;
-
 public class MainActivity extends AppCompatActivity {
-    static final Game GAME = new Game();
-    static final int maxLevel = 4;
-    private float eyeballRotationDegrees = 0f;
-    private final static Logger LOGGER =
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
+
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Game GAME = new Game();
+    private static final int MAX_LEVEL = 4;
+
+    private static final Map<String, Integer> shapeColorDrawableMap = new HashMap<>();
 
     static {
         shapeColorDrawableMap.put("STAR_RED", R.drawable.shape_star_red);
@@ -60,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         shapeColorDrawableMap.put("EMPTY", R.drawable.line_none);
     }
-    int[][] gridIds = {
+
+    private final int[][] gridIds = {
             { R.id.cellGrid_1_1, R.id.cellGrid_1_2, R.id.cellGrid_1_3, R.id.cellGrid_1_4, R.id.cellGrid_1_5, R.id.cellGrid_1_6, R.id.cellGrid_1_7 },
             { R.id.cellGrid_2_1, R.id.cellGrid_2_2, R.id.cellGrid_2_3, R.id.cellGrid_2_4, R.id.cellGrid_2_5, R.id.cellGrid_2_6, R.id.cellGrid_2_7 },
             { R.id.cellGrid_3_1, R.id.cellGrid_3_2, R.id.cellGrid_3_3, R.id.cellGrid_3_4, R.id.cellGrid_3_5, R.id.cellGrid_3_6, R.id.cellGrid_3_7 },
@@ -72,29 +72,43 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
-    protected  void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
-    public void handleResetButtonClick(View view) {
-        LOGGER.log(Level.INFO, "Clear Grid");
-        GAME.moveCount = 0;
-        GAME.setLevelNumber(1);
-        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-        updateTextView(R.id.goalsRemainingValue, 0+ " / " + 1);
-        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
-    }
-    public void handleUndoButtonClick(View view) {
-        LOGGER.log(Level.INFO, "Clear Grid");
-        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
-        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
-    }
+
+//    public void handleResetButtonClick(View view) {
+//        LOGGER.log(Level.INFO, "Resetting game");
+//        GAME.moveCount = 0;
+//        GAME.setLevelNumber(1);
+//        int currentLevel = GAME.getLevelCount();
+//        LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
+//
+//        if (levelData == null) {
+//            LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
+//            return;
+//        }
+//
+//        // Re-initialize the level in Game logic
+//        GAME.addLevel(levelData.levelHeight(), levelData.levelWidth());
+//
+//        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
+//        updateTextView(R.id.movesMadeValue, "0");
+//        updateTextView(R.id.goalsRemainingValue, "0 / " + GAME.getGoalCount());
+//    }
+
+//    public void handleUndoButtonClick(View view) {
+//        updateTextView(R.id.currentLevelValue, String.valueOf(GAME.getLevelCount()));
+//        updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
+//    }
+
     public void handleStartButtonClick(View view) {
         int currentLevel = GAME.getLevelCount();
         LevelData levelData = LevelRepository.LEVELS.get("level" + currentLevel);
@@ -103,71 +117,72 @@ public class MainActivity extends AppCompatActivity {
             LOGGER.log(Level.WARNING, "Level not found: " + currentLevel);
             return;
         }
-        LOGGER.log(Level.INFO, "Setting Level " + currentLevel);
+
+        LOGGER.log(Level.INFO, "Starting level " + currentLevel);
 
         GAME.addLevel(levelData.levelHeight(), levelData.levelWidth());
+
         for (PlayableSquare square : levelData.squares()) {
             handleInitialMarker(square);
             handleCellAt(square);
         }
-        if (currentLevel >= maxLevel) {
+
+        if (currentLevel >= MAX_LEVEL) {
             GAME.setLevel(1);
         }
-        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
-//        int targetGoalCount = GAME.getGoalCount();
-//        int completedGoalCount = GAME.getCompletedGoalCount();
 
+        updateTextView(R.id.currentLevelValue, String.valueOf(currentLevel));
         updateTextView(R.id.goalsRemainingValue, GAME.getCompletedGoalCount() + " / " + GAME.getGoalCount());
     }
-    private void handleInitialMarker(@NonNull PlayableSquare square) {
 
+    private void handleInitialMarker(@NonNull PlayableSquare square) {
         GAME.addSquare(square, square.row, square.col);
         GAME.addEyeball(square.row, square.col, Direction.UP);
     }
+
     private void handleCellAt(@NonNull PlayableSquare square) {
         int drawableRes = getDrawableFrom(square.getShape(), square.getColor());
-        ImageView eyeballView = findCell(square.row, square.col);
+        ImageView cellView = findCell(square.row, square.col);
+        Drawable base = ContextCompat.getDrawable(this, drawableRes);
+        Drawable overlay = getOverlay(square);
 
-
-        if (eyeballView != null) {
-            float previousRotation = eyeballRotationDegrees;
-            eyeballRotationDegrees += 90f;
-            if (eyeballRotationDegrees >= 360f) {
-                eyeballRotationDegrees = 0f;
-            }
-
-//            rotateEyeball(eyeballView, previousRotation, eyeballRotationDegrees);
-
-//            rotateEyeball(R.drawable.eyeball, previousRotation, eyeballRotationDegrees);
-            Drawable base = ContextCompat.getDrawable(this, drawableRes);
-            Drawable overlay = getOverlay(square); // move this outside if-block
-
-//            if (square.isCurrent()) {
-//                LOGGER.log(Level.INFO, "Currently at: row=" + square.row + ", col=" + square.col);
-//                overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
-//            }
-
-            applyDrawableToCell(eyeballView, base, overlay, drawableRes);
-            eyeballView.setOnClickListener(v -> handleCellClick(square));
-
-        } else {
-            logMissingCell(square.row, square.col);
-        }
+        applyDrawableToCell(cellView, base, overlay, drawableRes);
+        cellView.setOnClickListener(v -> handleCellClick(square));
     }
-    private Drawable getOverlay(@NonNull PlayableSquare square) {
-        Drawable overlay = null;
 
+    private Drawable getOverlay(@NonNull PlayableSquare square) {
         if (GAME.hasGoalAt(square.row, square.col)) {
-            overlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
-            if (overlay != null) overlay.setAlpha(100);
+            Drawable goalOverlay = ContextCompat.getDrawable(this, R.drawable.empty_goal);
+            if (goalOverlay != null) goalOverlay.setAlpha(100);
+            return goalOverlay;
         } else if (square.isCurrent()) {
             GAME.addEyeball(square.row, square.col, Direction.UP);
-            overlay = ContextCompat.getDrawable(this, R.drawable.eyeball);
+            return ContextCompat.getDrawable(this, R.drawable.eyeball);
+        }
+        return null;
+    }
+
+    private void handleCellClick(@NonNull PlayableSquare square) {
+        PlayableSquare previous = GAME.getCurrentSquare();
+        if (previous != null) {
+            previous.setCurrent(false);
+            handleCellAt(previous);
         }
 
-        return overlay;
+        square.setCurrent(true);
+        handleCellAt(square);
+        GAME.moveCount++;
+        updateTextView(R.id.movesMadeValue, String.valueOf(GAME.moveCount));
     }
+
+    private int getDrawableFrom(Shape shape, Color color) {
+        String key = (shape != null && color != null) ? shape.name() + "_" + color.name() : "EMPTY";
+        return shapeColorDrawableMap.getOrDefault(key, R.drawable.line_none);
+    }
+
     private void applyDrawableToCell(ImageView cell, Drawable base, Drawable overlay, int fallbackResId) {
+        if (cell == null) return;
+
         if (overlay != null || base != null) {
             LayerDrawable layeredDrawable = new LayerDrawable(new Drawable[]{base, overlay});
             cell.setImageDrawable(layeredDrawable);
@@ -198,26 +213,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView findCell(int row, int col) {
         return findViewById(gridIds[row][col]);
     }
-    private int getDrawableFrom(Shape shape, Color color) {
 
-        String key = (shape != null && color != null)
-                ? shape.name() + "_" + color.name()
-                : "EMPTY";
-        LOGGER.log(Level.WARNING, "DrawableKey: " + key);
-
-        return shapeColorDrawableMap.getOrDefault(key, R.drawable.line_none);
-    }
-    private void rotateEyeball(ImageView eyeballView, float prevDegrees, float currentDegrees) {
-        android.view.animation.RotateAnimation rotate = new android.view.animation.RotateAnimation(
-                prevDegrees,
-                currentDegrees,
-                android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
-                android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
-        );
-        rotate.setDuration(300); // duration in ms
-        rotate.setFillAfter(true); // maintain end position
-        eyeballView.startAnimation(rotate);
-    }
     public void updateTextView(int viewId, String newText) {
         TextView textView = findViewById(viewId);
         if (textView != null) {
@@ -225,5 +221,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             LOGGER.log(Level.WARNING, "View ID not found: " + viewId);
         }
+    }
+
+    public void resetGame() {
+        LOGGER.log(Level.INFO, "Resetting game");
     }
 }

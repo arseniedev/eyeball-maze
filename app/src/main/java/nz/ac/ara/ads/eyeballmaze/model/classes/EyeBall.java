@@ -1,60 +1,94 @@
 package nz.ac.ara.ads.eyeballmaze.model.classes;
+
 import nz.ac.ara.ads.eyeballmaze.enums.Direction;
+
 public class EyeBall {
-    protected Position currenPosition;
-    public float currentEyeballRotation = 0f;
-    public Direction currentDirection;
+    protected Position currentPosition;
     protected Direction previousDirection;
-    public EyeBall(int newYPosition,int newXPosition, Direction eyeballDirection) {
-        this.currenPosition = new Position(newYPosition,newXPosition);
+    public Direction currentDirection;
+    public float currentEyeballRotation = 0f;
+
+    public EyeBall(int newYPosition, int newXPosition, Direction eyeballDirection) {
+        this.currentPosition = new Position(newYPosition, newXPosition);
         this.currentDirection = eyeballDirection;
     }
+
     public int getXPosition() {
-        return currenPosition.getColumn();
+        return currentPosition.getColumn();
     }
+
     public int getYPosition() {
-        return currenPosition.getRow();
+        return currentPosition.getRow();
     }
+
     public Direction getDirection() {
         return currentDirection;
     }
-    public Direction rotateDirection(Direction currentDirection, boolean clockwise) {
-        switch (currentDirection) {
-            case UP: return clockwise ? Direction.RIGHT : Direction.LEFT;
-            case RIGHT: return clockwise ? Direction.DOWN : Direction.UP;
-            case DOWN: return clockwise ? Direction.LEFT : Direction.RIGHT;
-            case LEFT: return clockwise ? Direction.UP : Direction.DOWN;
-            default: return Direction.UP;
-        }
+
+    private float getRotationDegrees(Direction direction) {
+        return switch (direction) {
+            case RIGHT -> 90f;
+            case DOWN -> 180f;
+            case LEFT -> 270f;
+            default -> 0f; // UP or fallback
+        };
+    }
+
+    public Direction getNewFacing(Direction intendedMove) {
+        // Returns new direction relative to the current facing direction
+        return switch (currentDirection) {
+            case UP -> intendedMove;
+            case RIGHT -> switch (intendedMove) {
+                case UP -> Direction.LEFT;
+                case DOWN -> Direction.RIGHT;
+                case LEFT -> Direction.UP;
+                case RIGHT -> Direction.DOWN;
+                default -> intendedMove;
+            };
+            case DOWN -> switch (intendedMove) {
+                case UP -> Direction.DOWN;
+                case DOWN -> Direction.UP;
+                case LEFT -> Direction.RIGHT;
+                case RIGHT -> Direction.LEFT;
+                default -> intendedMove;
+            };
+            case LEFT -> switch (intendedMove) {
+                case UP -> Direction.RIGHT;
+                case DOWN -> Direction.LEFT;
+                case LEFT -> Direction.DOWN;
+                case RIGHT -> Direction.UP;
+                default -> intendedMove;
+            };
+            default -> intendedMove;
+        };
+    }
+
+    public boolean isOpposite(Direction move) {
+        return (this.currentDirection == Direction.UP && move == Direction.DOWN) ||
+                (this.currentDirection == Direction.DOWN && move == Direction.UP) ||
+                (this.currentDirection == Direction.LEFT && move == Direction.RIGHT) ||
+                (this.currentDirection == Direction.RIGHT && move == Direction.LEFT);
     }
 
     public void updateEyeball(int row, int column) {
         this.previousDirection = this.currentDirection;
-        this.getNewEyeballFacingDirection(row, column);
-        this.currenPosition = new Position(row, column);
+        this.currentDirection = getNewEyeballFacingDirection(row, column);
+        this.currentPosition = new Position(row, column);
     }
 
     public Direction getNewEyeballFacingDirection(int targetY, int targetX) {
-        Direction direction;
-
-        int currentY= this.getYPosition();
+        int currentY = this.getYPosition();
         int currentX = this.getXPosition();
 
-        boolean isMovingVertical= targetY != currentY;
+        boolean isMovingVertical = targetY != currentY;
         boolean isMovingHorizontal = targetX != currentX;
+
         if (isMovingVertical && isMovingHorizontal) {
-            direction = Direction.DIAGONAL;
+            return Direction.DIAGONAL;
+        } else if (isMovingHorizontal) {
+            return targetX > currentX ? Direction.RIGHT : Direction.LEFT;
         } else {
-            if (isMovingHorizontal) {
-                direction = targetX > currentX ? Direction.RIGHT : Direction.LEFT;
-
-            } else { //if (isMovingVertical)
-                direction = targetY < currentY ? Direction.UP : Direction.DOWN;
-            }
+            return targetY < currentY ? Direction.UP : Direction.DOWN;
         }
-
-//        this.currentDirection = Direction.UP;
-
-        return direction;
     }
 }
