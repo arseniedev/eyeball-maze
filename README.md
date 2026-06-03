@@ -28,7 +28,7 @@
 
 <table>
     <tr>
-        <td><image src="https://github.com/arseniedev/eyeball-maze/tree/docs/assets/clips/clip-001.gif" width="200" alt="clip-001.gif"></image></td>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-001.gif" width="200" alt="clip-001.gif"></image></td>
         <td>
             <ul>
                 <li>Display starting level + level name</li>
@@ -38,7 +38,7 @@
         </td>
     </tr>
     <tr>
-        <td><image src="https://github.com/arseniedev/eyeball-maze/tree/docs/assets/clips/clip-002.gif" width="200" alt="clip-002.gif"></td>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-002.gif" width="200" alt="clip-002.gif"></td>
         <td>
             <ul>
                 <li>Event handler (button clicks/ tough gestures) to control player movement</li>
@@ -48,7 +48,7 @@
         </td>
     </tr>
     <tr>
-        <td><image src="https://github.com/arseniedev/eyeball-maze/tree/docs/assets/clips/clip-003.gif" width="200" alt="clip-003.gif"></td>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-003.gif" width="200" alt="clip-003.gif"></td>
         <td>
             <ul>
                 <li>A button or menu to restart the current maze*</li>
@@ -56,7 +56,7 @@
         </td>
     </tr>
     <tr>
-        <td><image src="https://github.com/arseniedev/eyeball-maze/tree/docs/assets/clips/clip-004.gif" width="200" alt="clip-004.gif"></td>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-004.gif" width="200" alt="clip-004.gif"></td>
         <td>
             <ul>
                 <li>Diplay rules/prompt if move does not obey move logic rules</li>
@@ -71,7 +71,7 @@
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/arsenie-sarmiento/draft-project-eyeball-maze.git
+git clone https://github.com/arseniedev/eyeball-maze.git
 ```
 
 2. Open the solution in Visual Studio.
@@ -83,13 +83,18 @@ git clone https://github.com/arsenie-sarmiento/draft-project-eyeball-maze.git
 ## Project Structure
 
 <!-- START_STRUCTURE -->
-```text
-.
-├── LICENSE
-├── README.md
-└── structure.txt
 
-1 directory, 3 files
+```text
+EyeballMaze/
+  ├── Game.java          # Main game loop and entry point
+  ├── Maze.java          # Maze structure and layout logic
+  ├── Player.java        # Eyeball entity (movement & state)
+  ├── InputHandler.java  # Keyboard input processing
+  └── Utils/             # Helper classes (if any)
+
+/docs
+  └── EyeballMazeDiagram.pdf   # System/design diagram
+
 ```
 <!-- END_STRUCTURE -->
 
@@ -97,7 +102,7 @@ git clone https://github.com/arsenie-sarmiento/draft-project-eyeball-maze.git
 
 A visual representation of the maze and game logic is available in the PDF file:
 
-- [Iteration 1](https://github.com/arsenie-sarmiento/draft-project-eyeball-maze/blob/docs/diagrams/eyeball-maze-class-diagram-iteration-1.pdf)
+- [Iteration 1](https://github.com/arseniedev/eyeball-maze/blob/docs/diagrams/eyeball-maze-class-diagram-iteration-1.pdf)
 
 ---
 
