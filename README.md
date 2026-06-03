@@ -71,7 +71,7 @@
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/arsenie-sarmiento/draft-project-eyeball-maze.git
+git clone https://github.com/arseniedev/eyeball-maze.git
 ```
 
 2. Open the solution in Visual Studio.
@@ -102,7 +102,7 @@ EyeballMaze/
 
 A visual representation of the maze and game logic is available in the PDF file:
 
-- [Iteration 1](https://github.com/arsenie-sarmiento/draft-project-eyeball-maze/blob/docs/diagrams/eyeball-maze-class-diagram-iteration-1.pdf)
+- [Iteration 1](https://github.com/arseniedev/eyeball-maze/blob/docs/diagrams/eyeball-maze-class-diagram-iteration-1.pdf)
 
 ---
 
