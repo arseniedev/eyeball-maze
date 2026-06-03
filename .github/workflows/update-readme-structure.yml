@@ -5,7 +5,7 @@ on:
     paths-ignore:
       - 'README.md'
     branches:
-      - sandbox-testing-env
+      - test/basic-game-logic
 
 jobs:
   update-readme:
