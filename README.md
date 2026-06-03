@@ -28,7 +28,7 @@
 
 <table>
     <tr>
-        <td><image src="https://github.com/arseniedev/eyeball-maze/tree/docs/assets/clips/clip-001.gif" width="200" alt="clip-001.gif"></image></td>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-001.gif" width="200" alt="clip-001.gif"></image></td>
         <td>
             <ul>
                 <li>Display starting level + level name</li>
@@ -38,7 +38,7 @@
         </td>
     </tr>
     <tr>
-        <td><image src="https://github.com/arseniedev/eyeball-maze/tree/docs/assets/clips/clip-002.gif" width="200" alt="clip-002.gif"></td>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-002.gif" width="200" alt="clip-002.gif"></td>
         <td>
             <ul>
                 <li>Event handler (button clicks/ tough gestures) to control player movement</li>
@@ -48,7 +48,7 @@
         </td>
     </tr>
     <tr>
-        <td><image src="https://github.com/arseniedev/eyeball-maze/tree/docs/assets/clips/clip-003.gif" width="200" alt="clip-003.gif"></td>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-003.gif" width="200" alt="clip-003.gif"></td>
         <td>
             <ul>
                 <li>A button or menu to restart the current maze*</li>
@@ -56,7 +56,7 @@
         </td>
     </tr>
     <tr>
-        <td><image src="https://github.com/arseniedev/eyeball-maze/tree/docs/assets/clips/clip-004.gif" width="200" alt="clip-004.gif"></td>
+        <td><image src="https://github.com/arseniedev/eyeball-maze/blob/docs/assets/clips/clip-004.gif" width="200" alt="clip-004.gif"></td>
         <td>
             <ul>
                 <li>Diplay rules/prompt if move does not obey move logic rules</li>
